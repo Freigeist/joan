@@ -1,11 +1,10 @@
 /* $Id$ */
 package org.openttd;
 
+import org.openttd.enums.Colour;
 import org.openttd.pool.Poolable;
 import java.math.BigInteger;
-import java.util.Iterator;
 import java.util.LinkedList;
-import org.openttd.pool.ClientPool;
 
 /**
  * Company representation of the companies in OpenTTD

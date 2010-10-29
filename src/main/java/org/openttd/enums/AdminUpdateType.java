@@ -3,14 +3,11 @@
  * and open the template in the editor.
  */
 
-package org.openttd.network;
-
-import org.openttd.enums.ReverseLookup;
-import org.openttd.enums.Reverseable;
+package org.openttd.enums;
 
 /**
  *
- * @author nathanael
+ * @author Nathanael Rebsch
  */
 public enum AdminUpdateType implements Reverseable<Integer>
 {

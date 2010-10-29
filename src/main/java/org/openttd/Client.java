@@ -1,7 +1,7 @@
 /* $Id$ */
 package org.openttd;
 
-import org.openttd.network.NetworkLanguage;
+import org.openttd.enums.NetworkLanguage;
 import org.openttd.pool.Poolable;
 
 /**

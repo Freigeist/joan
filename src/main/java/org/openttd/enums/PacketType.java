@@ -1,15 +1,8 @@
-package org.openttd.network;
+package org.openttd.enums;
 
-import org.openttd.enums.ReverseLookup;
-import org.openttd.enums.Reverseable;
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
  *
- * @author nathanael
+ * @author Nathanael Rebsch
  */
 public enum PacketType implements Reverseable<Integer>
 {

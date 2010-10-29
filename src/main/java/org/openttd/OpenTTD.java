@@ -8,11 +8,9 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
-import org.openttd.network.AdminCompanyRemoveReason;
-import org.openttd.network.DestType;
+
+import org.openttd.enums.*;
 import org.openttd.network.Network;
-import org.openttd.network.NetworkAction;
-import org.openttd.network.NetworkErrorCode;
 import org.openttd.network.Protocol;
 
 /**

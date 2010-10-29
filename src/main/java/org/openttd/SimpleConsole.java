@@ -11,8 +11,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.openttd.network.AdminUpdateFrequency;
-import org.openttd.network.AdminUpdateType;
+import org.openttd.enums.*;
 
 /**
  * Sample Bot Class, demonstrates a remote console implementation

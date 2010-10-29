@@ -2,10 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.openttd.network;
-
-import org.openttd.enums.Reverseable;
-import org.openttd.enums.ReverseLookup;
+package org.openttd.enums;
 
 /**
  *

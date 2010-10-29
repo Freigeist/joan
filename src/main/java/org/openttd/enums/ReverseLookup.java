@@ -2,7 +2,6 @@ package org.openttd.enums;
 
 import java.util.HashMap;
 
-
 /**
  *
  * @author Nathanael Rebsch

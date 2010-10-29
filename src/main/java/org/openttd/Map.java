@@ -5,6 +5,8 @@
 
 package org.openttd;
 
+import org.openttd.enums.Landscape;
+
 /**
  *
  * @author nathanael

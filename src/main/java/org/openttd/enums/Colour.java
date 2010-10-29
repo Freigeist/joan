@@ -1,8 +1,5 @@
 /* $Id */
-package org.openttd;
-
-import org.openttd.enums.ReverseLookup;
-import org.openttd.enums.Reverseable;
+package org.openttd.enums;
 
 /**
  * Colour enum as found in OpenTTD.

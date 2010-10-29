@@ -1,5 +1,6 @@
 package org.openttd.network;
 
+import org.openttd.enums.PacketType;
 import java.io.*;
 import java.net.*;
 import java.math.BigInteger;

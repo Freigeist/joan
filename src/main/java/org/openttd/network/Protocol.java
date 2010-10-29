@@ -1,5 +1,7 @@
 package org.openttd.network;
 
+import org.openttd.enums.AdminUpdateType;
+import org.openttd.enums.AdminUpdateFrequency;
 import java.util.EnumMap;
 import java.util.EnumSet;
 
