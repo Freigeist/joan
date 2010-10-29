@@ -14,7 +14,9 @@ public class Network
     
     public Network (OpenTTD openttd)
     {
-        this.openttd = openttd;
+        this.openttd       = openttd;
+        this.network_client = new NetworkClient(this);
+
         Logger.getLogger(Network.class.getName()).setLevel(openttd.loglevel);
     }
 
@@ -30,7 +32,6 @@ public class Network
         this.socket.setTcpNoDelay(true);
         this.socket.setKeepAlive(false);
 
-        this.network_client = new NetworkClient(openttd, socket);
         this.network_client.SEND_ADMIN_PACKET_ADMIN_JOIN();
         return true;
     }
@@ -48,6 +49,16 @@ public class Network
             Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+    }
+
+    protected OpenTTD getOpenTTD()
+    {
+        return openttd;
+    }
+
+    protected Socket getSocket()
+    {
+        return socket;
     }
 
     public void receive () throws IOException

@@ -7,7 +7,6 @@ package org.openttd.network;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
-import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,21 +27,19 @@ import org.openttd.OpenTTD;
 public class NetworkClient extends Thread
 {
 
-    private Socket  socket;
-    private OpenTTD openttd;
+    private Network network;
 
-    public NetworkClient (OpenTTD openttd, Socket socket)
+    protected NetworkClient (Network network)
     {
-        this.openttd = openttd;
-        this.socket  = socket;
-        Logger.getLogger(Network.class.getName()).setLevel(openttd.loglevel);
+        this.network = network;
+        Logger.getLogger(Network.class.getName()).setLevel(network.getOpenTTD().loglevel);
     }
 
     @Override
     public void run ()
     {
         try {
-            while(socket.isConnected())
+            while(network.getSocket().isConnected())
                 receive();
         } catch (IOException ex) {
             Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
@@ -57,15 +54,15 @@ public class NetworkClient extends Thread
 
     private void send (Packet p) throws IOException
     {
-        p.send(this.socket);
+        p.send(network.getSocket());
     }
 
     public void receive () throws IOException
     {
-        Packet p = new Packet(this.socket);
+        Packet p = new Packet(network.getSocket());
 
         try {
-            this.getClass().getMethod("RECEIVE_" + p.getType(), OpenTTD.class, Packet.class).invoke(this, openttd, p);
+            this.getClass().getMethod("RECEIVE_" + p.getType(), OpenTTD.class, Packet.class).invoke(this, network.getOpenTTD(), p);
         } catch (NoSuchMethodException ex) {
             Logger.getLogger(Network.class.getName()).log(Level.SEVERE, "Method not found: {0}", ex.getMessage());
         } catch (SecurityException ex) {
@@ -429,9 +426,9 @@ public class NetworkClient extends Thread
     public synchronized void SEND_ADMIN_PACKET_ADMIN_JOIN () throws IOException
     {
         Packet p = new Packet(PacketType.ADMIN_PACKET_ADMIN_JOIN);
-        p.send_string(openttd.getPassword());
-        p.send_string(openttd.getBotName());
-        p.send_string(openttd.getBotVersion());
+        p.send_string(network.getOpenTTD().getPassword());
+        p.send_string(network.getOpenTTD().getBotName());
+        p.send_string(network.getOpenTTD().getBotVersion());
 
         this.send(p);
     }
