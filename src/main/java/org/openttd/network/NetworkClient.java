@@ -128,7 +128,7 @@ public class NetworkClient extends Thread
 
     public synchronized void RECEIVE_ADMIN_PACKET_SERVER_ERROR (OpenTTD openttd, Packet p)
     {
-        NetworkErrorCode error = NetworkErrorCode.get(p.recv_uint8());
+        NetworkErrorCode error = NetworkErrorCode.valueOf(p.recv_uint8());
         openttd.onServerError(error);
     }
 
@@ -235,7 +235,7 @@ public class NetworkClient extends Thread
         Pool pool      = openttd.getPool();
         long client_id = p.recv_uint32();
 
-        NetworkErrorCode error = NetworkErrorCode.get(p.recv_uint8());
+        NetworkErrorCode error = NetworkErrorCode.valueOf(p.recv_uint8());
 
         if (pool.getClientPool().exists(client_id)) {
             Client client = pool.getClientPool().remove(client_id);
