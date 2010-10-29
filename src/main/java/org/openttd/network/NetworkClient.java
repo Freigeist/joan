@@ -372,7 +372,7 @@ public class NetworkClient extends Thread
     public synchronized void RECEIVE_ADMIN_PACKET_SERVER_CHAT (OpenTTD openttd, Packet p)
     {
         Pool pool            = openttd.getPool();
-        NetworkAction action = NetworkAction.get(p.recv_uint8());
+        NetworkAction action = NetworkAction.valueOf(p.recv_uint8());
         DestType dest        = DestType.valueOf(p.recv_uint8());
         long client_id       = p.recv_uint32();
         String message       = p.recv_string();

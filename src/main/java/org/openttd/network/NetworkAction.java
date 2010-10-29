@@ -4,30 +4,49 @@
  */
 package org.openttd.network;
 
+import org.openttd.enums.ReverseLookup;
+import org.openttd.enums.Reverseable;
+
 /**
  *
  * @author nathanael
  */
-public enum NetworkAction
+public enum NetworkAction implements Reverseable<Integer>
 {
 
-    NETWORK_ACTION_JOIN,
-    NETWORK_ACTION_LEAVE,
-    NETWORK_ACTION_SERVER_MESSAGE,
-    NETWORK_ACTION_CHAT,
-    NETWORK_ACTION_CHAT_COMPANY,
-    NETWORK_ACTION_CHAT_CLIENT,
-    NETWORK_ACTION_GIVE_MONEY,
-    NETWORK_ACTION_NAME_CHANGE,
-    NETWORK_ACTION_COMPANY_SPECTATOR,
-    NETWORK_ACTION_COMPANY_JOIN,
-    NETWORK_ACTION_COMPANY_NEW;
+    NETWORK_ACTION_JOIN               (0),
+    NETWORK_ACTION_LEAVE              (1),
+    NETWORK_ACTION_SERVER_MESSAGE     (2),
+    NETWORK_ACTION_CHAT               (3),
+    NETWORK_ACTION_CHAT_COMPANY       (4),
+    NETWORK_ACTION_CHAT_CLIENT        (5),
+    NETWORK_ACTION_GIVE_MONEY         (6),
+    NETWORK_ACTION_NAME_CHANGE        (7),
+    NETWORK_ACTION_COMPANY_SPECTATOR  (8),
+    NETWORK_ACTION_COMPANY_JOIN       (9),
+    NETWORK_ACTION_COMPANY_NEW        (10);
 
-    static NetworkAction get (int i)
+    private Integer value;
+    private static final ReverseLookup<Integer, NetworkAction> lookup = new ReverseLookup<Integer, NetworkAction>(NetworkAction.class);
+
+    NetworkAction (int i)
     {
-        Math.max(i, NETWORK_ACTION_JOIN.ordinal());
-        Math.min(i, NETWORK_ACTION_COMPANY_NEW.ordinal());
+        value = i;
+    }
 
-        return NetworkAction.values()[i];
+    public static boolean isValid (int i)
+    {
+        return valueOf(i) != null;
+    }
+
+    @Override
+    public Integer getValue ()
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public static NetworkAction valueOf (int i)
+    {
+        return lookup.get(i);
     }
 }
