@@ -42,7 +42,7 @@ public enum NetworkAction implements Reverseable<Integer>
     @Override
     public Integer getValue ()
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return value;
     }
 
     public static NetworkAction valueOf (int i)
