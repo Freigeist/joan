@@ -13,6 +13,7 @@ import org.openttd.network.DestType;
 import org.openttd.network.Network;
 import org.openttd.network.NetworkAction;
 import org.openttd.network.NetworkErrorCode;
+import org.openttd.network.Protocol;
 
 /**
  * The OpenTTD Admin Network Bot Framework
@@ -311,8 +312,9 @@ public abstract class OpenTTD
 
     /**
      * The server is notifying us of it's protocol version and further details.
+     * @param protocol Protocol details of what we cover.
      */
-    public void onProtocol() {}
+    public void onProtocol(Protocol protocol) {}
 
     /**
      * Output on the server console is being sent to the bot.
