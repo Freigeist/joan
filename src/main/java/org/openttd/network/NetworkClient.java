@@ -7,6 +7,7 @@ package org.openttd.network;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
+import java.util.BitSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -408,9 +409,24 @@ public class NetworkClient extends Thread
 
     public synchronized void RECEIVE_ADMIN_PACKET_SERVER_PROTOCOL (OpenTTD openttd, Packet p)
     {
-        // TODO: handle protocol packet
-        openttd.getGame().protocol_version = p.recv_uint8();
-        // openttd.onProtocol();
+        Protocol protocol = network.getProtocol();
+        
+        protocol.version = p.recv_uint8();
+
+        while (p.recv_bool()) {
+            int tIndex  = p.recv_uint16();
+            int fValues = p.recv_uint16();
+
+            /* Bitwise handling in java is ucky */
+            while (fValues > 0) {
+                int index = Integer.lowestOneBit(fValues);
+                protocol.addSupport(tIndex, index);
+
+                fValues -= index;
+            }
+        }
+
+        network.getOpenTTD().onProtocol(protocol);
     }
 
     public synchronized void RECEIVE_ADMIN_PACKET_SERVER_CONSOLE (OpenTTD openttd, Packet p)

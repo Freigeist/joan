@@ -11,10 +11,12 @@ public class Network
     private Socket        socket;
     private NetworkClient networkClient;
     private OpenTTD       openttd;
+    private Protocol      protocol;
     
     public Network (OpenTTD openttd)
     {
         this.openttd       = openttd;
+        this.protocol      = new Protocol();
         this.networkClient = new NetworkClient(this);
 
         Logger.getLogger(Network.class.getName()).setLevel(openttd.loglevel);
@@ -51,12 +53,17 @@ public class Network
         
     }
 
-    protected OpenTTD getOpenTTD()
+    protected OpenTTD getOpenTTD ()
     {
         return openttd;
     }
 
-    protected Socket getSocket()
+    protected Protocol getProtocol ()
+    {
+        return protocol;
+    }
+
+    protected Socket getSocket ()
     {
         return socket;
     }
