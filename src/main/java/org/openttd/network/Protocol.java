@@ -20,7 +20,7 @@ public class Protocol {
     {
         if (AdminUpdateType.isValid(tIndex) && AdminUpdateFrequency.isValid(fIndex)) {
             AdminUpdateType type = AdminUpdateType.get(tIndex);
-            AdminUpdateFrequency freq = AdminUpdateFrequency.get(fIndex);
+            AdminUpdateFrequency freq = AdminUpdateFrequency.valueOf(fIndex);
 
             if (!supportedFrequencies.containsKey(type))
                 supportedFrequencies.put(type, EnumSet.noneOf(AdminUpdateFrequency.class));

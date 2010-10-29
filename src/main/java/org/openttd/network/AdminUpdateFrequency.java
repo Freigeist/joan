@@ -4,13 +4,14 @@
  */
 package org.openttd.network;
 
-import java.util.EnumSet;
+import org.openttd.enums.Reverseable;
+import org.openttd.enums.ReverseLookup;
 
 /**
  *
- * @author nathanael
+ * @author Nathanael Rebsch
  */
-public enum AdminUpdateFrequency
+public enum AdminUpdateFrequency implements Reverseable<Integer>
 {
     ADMIN_FREQUENCY_POLL      (0x01),
     ADMIN_FREQUENCY_DAILY     (0x02),
@@ -20,31 +21,27 @@ public enum AdminUpdateFrequency
     ADMIN_FREQUENCY_ANUALLY   (0x20),
     ADMIN_FREQUENCY_AUTOMATIC (0x40);
 
-    private int value;
-    private static final EnumSet<AdminUpdateFrequency> frequencies = EnumSet.allOf(AdminUpdateFrequency.class);
+    private Integer value;
+    private static final ReverseLookup<Integer, AdminUpdateFrequency> lookup = new ReverseLookup<Integer, AdminUpdateFrequency>(AdminUpdateFrequency.class);
 
     AdminUpdateFrequency (int i)
     {
-        this.value = i;
+        value = i;
     }
 
-    public static AdminUpdateFrequency get(int i)
+    public static boolean isValid (int i)
     {
-        for (AdminUpdateFrequency freq : frequencies) {
-            if (freq.getValue() == i)
-                return freq;
-        }
-
-        return null;
+        return valueOf(i) != null;
     }
-
-    public static boolean isValid(int i)
-    {
-        return get(i) != null;
-    }
-
-    public int getValue()
+    
+    @Override
+    public Integer getValue ()
     {
         return value;
+    }
+
+    public static AdminUpdateFrequency valueOf (int i)
+    {
+        return lookup.get(i);
     }
 }
