@@ -357,7 +357,7 @@ public class NetworkClient extends Thread
         Pool pool      = openttd.getPool();
         int company_id = p.recv_uint8();
 
-        AdminCompanyRemoveReason crr = AdminCompanyRemoveReason.get(p.recv_uint8());
+        AdminCompanyRemoveReason crr = AdminCompanyRemoveReason.valueOf(p.recv_uint8());
 
         if (pool.getCompanyPool().exists(company_id)) {
             Company company = pool.getCompanyPool().remove(company_id);
