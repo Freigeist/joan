@@ -185,7 +185,7 @@ public class NetworkClient extends Thread
 
         client.address    = p.recv_string();
         client.name       = p.recv_string();
-        client.language   = NetworkLanguage.Get(p.recv_uint8());
+        client.language   = NetworkLanguage.valueOf(p.recv_uint8());
         client.joindate   = new GameDate(p.recv_uint32());
         client.company_id = p.recv_uint8();
 

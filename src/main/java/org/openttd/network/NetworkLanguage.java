@@ -5,65 +5,74 @@
 
 package org.openttd.network;
 
+import org.openttd.enums.ReverseLookup;
+import org.openttd.enums.Reverseable;
+
 /**
  *
  * @author nathanael
  */
-public enum NetworkLanguage {
-    NETLANG_ANY,
-    NETLANG_ENGLISH,
-    NETLANG_GERMAN,
-    NETLANG_FRENCH,
-    NETLANG_BRAZILIAN,
-    NETLANG_BULGARIAN,
-    NETLANG_CHINESE,
-    NETLANG_CZECH,
-    NETLANG_DANISH,
-    NETLANG_DUTCH,
-    NETLANG_ESPERANTO,
-    NETLANG_FINNISH,
-    NETLANG_HUNGARIAN,
-    NETLANG_ICELANDIC,
-    NETLANG_ITALIAN,
-    NETLANG_JAPANESE,
-    NETLANG_KOREAN,
-    NETLANG_LITHUANIAN,
-    NETLANG_NORWEGIAN,
-    NETLANG_POLISH,
-    NETLANG_PORTUGUESE,
-    NETLANG_ROMANIAN,
-    NETLANG_RUSSIAN,
-    NETLANG_SLOVAK,
-    NETLANG_SLOVENIAN,
-    NETLANG_SPANISH,
-    NETLANG_SWEDISH,
-    NETLANG_TURKISH,
-    NETLANG_UKRAINIAN,
-    NETLANG_AFRIKAANS,
-    NETLANG_CROATIAN,
-    NETLANG_CATALAN,
-    NETLANG_ESTONIAN,
-    NETLANG_GALICIAN,
-    NETLANG_GREEK,
-    NETLANG_LATVIAN,
-    NETLANG_COUNT;
+public enum NetworkLanguage implements Reverseable<Integer>
+{
+    NETLANG_ANY        (0),
+    NETLANG_ENGLISH    (1),
+    NETLANG_GERMAN     (2),
+    NETLANG_FRENCH     (3),
+    NETLANG_BRAZILIAN  (4),
+    NETLANG_BULGARIAN  (5),
+    NETLANG_CHINESE    (6),
+    NETLANG_CZECH      (7),
+    NETLANG_DANISH     (8),
+    NETLANG_DUTCH      (9),
+    NETLANG_ESPERANTO  (10),
+    NETLANG_FINNISH    (11),
+    NETLANG_HUNGARIAN  (12),
+    NETLANG_ICELANDIC  (13),
+    NETLANG_ITALIAN    (14),
+    NETLANG_JAPANESE   (15),
+    NETLANG_KOREAN     (16),
+    NETLANG_LITHUANIAN (17),
+    NETLANG_NORWEGIAN  (18),
+    NETLANG_POLISH     (19),
+    NETLANG_PORTUGUESE (20),
+    NETLANG_ROMANIAN   (21),
+    NETLANG_RUSSIAN    (22),
+    NETLANG_SLOVAK     (23),
+    NETLANG_SLOVENIAN  (24),
+    NETLANG_SPANISH    (25),
+    NETLANG_SWEDISH    (26),
+    NETLANG_TURKISH    (27),
+    NETLANG_UKRAINIAN  (28),
+    NETLANG_AFRIKAANS  (29),
+    NETLANG_CROATIAN   (30),
+    NETLANG_CATALAN    (31),
+    NETLANG_ESTONIAN   (32),
+    NETLANG_GALICIAN   (33),
+    NETLANG_GREEK      (34),
+    NETLANG_LATVIAN    (35),
+    NETLANG_COUNT      (36);
 
-    public static NetworkLanguage Get(int i)
+    private Integer value;
+    private static final ReverseLookup<Integer, NetworkLanguage> lookup = new ReverseLookup<Integer, NetworkLanguage>(NetworkLanguage.class);
+
+    NetworkLanguage (int i)
     {
-        try {
-            return NetworkLanguage.values()[i];
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return null;
-        }
+        value = i;
     }
 
-    public static boolean IsValid(int i)
+    public static boolean isValid (int i)
     {
-        return Get(i) != null;
+        return valueOf(i) != null;
     }
 
-    public int Ord()
+    @Override
+    public Integer getValue ()
     {
-        return this.ordinal();
+        return value;
+    }
+
+    public static NetworkLanguage valueOf (int i)
+    {
+        return lookup.get(i);
     }
 }
