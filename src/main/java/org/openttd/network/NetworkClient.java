@@ -373,7 +373,7 @@ public class NetworkClient extends Thread
     {
         Pool pool            = openttd.getPool();
         NetworkAction action = NetworkAction.get(p.recv_uint8());
-        DestType dest        = DestType.get(p.recv_uint8());
+        DestType dest        = DestType.valueOf(p.recv_uint8());
         long client_id       = p.recv_uint32();
         String message       = p.recv_string();
         BigInteger data      = p.recv_uint64();
