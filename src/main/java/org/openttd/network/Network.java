@@ -9,13 +9,13 @@ import org.openttd.OpenTTD;
 public class Network
 {
     private Socket        socket;
-    private NetworkClient network_client;
+    private NetworkClient networkClient;
     private OpenTTD       openttd;
     
     public Network (OpenTTD openttd)
     {
         this.openttd       = openttd;
-        this.network_client = new NetworkClient(this);
+        this.networkClient = new NetworkClient(this);
 
         Logger.getLogger(Network.class.getName()).setLevel(openttd.loglevel);
     }
@@ -32,7 +32,7 @@ public class Network
         this.socket.setTcpNoDelay(true);
         this.socket.setKeepAlive(false);
 
-        this.network_client.SEND_ADMIN_PACKET_ADMIN_JOIN();
+        this.networkClient.SEND_ADMIN_PACKET_ADMIN_JOIN();
         return true;
     }
 
@@ -63,88 +63,88 @@ public class Network
 
     public void receive () throws IOException
     {
-        network_client.start();
+        networkClient.start();
     }
     
     public void serverMessagePublic(String msg) throws IOException
     {
-        network_client.SEND_ADMIN_PACKET_ADMIN_CHAT(NetworkAction.NETWORK_ACTION_SERVER_MESSAGE, DestType.DESTTYPE_BROADCAST, 0, msg, 0);
+        networkClient.SEND_ADMIN_PACKET_ADMIN_CHAT(NetworkAction.NETWORK_ACTION_SERVER_MESSAGE, DestType.DESTTYPE_BROADCAST, 0, msg, 0);
     }
 
     public void serverMessagePrivate(long client, String msg) throws IOException
     {
-        network_client.SEND_ADMIN_PACKET_ADMIN_CHAT(NetworkAction.NETWORK_ACTION_SERVER_MESSAGE, DestType.DESTTYPE_CLIENT, client, msg, 0);
+        networkClient.SEND_ADMIN_PACKET_ADMIN_CHAT(NetworkAction.NETWORK_ACTION_SERVER_MESSAGE, DestType.DESTTYPE_CLIENT, client, msg, 0);
     }
 
     public void chatPublic(String msg) throws IOException
     {
-        network_client.SEND_ADMIN_PACKET_ADMIN_CHAT(NetworkAction.NETWORK_ACTION_CHAT, DestType.DESTTYPE_BROADCAST, 0, msg, 0);
+        networkClient.SEND_ADMIN_PACKET_ADMIN_CHAT(NetworkAction.NETWORK_ACTION_CHAT, DestType.DESTTYPE_BROADCAST, 0, msg, 0);
     }
 
     public void chatPrivate(long client, String msg) throws IOException
     {
-        network_client.SEND_ADMIN_PACKET_ADMIN_CHAT(NetworkAction.NETWORK_ACTION_CHAT_CLIENT, DestType.DESTTYPE_CLIENT, client, msg, 0);
+        networkClient.SEND_ADMIN_PACKET_ADMIN_CHAT(NetworkAction.NETWORK_ACTION_CHAT_CLIENT, DestType.DESTTYPE_CLIENT, client, msg, 0);
     }
 
     public void chatTeam(int company, String msg) throws IOException
     {
-        network_client.SEND_ADMIN_PACKET_ADMIN_CHAT(NetworkAction.NETWORK_ACTION_SERVER_MESSAGE, DestType.DESTTYPE_TEAM, company, msg, 0);
+        networkClient.SEND_ADMIN_PACKET_ADMIN_CHAT(NetworkAction.NETWORK_ACTION_SERVER_MESSAGE, DestType.DESTTYPE_TEAM, company, msg, 0);
     }
 
     
     public synchronized void SEND_ADMIN_PACKET_ADMIN_UPDATE_FREQUENCY (AdminUpdateType type, AdminUpdateFrequency freq) throws IOException
     {
-        network_client.SEND_ADMIN_PACKET_ADMIN_UPDATE_FREQUENCY(type, freq);
+        networkClient.SEND_ADMIN_PACKET_ADMIN_UPDATE_FREQUENCY(type, freq);
     }
 
     public synchronized void SEND_ADMIN_PACKET_ADMIN_RCON (String command) throws IOException
     {
         if (!command.isEmpty())
-            network_client.SEND_ADMIN_PACKET_ADMIN_RCON(command);
+            networkClient.SEND_ADMIN_PACKET_ADMIN_RCON(command);
     }
 
     public synchronized void SEND_ADMIN_PACKET_ADMIN_QUIT () throws IOException
     {
-        network_client.SEND_ADMIN_PACKET_ADMIN_QUIT();
+        networkClient.SEND_ADMIN_PACKET_ADMIN_QUIT();
     }
 
     public synchronized void SEND_ADMIN_PACKET_ADMIN_CHAT (NetworkAction action, DestType type, long dest, String message, long data) throws IOException
     {
-        network_client.SEND_ADMIN_PACKET_ADMIN_CHAT(action, type, dest, message, data);
+        networkClient.SEND_ADMIN_PACKET_ADMIN_CHAT(action, type, dest, message, data);
     }
 
     public synchronized void POLL_DATE () throws IOException
     {
-        network_client.POLL_DATE();
+        networkClient.POLL_DATE();
     }
 
     public synchronized void POLL_COMPANY_STATS () throws IOException
     {
-        network_client.POLL_COMPANY_STATS();
+        networkClient.POLL_COMPANY_STATS();
     }
 
     public synchronized void POLL_COMPANY_INFOS () throws IOException
     {
-        network_client.POLL_COMPANY_INFOS();
+        networkClient.POLL_COMPANY_INFOS();
     }
 
     public synchronized void POLL_COMPANY_INFO (int company_id) throws IOException
     {
-        network_client.POLL_COMPANY_INFO(company_id);
+        networkClient.POLL_COMPANY_INFO(company_id);
     }
 
     public synchronized void POLL_COMPANY_ECONOMY () throws IOException
     {
-        network_client.POLL_COMPANY_ECONOMY();
+        networkClient.POLL_COMPANY_ECONOMY();
     }
 
     public synchronized void POLL_CLIENT_INFOS () throws IOException
     {
-        network_client.POLL_CLIENT_INFOS();
+        networkClient.POLL_CLIENT_INFOS();
     }
 
     public synchronized void POLL_CLIENT_INFO (long client_id) throws IOException
     {
-        network_client.POLL_CLIENT_INFO(client_id);
+        networkClient.POLL_CLIENT_INFO(client_id);
     }
 }
