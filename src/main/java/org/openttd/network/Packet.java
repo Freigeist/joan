@@ -66,7 +66,7 @@ public class Packet
 
     public void setPacketType (PacketType type)
     {
-        this.buf[2] = (byte) type.valueOf();
+        this.buf[2] = (byte) type.getValue().byteValue();
         this.type = type;
     }
 
@@ -193,7 +193,7 @@ public class Packet
     public PacketType getType () throws ArrayIndexOutOfBoundsException
     {
         if (this.type == null) {
-            this.type = PacketType.get(this.buf[2] & 0xFF);
+            this.type = PacketType.valueOf(this.buf[2] & 0xFF);
         }
 
         return this.type;
