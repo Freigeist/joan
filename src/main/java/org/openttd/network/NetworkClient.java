@@ -271,7 +271,7 @@ public class NetworkClient extends Thread
 
         company.name        = p.recv_string();
         company.president   = p.recv_string();
-        company.colour      = Colour.get(p.recv_uint8());
+        company.colour      = Colour.valueOf(p.recv_uint8());
         company.passworded  = p.recv_bool();
         company.inaugurated = p.recv_uint32();
         company.ai          = p.recv_bool();
@@ -291,7 +291,7 @@ public class NetworkClient extends Thread
 
             company.name        = p.recv_string();
             company.president   = p.recv_string();
-            company.colour      = Colour.get(p.recv_uint8());
+            company.colour      = Colour.valueOf(p.recv_uint8());
             company.passworded  = p.recv_bool();
             company.bankruptcy  = p.recv_uint8();
 
@@ -400,7 +400,7 @@ public class NetworkClient extends Thread
 
     public synchronized void RECEIVE_ADMIN_PACKET_SERVER_RCON (OpenTTD openttd, Packet p)
     {
-        Colour colour  = Colour.get(p.recv_uint16());
+        Colour colour  = Colour.valueOf(p.recv_uint16());
         String message = p.recv_string();
 
         openttd.onRcon(colour, message);
