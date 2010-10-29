@@ -454,7 +454,7 @@ public class NetworkClient extends Thread
             throw new IllegalArgumentException("The server does not support " + freq + " for " + type);
 
         Packet p = new Packet(PacketType.ADMIN_PACKET_ADMIN_UPDATE_FREQUENCY);
-        p.send_uint16(type.ordinal());
+        p.send_uint16(type.getValue());
         p.send_uint16(freq.getValue());
 
         this.send(p);
@@ -471,7 +471,7 @@ public class NetworkClient extends Thread
             throw new IllegalArgumentException("The server does not support ADMIN_FREQUENCY_POLL for " + type);
 
         Packet p = new Packet(PacketType.ADMIN_PACKET_ADMIN_POLL);
-        p.send_uint8(type.ordinal());
+        p.send_uint8(type.getValue());
         p.send_uint32(data);
 
         this.send(p);

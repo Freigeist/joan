@@ -19,7 +19,7 @@ public class Protocol {
     protected void addSupport (int tIndex, int fIndex)
     {
         if (AdminUpdateType.isValid(tIndex) && AdminUpdateFrequency.isValid(fIndex)) {
-            AdminUpdateType type = AdminUpdateType.get(tIndex);
+            AdminUpdateType type = AdminUpdateType.valueOf(tIndex);
             AdminUpdateFrequency freq = AdminUpdateFrequency.valueOf(fIndex);
 
             if (!supportedFrequencies.containsKey(type))
