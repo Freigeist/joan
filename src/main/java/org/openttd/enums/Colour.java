@@ -5,7 +5,7 @@ package org.openttd.enums;
  * Colour enum as found in OpenTTD.
  * @author Nathanael Rebsch
  */
-public enum Colour implements Reverseable<Integer>
+public enum Colour implements Reversible<Integer>
 {
     COLOUR_DARK_BLUE   (0),
     COLOUR_PALE_GREEN  (1),

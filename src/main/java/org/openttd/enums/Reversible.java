@@ -8,7 +8,7 @@ package org.openttd.enums;
  *
  * @author nathanael
  */
-public interface Reverseable<T>
+public interface Reversible<T>
 {
     public T getValue ();
 }

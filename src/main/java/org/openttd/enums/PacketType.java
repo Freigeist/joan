@@ -4,7 +4,7 @@ package org.openttd.enums;
  *
  * @author Nathanael Rebsch
  */
-public enum PacketType implements Reverseable<Integer>
+public enum PacketType implements Reversible<Integer>
 {
     ADMIN_PACKET_ADMIN_JOIN              (0),    ///< The admin announces and authenticates itself to the server.
     ADMIN_PACKET_ADMIN_QUIT              (1),    ///< The admin tells the server that it is quitting.

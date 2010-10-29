@@ -9,7 +9,7 @@ package org.openttd.enums;
  *
  * @author Nathanael Rebsch
  */
-public enum Landscape implements Reverseable<Integer>
+public enum Landscape implements Reversible<Integer>
 {
     LANDSCAPE_TEMPERATE  (0),
     LANDSCAPE_ARCTIC     (1),

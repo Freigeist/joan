@@ -8,7 +8,7 @@ package org.openttd.enums;
  *
  * @author Nathanael Rebsch
  */
-public enum VehicleType implements Reverseable<Integer>
+public enum VehicleType implements Reversible<Integer>
 {
     NETWORK_VEH_TRAIN  (0),
     NETWORK_VEH_LORRY  (1),

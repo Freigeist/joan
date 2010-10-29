@@ -8,7 +8,7 @@ package org.openttd.enums;
  *
  * @author Nathanael Rebsch
  */
-public enum NetworkErrorCode implements Reverseable<Integer>
+public enum NetworkErrorCode implements Reversible<Integer>
 {
 
     NETWORK_ERROR_GENERAL            (0), // Try to use this one like never

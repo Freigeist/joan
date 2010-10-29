@@ -9,7 +9,7 @@ package org.openttd.enums;
  *
  * @author Nathanael Rebsch
  */
-public enum AdminUpdateType implements Reverseable<Integer>
+public enum AdminUpdateType implements Reversible<Integer>
 {
     ADMIN_UPDATE_DATE            (0),
     ADMIN_UPDATE_CLIENT_INFO     (1),

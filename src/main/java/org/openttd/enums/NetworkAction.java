@@ -8,7 +8,7 @@ package org.openttd.enums;
  *
  * @author Nathanael Rebsch
  */
-public enum NetworkAction implements Reverseable<Integer>
+public enum NetworkAction implements Reversible<Integer>
 {
 
     NETWORK_ACTION_JOIN               (0),

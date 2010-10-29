@@ -9,7 +9,7 @@ package org.openttd.enums;
  *
  * @author Nathanael Rebsch
  */
-public enum DestType implements Reverseable<Integer>
+public enum DestType implements Reversible<Integer>
 {
     DESTTYPE_BROADCAST (0),
     DESTTYPE_TEAM      (1),

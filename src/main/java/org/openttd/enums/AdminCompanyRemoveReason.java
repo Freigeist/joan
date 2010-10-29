@@ -9,7 +9,7 @@ package org.openttd.enums;
  *
  * @author Nathanael Rebsch
  */
-public enum AdminCompanyRemoveReason implements Reverseable<Integer>
+public enum AdminCompanyRemoveReason implements Reversible<Integer>
 {
     ADMIN_CRR_MANUAL     (0),
     ADMIN_CRR_AUTOCLEAN  (1),

@@ -6,7 +6,7 @@ import java.util.HashMap;
  *
  * @author Nathanael Rebsch
  */
-public class ReverseLookup<T, E extends Enum<E> & Reverseable<T>>
+public class ReverseLookup<T, E extends Enum<E> & Reversible<T>>
 {
     private final HashMap<T, E> map = new HashMap<T, E>();
 

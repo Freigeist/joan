@@ -9,7 +9,7 @@ package org.openttd.enums;
  *
  * @author Nathanael Rebsch
  */
-public enum NetworkLanguage implements Reverseable<Integer>
+public enum NetworkLanguage implements Reversible<Integer>
 {
     NETLANG_ANY        (0),
     NETLANG_ENGLISH    (1),

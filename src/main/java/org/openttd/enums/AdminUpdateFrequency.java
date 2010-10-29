@@ -8,7 +8,7 @@ package org.openttd.enums;
  *
  * @author Nathanael Rebsch
  */
-public enum AdminUpdateFrequency implements Reverseable<Integer>
+public enum AdminUpdateFrequency implements Reversible<Integer>
 {
     ADMIN_FREQUENCY_POLL      (0x01),
     ADMIN_FREQUENCY_DAILY     (0x02),
