@@ -143,7 +143,7 @@ public class NetworkClient extends Thread
 
         map.name = p.recv_string();
         map.seed = p.recv_uint32();
-        map.landscape = Landscape.Get(p.recv_uint8());
+        map.landscape = Landscape.valueOf(p.recv_uint8());
         map.start_date = new GameDate(p.recv_uint32());
         map.width      = p.recv_uint16();
         map.height     = p.recv_uint16();

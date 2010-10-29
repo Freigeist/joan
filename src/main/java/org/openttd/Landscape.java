@@ -5,33 +5,42 @@
 
 package org.openttd;
 
+import org.openttd.enums.ReverseLookup;
+import org.openttd.enums.Reverseable;
+
 /**
  *
  * @author nathanael
  */
-public enum Landscape {
-    LANDSCAPE_TEMPERATE,
-    LANDSCAPE_ARCTIC,
-    LANDSCAPE_TROPIC,
-    LANDSCAPE_TOYLAND,
-    NUM_LANDSCAPE;
+public enum Landscape implements Reverseable<Integer>
+{
+    LANDSCAPE_TEMPERATE  (0),
+    LANDSCAPE_ARCTIC     (1),
+    LANDSCAPE_TROPIC     (2),
+    LANDSCAPE_TOYLAND    (3),
+    NUM_LANDSCAPE        (4);
 
-    public static Landscape Get(int i)
+    private Integer value;
+    private static final ReverseLookup<Integer, Landscape> lookup = new ReverseLookup<Integer, Landscape>(Landscape.class);
+
+    Landscape (int i)
     {
-        try {
-            return Landscape.values()[i];
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return null;
-        }
+        value = i;
     }
 
-    public static boolean IsValid(int i)
+    public static boolean isValid (int i)
     {
-        return Get(i) != null;
+        return valueOf(i) != null;
     }
 
-    public int Ord()
+    @Override
+    public Integer getValue ()
     {
-        return this.ordinal();
+        return value;
+    }
+
+    public static Landscape valueOf (int i)
+    {
+        return lookup.get(i);
     }
 }
