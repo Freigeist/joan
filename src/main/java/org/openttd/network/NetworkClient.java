@@ -7,7 +7,6 @@ package org.openttd.network;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
-import java.util.BitSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -449,8 +448,11 @@ public class NetworkClient extends Thread
         this.send(p);
     }
 
-    public synchronized void SEND_ADMIN_PACKET_ADMIN_UPDATE_FREQUENCY (AdminUpdateType type, AdminUpdateFrequency freq) throws IOException
+    public synchronized void SEND_ADMIN_PACKET_ADMIN_UPDATE_FREQUENCY (AdminUpdateType type, AdminUpdateFrequency freq) throws IOException, IllegalArgumentException
     {
+        if (!network.getProtocol().isSupported(type, freq))
+            throw new IllegalArgumentException("The server does not support " + freq + " for " + type);
+
         Packet p = new Packet(PacketType.ADMIN_PACKET_ADMIN_UPDATE_FREQUENCY);
         p.send_uint16(type.ordinal());
         p.send_uint16(freq.getValue());
@@ -458,13 +460,16 @@ public class NetworkClient extends Thread
         this.send(p);
     }
 
-    public synchronized void SEND_ADMIN_PACKET_ADMIN_POLL (AdminUpdateType type) throws IOException
+    public synchronized void SEND_ADMIN_PACKET_ADMIN_POLL (AdminUpdateType type) throws IOException, IllegalArgumentException
     {
         SEND_ADMIN_PACKET_ADMIN_POLL(type, 0);
     }
 
-    public synchronized void SEND_ADMIN_PACKET_ADMIN_POLL (AdminUpdateType type, long data) throws IOException
+    public synchronized void SEND_ADMIN_PACKET_ADMIN_POLL (AdminUpdateType type, long data) throws IOException, IllegalArgumentException
     {
+        if (!network.getProtocol().isSupported(type, AdminUpdateFrequency.ADMIN_FREQUENCY_POLL))
+            throw new IllegalArgumentException("The server does not support ADMIN_FREQUENCY_POLL for " + type);
+
         Packet p = new Packet(PacketType.ADMIN_PACKET_ADMIN_POLL);
         p.send_uint8(type.ordinal());
         p.send_uint32(data);
