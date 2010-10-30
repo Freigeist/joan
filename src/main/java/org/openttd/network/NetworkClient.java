@@ -4,7 +4,6 @@
  */
 package org.openttd.network;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
@@ -39,7 +38,7 @@ public class NetworkClient extends Thread
     @Override
     public void run ()
     {
-        while(network.getSocket().isConnected())
+        while (network.isConnected())
             receive();
     }
 
@@ -61,7 +60,7 @@ public class NetworkClient extends Thread
             delegatePacket(p);
         } catch (SocketException ex) {
             Logger.getLogger(NetworkClient.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-            System.exit(1);
+            network.disconnect();
         } catch (IOException ex) {
             Logger.getLogger(NetworkClient.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } catch (IndexOutOfBoundsException ex) {
@@ -128,16 +127,19 @@ public class NetworkClient extends Thread
 
     public synchronized void RECEIVE_ADMIN_PACKET_SERVER_FULL (OpenTTD openttd, Packet p)
     {
+        network.disconnect();
         openttd.onServerFull();
     }
 
     public synchronized void RECEIVE_ADMIN_PACKET_SERVER_BANNED (OpenTTD openttd, Packet p)
     {
+        network.disconnect();
         openttd.onServerBanned();
     }
 
     public synchronized void RECEIVE_ADMIN_PACKET_SERVER_ERROR (OpenTTD openttd, Packet p)
     {
+        network.disconnect();
         NetworkErrorCode error = NetworkErrorCode.valueOf(p.recv_uint8());
         openttd.onServerError(error);
     }
@@ -405,6 +407,7 @@ public class NetworkClient extends Thread
 
     public synchronized void RECEIVE_ADMIN_PACKET_SERVER_SHUTDOWN (OpenTTD openttd, Packet p)
     {
+        network.disconnect();
         openttd.onShutdown();
     }
 
@@ -508,6 +511,7 @@ public class NetworkClient extends Thread
     public synchronized void SEND_ADMIN_PACKET_ADMIN_QUIT () throws IOException
     {
         this.send(PacketType.ADMIN_PACKET_ADMIN_QUIT);
+        network.disconnect();
     }
 
     public synchronized void SEND_ADMIN_PACKET_ADMIN_RCON (String command) throws IOException

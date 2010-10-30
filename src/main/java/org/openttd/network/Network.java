@@ -41,7 +41,7 @@ public class Network
 
     public boolean isConnected ()
     {
-        return this.socket.isConnected();
+        return this.socket.isConnected() && !this.socket.isClosed();
     }
 
     public void disconnect ()
