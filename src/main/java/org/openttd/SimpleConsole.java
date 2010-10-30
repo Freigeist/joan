@@ -69,7 +69,7 @@ public class SimpleConsole extends OpenTTD
 
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
             String str = "";
-            while (str != null) {
+            while (network.isConnected()) {
                 str = in.readLine();
                 network.SEND_ADMIN_PACKET_ADMIN_RCON(str);
             }
@@ -78,6 +78,11 @@ public class SimpleConsole extends OpenTTD
         } catch (IOException ex) {
             Logger.getLogger(SimpleConsole.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void shutdownBot ()
+    {
+        System.exit(0);
     }
 
     /**
@@ -129,5 +134,33 @@ public class SimpleConsole extends OpenTTD
     public void onRcon(Colour colour, String message)
     {
         System.out.println(StringFunc.stripColour(message));
+    }
+
+    @Override
+    public void onShutdown ()
+    {
+        System.out.println("Server Shutdown");
+        shutdownBot();
+    }
+
+    @Override
+    public void onServerError (NetworkErrorCode error)
+    {
+        System.out.println(error);
+        shutdownBot();
+    }
+
+    @Override
+    public void onServerFull ()
+    {
+        System.out.println("The server is full.");
+        shutdownBot();
+    }
+
+    @Override
+    public void onServerBanned ()
+    {
+        System.out.println("The server has you banned.");
+        shutdownBot();
     }
 }
