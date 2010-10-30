@@ -4,7 +4,9 @@ package org.openttd;
 import org.openttd.enums.Colour;
 import org.openttd.pool.Poolable;
 import java.math.BigInteger;
+import java.util.EnumMap;
 import java.util.LinkedList;
+import org.openttd.enums.VehicleType;
 
 /**
  * Company representation of the companies in OpenTTD
@@ -25,8 +27,6 @@ public class Company extends Poolable<Integer>
     public int        performance;
     public boolean    passworded  = false;
     public boolean    ai          = false;
-    public int        vehicles[];
-    public int        stations[];
     public Colour     colour;
 
     public int        shares[] = new int[4];
@@ -35,6 +35,9 @@ public class Company extends Poolable<Integer>
 
     public Economy             current_economy = new Economy();
     public LinkedList<Economy> history_economy = new LinkedList<Economy>();
+
+    public final EnumMap<VehicleType, Integer> vehicles = new EnumMap<VehicleType, Integer>(VehicleType.class);
+    public final EnumMap<VehicleType, Integer> stations = new EnumMap<VehicleType, Integer>(VehicleType.class);
 
     public Company (int company_id)
     {

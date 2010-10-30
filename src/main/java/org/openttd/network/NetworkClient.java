@@ -334,12 +334,12 @@ public class NetworkClient extends Thread
         if (pool.getCompanyPool().exists(company_id)) {
             Company company = pool.getCompanyPool().get(company_id);
 
-            for (short i = 0; i < 5; i++) {
-                company.vehicles[i] = p.recv_uint16();
+            for (VehicleType vt : VehicleType.values()) {
+                company.vehicles.put(vt, p.recv_uint16());
             }
 
-            for (short i = 0; i < 5; i++) {
-                company.stations[i] = p.recv_uint16();
+            for (VehicleType vt : VehicleType.values()) {
+                company.stations.put(vt, p.recv_uint16());
             }
 
             openttd.onCompanyStats(company);
