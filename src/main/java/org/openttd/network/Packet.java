@@ -1,12 +1,13 @@
 package org.openttd.network;
 
 import org.openttd.enums.PacketType;
-import java.io.*;
-import java.net.*;
+import java.io.IOException;
+import java.io.DataInputStream;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.net.Socket;
+import java.net.SocketException;
 
 public class Packet
 {
@@ -34,7 +35,7 @@ public class Packet
         this.buf = buf;
     }
 
-    public Packet (Socket s) throws IOException
+    public Packet (Socket s) throws IOException, IndexOutOfBoundsException
     {
         this.buf = new byte[2];
         DataInputStream in = new DataInputStream(s.getInputStream());
@@ -45,19 +46,15 @@ public class Packet
         this.buf = Arrays.copyOf(this.buf, length);
 
         if (length > SEND_MTU) {
-            Logger.getLogger(Network.class.getName()).log(Level.INFO, "SEND_MTU exceeded");
+            throw new IndexOutOfBoundsException("Packet length claims to be greater than SEND_MTU");
         }
 
-        // TODO: throw an exception to handle
         if (length == 0) {
-            Logger.getLogger(Network.class.getName()).log(Level.INFO, "Empty packet received");
-            System.exit(1);
+            throw new SocketException("Empty packet received");
         }
 
         in.readFully(this.buf, 2, this.length() - 2);
         this.pos = 3;
-
-        Logger.getLogger(Network.class.getName()).log(Level.INFO, "Receiving {0}", this.getType());
     }
 
     public void append (byte[] buf)
@@ -65,7 +62,7 @@ public class Packet
         System.arraycopy(buf, 0, this.buf, this.buf.length, buf.length);
     }
 
-    public void setPacketType (PacketType type)
+    private void setPacketType (PacketType type)
     {
         this.buf[2] = (byte) type.getValue().byteValue();
         this.type = type;
@@ -185,7 +182,7 @@ public class Packet
         try {
             out = new String(this.buf, startIdx, endIdx, "UTF-8");
         } catch (UnsupportedEncodingException ex) {
-            /* as utf8 is a supported encoding, we will ignore this part! */
+            /* as "UTF-8" is a supported encoding, we will ignore this part! */
         }
 
         return out;
@@ -202,15 +199,13 @@ public class Packet
 
     public void send (Socket s) throws IOException
     {
-        Logger.getLogger(Network.class.getName()).log(Level.INFO, "Sending {0}", this.getType());
-        
         this.buf[0] = (byte) this.pos;
         this.buf[1] = (byte) (this.pos >> 8);
 
         s.getOutputStream().write(Arrays.copyOf(this.buf, this.pos));
     }
 
-    public int length ()
+    public final int length ()
     {
         int b1 = this.buf[0] & 0xFF;
         int b2 = this.buf[1] & 0xFF;

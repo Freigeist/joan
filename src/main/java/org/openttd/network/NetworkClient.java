@@ -4,9 +4,11 @@
  */
 package org.openttd.network;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
+import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,12 +39,8 @@ public class NetworkClient extends Thread
     @Override
     public void run ()
     {
-        try {
-            while(network.getSocket().isConnected())
-                receive();
-        } catch (IOException ex) {
-            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        while(network.getSocket().isConnected())
+            receive();
     }
 
     public void send (PacketType type) throws IOException
@@ -56,24 +54,37 @@ public class NetworkClient extends Thread
         p.send(network.getSocket());
     }
 
-    public void receive () throws IOException
+    public void receive ()
     {
-        Packet p = new Packet(network.getSocket());
+        try {
+            Packet p = new Packet(network.getSocket());
+            delegatePacket(p);
+        } catch (SocketException ex) {
+            Logger.getLogger(NetworkClient.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            System.exit(1);
+        } catch (IOException ex) {
+            Logger.getLogger(NetworkClient.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        } catch (IndexOutOfBoundsException ex) {
+            Logger.getLogger(NetworkClient.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        }
+    }
 
+    private void delegatePacket (Packet p)
+    {
         try {
             this.getClass().getMethod("RECEIVE_" + p.getType(), OpenTTD.class, Packet.class).invoke(this, network.getOpenTTD(), p);
         } catch (NoSuchMethodException ex) {
-            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, "Method not found: {0}", ex.getMessage());
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } catch (SecurityException ex) {
-            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, "SECURITY {0}", p.getType());
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, "ILLEGAL_ACCESS {0}", p.getType());
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } catch (InvocationTargetException ex) {
-            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, "INVOCATION {0}", p.getType());
-            ex.printStackTrace();
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } catch (IllegalArgumentException ex) {
-            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, "ILLEGAL_ARGUMENT {0}", p.getType());
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } catch (ArrayIndexOutOfBoundsException ex) {
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             return;
         }
     }
