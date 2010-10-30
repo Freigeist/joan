@@ -95,7 +95,7 @@ public class NetworkClient extends Thread
 
     public synchronized void POLL_COMPANY_INFOS () throws IOException
     {
-        POLL_COMPANY_INFO(Integer.MAX_VALUE);
+        SEND_ADMIN_PACKET_ADMIN_POLL(AdminUpdateType.ADMIN_UPDATE_COMPANY_INFO, Long.MAX_VALUE);
     }
 
     public synchronized void POLL_COMPANY_INFO (int company_id) throws IOException
