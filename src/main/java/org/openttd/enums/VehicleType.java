@@ -14,8 +14,7 @@ public enum VehicleType implements Reversible<Integer>
     NETWORK_VEH_LORRY  (1),
     NETWORK_VEH_BUS    (2),
     NETWORK_VEH_PLANE  (3),
-    NETWORK_VEH_SHIP   (4),
-    NETWORK_VEH_END    (5);
+    NETWORK_VEH_SHIP   (4);
 
     private Integer value;
     private static final ReverseLookup<Integer, VehicleType> lookup = new ReverseLookup<Integer, VehicleType>(VehicleType.class);
