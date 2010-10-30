@@ -17,7 +17,7 @@ public class Company extends Poolable<Integer>
 
     public static final int INVALID_COMPANY   = 255;
     public static final int COMPANY_SPECTATOR = 255;
-    public static final int MAX_COMPANIES     = 16;
+    public static final int MAX_COMPANIES     = 15;
 
     public String     name;
     public String     president;
@@ -28,10 +28,8 @@ public class Company extends Poolable<Integer>
     public boolean    passworded  = false;
     public boolean    ai          = false;
     public Colour     colour;
-
-    public int        shares[] = new int[4];
-
-    public int        bankruptcy = 0;
+    public int[]      shares      = {INVALID_COMPANY, INVALID_COMPANY, INVALID_COMPANY, INVALID_COMPANY};
+    public int        bankruptcy  = 0;
 
     public Economy             current_economy = new Economy();
     public LinkedList<Economy> history_economy = new LinkedList<Economy>();
