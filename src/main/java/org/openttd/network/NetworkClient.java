@@ -73,17 +73,17 @@ public class NetworkClient extends Thread
         try {
             this.getClass().getMethod("RECEIVE_" + p.getType(), OpenTTD.class, Packet.class).invoke(this, network.getOpenTTD(), p);
         } catch (NoSuchMethodException ex) {
-            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, ex.getCause().getMessage(), ex.getCause());
         } catch (SecurityException ex) {
-            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, ex.getCause().getMessage(), ex.getCause());
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, ex.getCause().getMessage(), ex.getCause());
         } catch (InvocationTargetException ex) {
-            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, ex.getCause().getMessage(), ex.getCause());
         } catch (IllegalArgumentException ex) {
-            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, ex.getCause().getMessage(), ex.getCause());
         } catch (ArrayIndexOutOfBoundsException ex) {
-            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, ex.getCause().getMessage(), ex.getCause());
             return;
         }
     }
