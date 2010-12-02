@@ -107,12 +107,8 @@ public class SimpleConsole extends OpenTTD
     @Override
     public void onServerWelcome(Game game)
     {
-        try {
-            /* register for console updates */
-            network.SEND_ADMIN_PACKET_ADMIN_UPDATE_FREQUENCY(AdminUpdateType.ADMIN_UPDATE_CONSOLE, AdminUpdateFrequency.ADMIN_FREQUENCY_AUTOMATIC);
-        } catch (IOException ex) {
-            Logger.getLogger(SimpleConsole.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        /* register for console updates */
+        this.registerUpdateFrequency(AdminUpdateType.ADMIN_UPDATE_CONSOLE, AdminUpdateFrequency.ADMIN_FREQUENCY_AUTOMATIC);
 
         System.out.println("... ready.");
     }

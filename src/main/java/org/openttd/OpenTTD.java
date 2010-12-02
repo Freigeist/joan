@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.openttd.enums.*;
 import org.openttd.network.Network;
@@ -175,6 +176,118 @@ public abstract class OpenTTD
     public void setBotVersion(String version)
     {
         this.botVersion = version;
+    }
+
+    /**
+     * Register an AdminUpdateType at AdminUpdateFrequency with the server.
+     * @param type AdminUpdateType to be registered
+     * @param freq AdminUpdateFrequency the type should be registered for
+     */
+    protected final void registerUpdateFrequency (AdminUpdateType type, AdminUpdateFrequency freq)
+    {
+        try {
+            network.SEND_ADMIN_PACKET_ADMIN_UPDATE_FREQUENCY(type, freq);
+        } catch (IOException ex) {
+            Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Send poll requests for everything (order is important).
+     */
+    public final void pollAll ()
+    {
+        this.pollDate();
+        this.pollClientInfos();
+        this.pollCompanyInfos();
+        this.pollCompanyStats();
+        this.pollCompanyEconomy();
+    }
+
+    /**
+     * Poll the server for the Date.
+     */
+    public final void pollDate ()
+    {
+        try {
+            network.POLL_DATE();
+        } catch (IOException ex) {
+            Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Poll the server for all Clients
+     */
+    public final void pollClientInfos ()
+    {
+        try {
+            network.POLL_CLIENT_INFOS();
+        } catch (IOException ex) {
+            Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * poll the server for a certain client.
+     * @param clientId The Id of the client
+     */
+    public final void pollClientInfo (long clientId)
+    {
+        try {
+            network.POLL_CLIENT_INFO(clientId);
+        } catch (IOException ex) {
+            Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Poll the server for all companies.
+     */
+    public final void pollCompanyInfos ()
+    {
+        try {
+            network.POLL_COMPANY_INFOS();
+        } catch (IOException ex) {
+            Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Poll the server for a certain company.
+     * @param companyId The Id of the company
+     */
+    public final void pollCompanyInfo (int companyId)
+    {
+        try {
+            network.POLL_COMPANY_INFO(companyId);
+        } catch (IOException ex) {
+            Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Poll the server for all company stats.
+     */
+    public final void pollCompanyStats ()
+    {
+        try {
+            network.POLL_COMPANY_STATS();
+        } catch (IOException ex) {
+            Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * poll the server for all company economy data.
+     */
+    public final void pollCompanyEconomy ()
+    {
+        try {
+            network.POLL_COMPANY_ECONOMY();
+        } catch (IOException ex) {
+            Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
