@@ -36,7 +36,9 @@ public enum PacketType implements Reversible<Integer>
     ADMIN_PACKET_SERVER_CHAT             (119),  ///< The server received a chat message and relays it.
     ADMIN_PACKET_SERVER_RCON             (120),  ///< The server's reply to a remove console command.
     ADMIN_PACKET_SERVER_CONSOLE          (121),  ///< The server gives the admin the data that got printed to its console.
-    ADMIN_PACKET_SERVER_END              (122),  ///< For internal reference only, mark the end.
+    ADMIN_PACKET_SERVER_CMD_NAMES        (122),  ///< The server gives the admin names of all DoCommands.
+    ADMIN_PACKET_SERVER_CMD_LOGGING      (123),  ///< The server gives the admin DoCommand information (for logging purposes only).
+    ADMIN_PACKET_SERVER_END              (124),  ///< For internal reference only, mark the end.
 
     INVALID_ADMIN_PACKET                 (0xFF); ///< An invalid marker for admin packets.
 
