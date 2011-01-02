@@ -17,22 +17,11 @@ public class Packet
     byte[] buf;
     int pos = 0;
 
-    public Packet () throws IOException
-    {
-        this.buf = new byte[SEND_MTU];
-        this.pos = 2;
-    }
-
     public Packet (PacketType type)
     {
         this.buf = new byte[SEND_MTU];
         this.pos = 3;
         this.setPacketType(type);
-    }
-
-    public Packet (byte[] buf)
-    {
-        this.buf = buf;
     }
 
     public Packet (Socket s) throws IOException, IndexOutOfBoundsException
