@@ -7,7 +7,6 @@ package org.openttd.network;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
-import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,21 +44,16 @@ public class NetworkClient extends Thread
     public void send (PacketType type) throws IOException
     {
         Packet p = new Packet(network.getSocket(), type);
-        p.send();
+        NetworkOutputThread.append(p);
     }
 
     public void receive ()
     {
         try {
-            Packet p = new Packet(network.getSocket());
+            Packet p = NetworkInputThread.getNext(network.getSocket());
             delegatePacket(p);
-        } catch (SocketException ex) {
-            Logger.getLogger(NetworkClient.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-            network.disconnect();
-        } catch (IOException ex) {
-            Logger.getLogger(NetworkClient.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-        } catch (IndexOutOfBoundsException ex) {
-            Logger.getLogger(NetworkClient.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(NetworkClient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -453,7 +447,7 @@ public class NetworkClient extends Thread
         p.send_string(network.getOpenTTD().getBotName());
         p.send_string(network.getOpenTTD().getBotVersion());
 
-        p.send();
+        NetworkOutputThread.append(p);
     }
 
     public synchronized void SEND_ADMIN_PACKET_ADMIN_UPDATE_FREQUENCY (AdminUpdateType type, AdminUpdateFrequency freq) throws IOException, IllegalArgumentException
@@ -465,7 +459,7 @@ public class NetworkClient extends Thread
         p.send_uint16(type.getValue());
         p.send_uint16(freq.getValue());
 
-        p.send();
+        NetworkOutputThread.append(p);
     }
 
     public synchronized void SEND_ADMIN_PACKET_ADMIN_POLL (AdminUpdateType type) throws IOException, IllegalArgumentException
@@ -482,7 +476,7 @@ public class NetworkClient extends Thread
         p.send_uint8(type.getValue());
         p.send_uint32(data);
 
-        p.send();
+        NetworkOutputThread.append(p);
     }
 
     public synchronized void SEND_ADMIN_PACKET_ADMIN_CHAT (NetworkAction action, DestType type, long dest, String message, long data) throws IOException
@@ -500,7 +494,7 @@ public class NetworkClient extends Thread
         p.send_string(message);
         p.send_uint64(data);
 
-        p.send();
+        NetworkOutputThread.append(p);
     }
 
     public synchronized void SEND_ADMIN_PACKET_ADMIN_QUIT () throws IOException
@@ -514,6 +508,6 @@ public class NetworkClient extends Thread
         Packet p = new Packet(network.getSocket(), PacketType.ADMIN_PACKET_ADMIN_RCON);
         p.send_string(command);
 
-        p.send();
+        NetworkOutputThread.append(p);
     }
 }

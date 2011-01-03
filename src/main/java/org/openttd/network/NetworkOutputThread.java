@@ -105,7 +105,6 @@ public class NetworkOutputThread implements Runnable
     @Override
     public void run()
     {
-        System.out.println("Running OUTPUT THREAD...");
         while (true) {
             for (BlockingQueue<Packet> q : queues.values()) {
                 try {

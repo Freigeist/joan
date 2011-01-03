@@ -105,8 +105,6 @@ public class NetworkInputThread implements Runnable
     @Override
     public void run()
     {
-        System.out.println("Running INPUT THREAD...");
-
         while (true) {
             for (Socket socket : queues.keySet()) {
                 try {
