@@ -11,8 +11,8 @@ import java.net.SocketException;
 
 public class Packet
 {
+    public static final int SEND_MTU = 1460;
 
-    final static int SEND_MTU = 1460;
     private PacketType type = null;
     byte[] buf;
     int pos = 0;
