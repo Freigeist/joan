@@ -44,13 +44,8 @@ public class NetworkClient extends Thread
 
     public void send (PacketType type) throws IOException
     {
-        Packet p = new Packet(type);
-        this.send(p);
-    }
-
-    private void send (Packet p) throws IOException
-    {
-        p.send(network.getSocket());
+        Packet p = new Packet(network.getSocket(), type);
+        p.send();
     }
 
     public void receive ()
@@ -453,12 +448,12 @@ public class NetworkClient extends Thread
 
     public synchronized void SEND_ADMIN_PACKET_ADMIN_JOIN () throws IOException
     {
-        Packet p = new Packet(PacketType.ADMIN_PACKET_ADMIN_JOIN);
+        Packet p = new Packet(network.getSocket(), PacketType.ADMIN_PACKET_ADMIN_JOIN);
         p.send_string(network.getOpenTTD().getPassword());
         p.send_string(network.getOpenTTD().getBotName());
         p.send_string(network.getOpenTTD().getBotVersion());
 
-        this.send(p);
+        p.send();
     }
 
     public synchronized void SEND_ADMIN_PACKET_ADMIN_UPDATE_FREQUENCY (AdminUpdateType type, AdminUpdateFrequency freq) throws IOException, IllegalArgumentException
@@ -466,11 +461,11 @@ public class NetworkClient extends Thread
         if (!network.getProtocol().isSupported(type, freq))
             throw new IllegalArgumentException("The server does not support " + freq + " for " + type);
 
-        Packet p = new Packet(PacketType.ADMIN_PACKET_ADMIN_UPDATE_FREQUENCY);
+        Packet p = new Packet(network.getSocket(), PacketType.ADMIN_PACKET_ADMIN_UPDATE_FREQUENCY);
         p.send_uint16(type.getValue());
         p.send_uint16(freq.getValue());
 
-        this.send(p);
+        p.send();
     }
 
     public synchronized void SEND_ADMIN_PACKET_ADMIN_POLL (AdminUpdateType type) throws IOException, IllegalArgumentException
@@ -483,16 +478,16 @@ public class NetworkClient extends Thread
         if (!network.getProtocol().isSupported(type, AdminUpdateFrequency.ADMIN_FREQUENCY_POLL))
             throw new IllegalArgumentException("The server does not support ADMIN_FREQUENCY_POLL for " + type);
 
-        Packet p = new Packet(PacketType.ADMIN_PACKET_ADMIN_POLL);
+        Packet p = new Packet(network.getSocket(), PacketType.ADMIN_PACKET_ADMIN_POLL);
         p.send_uint8(type.getValue());
         p.send_uint32(data);
 
-        this.send(p);
+        p.send();
     }
 
     public synchronized void SEND_ADMIN_PACKET_ADMIN_CHAT (NetworkAction action, DestType type, long dest, String message, long data) throws IOException
     {
-        Packet p = new Packet(PacketType.ADMIN_PACKET_ADMIN_CHAT);
+        Packet p = new Packet(network.getSocket(), PacketType.ADMIN_PACKET_ADMIN_CHAT);
         p.send_uint8(action.ordinal());
         p.send_uint8(type.ordinal());
         p.send_uint32(dest);
@@ -505,7 +500,7 @@ public class NetworkClient extends Thread
         p.send_string(message);
         p.send_uint64(data);
 
-        this.send(p);
+        p.send();
     }
 
     public synchronized void SEND_ADMIN_PACKET_ADMIN_QUIT () throws IOException
@@ -516,9 +511,9 @@ public class NetworkClient extends Thread
 
     public synchronized void SEND_ADMIN_PACKET_ADMIN_RCON (String command) throws IOException
     {
-        Packet p = new Packet(PacketType.ADMIN_PACKET_ADMIN_RCON);
+        Packet p = new Packet(network.getSocket(), PacketType.ADMIN_PACKET_ADMIN_RCON);
         p.send_string(command);
 
-        this.send(p);
+        p.send();
     }
 }

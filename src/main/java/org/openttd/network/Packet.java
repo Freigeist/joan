@@ -13,21 +13,26 @@ public class Packet
 {
     public static final int SEND_MTU = 1460;
 
+    private final Socket socket;
+
     private PacketType type = null;
     byte[] buf;
     int pos = 0;
 
-    public Packet (PacketType type)
+    public Packet (final Socket socket, PacketType type)
     {
-        this.buf = new byte[SEND_MTU];
-        this.pos = 3;
+        this.socket = socket;
+        this.buf    = new byte[SEND_MTU];
+        this.pos    = 3;
         this.setPacketType(type);
     }
 
-    public Packet (Socket s) throws IOException, IndexOutOfBoundsException
+    public Packet (final Socket socket) throws IOException, IndexOutOfBoundsException
     {
-        this.buf = new byte[2];
-        DataInputStream in = new DataInputStream(s.getInputStream());
+        this.socket = socket;
+        this.buf    = new byte[2];
+
+        DataInputStream in = new DataInputStream(socket.getInputStream());
 
         in.read(this.buf, 0, 2);
         int length = this.length();
@@ -44,6 +49,11 @@ public class Packet
 
         in.readFully(this.buf, 2, this.length() - 2);
         this.pos = 3;
+    }
+
+    protected final Socket getSocket ()
+    {
+        return this.socket;
     }
 
     public void append (byte[] buf)
@@ -186,12 +196,12 @@ public class Packet
         return this.type;
     }
 
-    public void send (Socket s) throws IOException
+    public void send () throws IOException
     {
         this.buf[0] = (byte) this.pos;
         this.buf[1] = (byte) (this.pos >> 8);
 
-        s.getOutputStream().write(Arrays.copyOf(this.buf, this.pos));
+        this.socket.getOutputStream().write(Arrays.copyOf(this.buf, this.pos));
     }
 
     public final int length ()
