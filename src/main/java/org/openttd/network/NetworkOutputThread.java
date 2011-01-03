@@ -110,7 +110,6 @@ public class NetworkOutputThread implements Runnable
             for (BlockingQueue<Packet> q : queues.values()) {
                 try {
                     q.take().send();
-                    System.out.println("<");
                 } catch (InterruptedException ex) {
                     Logger.getLogger(NetworkOutputThread.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {

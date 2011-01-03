@@ -111,7 +111,6 @@ public class NetworkInputThread implements Runnable
             for (Socket socket : queues.keySet()) {
                 try {
                     append(new Packet(socket));
-                    System.out.println(">");
                 } catch (IOException ex) {
                     Logger.getLogger(NetworkInputThread.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IndexOutOfBoundsException ex) {
