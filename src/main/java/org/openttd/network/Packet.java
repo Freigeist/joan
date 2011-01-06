@@ -19,6 +19,11 @@ public class Packet
     byte[] buf;
     int pos = 0;
 
+    /**
+     * Constructor. Creates a new Packet of Type type.
+     * @param socket The Socket this is related to.
+     * @param type PacketType of this Packet.
+     */
     public Packet (final Socket socket, PacketType type)
     {
         this.socket = socket;
@@ -27,7 +32,14 @@ public class Packet
         this.setPacketType(type);
     }
 
-    public Packet (final Socket socket) throws IOException, IndexOutOfBoundsException
+    /**
+     * Constructor. Read the next Packet from the Socket.
+     * @param socket
+     * @throws IOException
+     * @throws IndexOutOfBoundsException
+     * @throws RuntimeException
+     */
+    public Packet (final Socket socket) throws IOException, IndexOutOfBoundsException, RuntimeException
     {
         this.socket = socket;
         this.buf    = new byte[2];
@@ -38,6 +50,10 @@ public class Packet
         int length = this.length();
 
         this.buf = Arrays.copyOf(this.buf, length);
+
+        if (socket.isClosed()) {
+            throw new RuntimeException("Socket closed");
+        }
 
         if (length > SEND_MTU) {
             throw new IndexOutOfBoundsException("Packet length claims to be greater than SEND_MTU");
