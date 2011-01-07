@@ -33,7 +33,11 @@ public enum AdminUpdateFrequency implements Reversible<Integer>
     ADMIN_FREQUENCY_AUTOMATIC (0x40);
 
     private Integer value;
-    private static final ReverseLookup<Integer, AdminUpdateFrequency> lookup = new ReverseLookup<Integer, AdminUpdateFrequency>(AdminUpdateFrequency.class);
+    private static final ReverseLookup<Integer, AdminUpdateFrequency> lookup;
+
+    static {
+        lookup = new ReverseLookup<Integer, AdminUpdateFrequency>(AdminUpdateFrequency.class);
+    }
 
     AdminUpdateFrequency (int i)
     {

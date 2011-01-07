@@ -29,7 +29,11 @@ public enum AdminCompanyRemoveReason implements Reversible<Integer>
     ADMIN_CRR_BANKRUPT   (2);
 
     private Integer value;
-    private static final ReverseLookup<Integer, AdminCompanyRemoveReason> lookup = new ReverseLookup<Integer, AdminCompanyRemoveReason>(AdminCompanyRemoveReason.class);
+    private static final ReverseLookup<Integer, AdminCompanyRemoveReason> lookup;
+
+    static {
+        lookup = new ReverseLookup<Integer, AdminCompanyRemoveReason>(AdminCompanyRemoveReason.class);
+    }
 
     AdminCompanyRemoveReason (int i)
     {

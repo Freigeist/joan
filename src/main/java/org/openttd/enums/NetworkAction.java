@@ -24,7 +24,6 @@ package org.openttd.enums;
  */
 public enum NetworkAction implements Reversible<Integer>
 {
-
     NETWORK_ACTION_JOIN               (0),
     NETWORK_ACTION_LEAVE              (1),
     NETWORK_ACTION_SERVER_MESSAGE     (2),
@@ -38,7 +37,11 @@ public enum NetworkAction implements Reversible<Integer>
     NETWORK_ACTION_COMPANY_NEW        (10);
 
     private Integer value;
-    private static final ReverseLookup<Integer, NetworkAction> lookup = new ReverseLookup<Integer, NetworkAction>(NetworkAction.class);
+    private static final ReverseLookup<Integer, NetworkAction> lookup;
+
+    static {
+        lookup = new ReverseLookup<Integer, NetworkAction>(NetworkAction.class);
+    }
 
     NetworkAction (int i)
     {

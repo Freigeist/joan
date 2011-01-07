@@ -31,7 +31,11 @@ public enum Landscape implements Reversible<Integer>
     NUM_LANDSCAPE        (4);
 
     private Integer value;
-    private static final ReverseLookup<Integer, Landscape> lookup = new ReverseLookup<Integer, Landscape>(Landscape.class);
+    private static final ReverseLookup<Integer, Landscape> lookup;
+
+    static {
+        lookup = new ReverseLookup<Integer, Landscape>(Landscape.class);
+    }
 
     Landscape (int i)
     {

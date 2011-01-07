@@ -44,7 +44,11 @@ public enum Colour implements Reversible<Integer>
     INVALID_COLOUR     (0xFF);
 
     private Integer value;
-    private static final ReverseLookup<Integer, Colour> lookup = new ReverseLookup<Integer, Colour>(Colour.class);
+    private static final ReverseLookup<Integer, Colour> lookup;
+
+    static {
+        lookup = new ReverseLookup<Integer, Colour>(Colour.class);
+    }
 
     Colour (int i)
     {

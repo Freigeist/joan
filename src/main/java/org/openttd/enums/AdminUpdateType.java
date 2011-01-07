@@ -36,7 +36,11 @@ public enum AdminUpdateType implements Reversible<Integer>
     ADMIN_UPDATE_END             (9);
 
     private Integer value;
-    private static final ReverseLookup<Integer, AdminUpdateType> lookup = new ReverseLookup<Integer, AdminUpdateType>(AdminUpdateType.class);
+    private static final ReverseLookup<Integer, AdminUpdateType> lookup;
+
+    static {
+        lookup = new ReverseLookup<Integer, AdminUpdateType>(AdminUpdateType.class);
+    }
 
     AdminUpdateType (int i)
     {

@@ -61,7 +61,11 @@ public enum PacketType implements Reversible<Integer>
     INVALID_ADMIN_PACKET                 (0xFF); ///< An invalid marker for admin packets.
 
     private Integer value;
-    private static final ReverseLookup<Integer, PacketType> lookup = new ReverseLookup<Integer, PacketType>(PacketType.class);
+    private static final ReverseLookup<Integer, PacketType> lookup;
+
+    static {
+        lookup = new ReverseLookup<Integer, PacketType>(PacketType.class);
+    }
 
     PacketType (int i)
     {

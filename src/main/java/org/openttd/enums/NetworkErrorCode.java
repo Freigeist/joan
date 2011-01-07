@@ -24,7 +24,6 @@ package org.openttd.enums;
  */
 public enum NetworkErrorCode implements Reversible<Integer>
 {
-
     NETWORK_ERROR_GENERAL            (0), // Try to use this one like never
 
     /* Signals from clients */
@@ -46,7 +45,11 @@ public enum NetworkErrorCode implements Reversible<Integer>
     NETWORK_ERROR_FULL               (14);
 
     private Integer value;
-    private static final ReverseLookup<Integer, NetworkErrorCode> lookup = new ReverseLookup<Integer, NetworkErrorCode>(NetworkErrorCode.class);
+    private static final ReverseLookup<Integer, NetworkErrorCode> lookup;
+
+    static {
+        lookup = new ReverseLookup<Integer, NetworkErrorCode>(NetworkErrorCode.class);
+    }
 
     NetworkErrorCode (int i)
     {

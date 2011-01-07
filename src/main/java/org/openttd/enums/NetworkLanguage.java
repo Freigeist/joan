@@ -63,7 +63,11 @@ public enum NetworkLanguage implements Reversible<Integer>
     NETLANG_COUNT      (36);
 
     private Integer value;
-    private static final ReverseLookup<Integer, NetworkLanguage> lookup = new ReverseLookup<Integer, NetworkLanguage>(NetworkLanguage.class);
+    private static final ReverseLookup<Integer, NetworkLanguage> lookup;
+
+    static {
+        lookup = new ReverseLookup<Integer, NetworkLanguage>(NetworkLanguage.class);
+    }
 
     NetworkLanguage (int i)
     {

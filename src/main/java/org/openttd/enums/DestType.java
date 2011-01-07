@@ -29,7 +29,11 @@ public enum DestType implements Reversible<Integer>
     DESTTYPE_CLIENT    (2);
 
     private Integer value;
-    private static final ReverseLookup<Integer, DestType> lookup = new ReverseLookup<Integer, DestType>(DestType.class);
+    private static final ReverseLookup<Integer, DestType> lookup;
+
+    static {
+        lookup = new ReverseLookup<Integer, DestType>(DestType.class);
+    }
 
     DestType (int i)
     {
