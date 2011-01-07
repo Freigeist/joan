@@ -178,7 +178,7 @@ public abstract class OpenTTD
      * Set the name of this bot.
      * @param name
      */
-    public void setBotName(String name)
+    public void setBotName (String name)
     {
         this.botName = name;
     }
@@ -187,7 +187,7 @@ public abstract class OpenTTD
      * Set the version of this bot.
      * @param version
      */
-    public void setBotVersion(String version)
+    public void setBotVersion (String version)
     {
         this.botVersion = version;
     }
@@ -307,12 +307,12 @@ public abstract class OpenTTD
     /**
      * Called when the server tells us that it is full.
      */
-    public void onServerFull() {}
+    public void onServerFull () {}
 
     /**
      * Called when the server tells us this IP is banned.
      */
-    public void onServerBanned() {}
+    public void onServerBanned () {}
 
     /**
      * This bot has caused an Error.
@@ -325,83 +325,83 @@ public abstract class OpenTTD
      * The server has Welcomed us to the game.
      * @param game Game details such as Server name and various Map details.
      */
-    public void onServerWelcome(Game game) {}
+    public void onServerWelcome (Game game) {}
 
     /**
      * Current game Date.
      * @param date
      */
-    public void onServerDate(GameDate date) {}
+    public void onServerDate (GameDate date) {}
 
 
     /**
      * A client has joined the game.
      * @param client
      */
-    public void onClientJoin(Client client) {}
+    public void onClientJoin (Client client) {}
 
     /**
      * Client information.
      * @param client
      */
-    public void onClientInfo(Client client) {}
+    public void onClientInfo (Client client) {}
 
     /**
      * Client has changed something, e.g. name, or has moved into another company.
      * @param client
      */
-    public void onClientUpdate(Client client) {}
+    public void onClientUpdate (Client client) {}
 
     /**
      * The client has quit / left the game.
      * @param client
      */
-    public void onClientQuit(Client client) {}
+    public void onClientQuit (Client client) {}
 
     /**
      * The client has caused an error and was disconnected.
      * @param client
      * @param error
      */
-    public void onClientError(Client client, NetworkErrorCode error) {}
+    public void onClientError (Client client, NetworkErrorCode error) {}
 
 
     /**
      * A new company has been created.
      * @param company
      */
-    public void onCompanyNew(Company company) {}
+    public void onCompanyNew (Company company) {}
 
     /**
      * Information on a company has been received.
      * @param company
      */
-    public void onCompanyInfo(Company company) {}
+    public void onCompanyInfo (Company company) {}
 
     /**
      * Some company details have changed, e.g. password status, name, etc.
      * @param company
      */
-    public void onCompanyUpdate(Company company) {}
+    public void onCompanyUpdate (Company company) {}
 
     /**
      * Update on company stats (vehicle and station numbers).
      * @param company
      */
-    public void onCompanyStats(Company company) {}
+    public void onCompanyStats (Company company) {}
 
     /**
      * Economy data on the company has arrived.
      * @param company
      */
-    public void onCompanyEconomy(Company company) {}
+    public void onCompanyEconomy (Company company) {}
 
     /**
      * A company has been removed.
      * @param company
      * @param crr Reason for the companies removal (e.g. Bankruptcy).
      */
-    public void onCompanyRemove(Company company, AdminCompanyRemoveReason crr) {}
+    public void onCompanyRemove (Company company, AdminCompanyRemoveReason crr) {}
 
 
     /**
@@ -409,7 +409,7 @@ public abstract class OpenTTD
      * @param colour  Colour of the message.
      * @param message The output of our Rcon command.
      */
-    public void onRcon(Colour colour, String message) {}
+    public void onRcon (Colour colour, String message) {}
 
     /**
      * Someone in the game is chatting.
@@ -421,30 +421,30 @@ public abstract class OpenTTD
      * @param message The actual message
      * @param data Money (in case this was a 'give money' action).
      */
-    public void onChat(NetworkAction action, DestType desttype, Client client, String message, BigInteger data) {}
+    public void onChat (NetworkAction action, DestType desttype, Client client, String message, BigInteger data) {}
 
     /**
      * The server is going to load a new map / saved map.
      * During this process the bot stays connected to the server.
      */
-    public void onNewgame() {}
+    public void onNewgame () {}
 
     /**
      * The server is going to shutdown.
      */
-    public void onShutdown() {}
+    public void onShutdown () {}
 
 
     /**
      * The server is notifying us of it's protocol version and further details.
      * @param protocol Protocol details of what we cover.
      */
-    public void onProtocol(Protocol protocol) {}
+    public void onProtocol (Protocol protocol) {}
 
     /**
      * Output on the server console is being sent to the bot.
      * @param origin  e.g. console, net, ai, ...
      * @param message the message as printed on the dedicated server console.
      */
-    public void onConsole(String origin, String message) {}
+    public void onConsole (String origin, String message) {}
 }

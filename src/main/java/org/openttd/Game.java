@@ -24,7 +24,8 @@ import org.openttd.network.NetworkClient;
  *
  * @author nathanael
  */
-public class Game {
+public class Game
+{
     public String name;
     public String version;
     public int protocol_version;

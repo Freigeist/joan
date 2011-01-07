@@ -36,12 +36,12 @@ public class Pool
         company_pool = new CompanyPool();
     }
 
-    public ClientPool getClientPool()
+    public ClientPool getClientPool ()
     {
         return client_pool;
     }
 
-    public CompanyPool getCompanyPool()
+    public CompanyPool getCompanyPool ()
     {
         return company_pool;
     }

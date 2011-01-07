@@ -22,8 +22,8 @@ package org.openttd;
  *
  * @author nathanael
  */
-public class GameDate {
-
+public class GameDate
+{
     public int  year  = 0;
     public int  month = 0;
     public int  day   = 0;
@@ -56,12 +56,12 @@ public class GameDate {
         setMonthDay();
     }
 
-    public boolean isLeapYear(double year)
+    public boolean isLeapYear (double year)
     {
         return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
     }
 
-    public void setMonthDay()
+    public void setMonthDay ()
     {
         if (day > 31) {
             month++;
@@ -126,22 +126,22 @@ public class GameDate {
         month++;
     }
 
-    public int getYear()
+    public int getYear ()
     {
         return year;
     }
 
-    public int getMonth()
+    public int getMonth ()
     {
         return month;
     }
 
-    public int getDay()
+    public int getDay ()
     {
         return day;
     }
 
-    public String toString()
+    public String toString ()
     {
         return year+"-"+month+"-"+day;
     }

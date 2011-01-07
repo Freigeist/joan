@@ -46,7 +46,7 @@ public class Client extends Poolable<Long>
      * @param company_id The identifier of the company to check against.
      * @return true if the client is in this company.
      */
-    public boolean inCompany(int company_id)
+    public boolean inCompany (int company_id)
     {
         return (this.company_id == company_id);
     }
@@ -56,7 +56,7 @@ public class Client extends Poolable<Long>
      * @param company The company object to check against.
      * @return true if the client is in the company.
      */
-    public boolean inCompany(Company company)
+    public boolean inCompany (Company company)
     {
         return inCompany(company.id);
     }
@@ -65,7 +65,7 @@ public class Client extends Poolable<Long>
      * Check if the client is a spectator.
      * @return true if the client is a spectator.
      */
-    public boolean isSpectator()
+    public boolean isSpectator ()
     {
         return (this.company_id == Company.COMPANY_SPECTATOR);
     }

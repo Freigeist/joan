@@ -67,7 +67,7 @@ public class Company extends Poolable<Integer>
      * Check if the Company is Spectator
      * @return
      */
-    public boolean isSpectator()
+    public boolean isSpectator ()
     {
         return isSpectator(this.id);
     }
@@ -78,7 +78,7 @@ public class Company extends Poolable<Integer>
      * @param index
      * @return
      */
-    public static boolean isSpectator(int index)
+    public static boolean isSpectator (int index)
     {
         return (index == COMPANY_SPECTATOR);
     }
@@ -88,7 +88,7 @@ public class Company extends Poolable<Integer>
      * @param index Company ID to check.
      * @return true if the Company ID is valid.
      */
-    public static boolean IsValid(int index)
+    public static boolean IsValid (int index)
     {
         return (index < MAX_COMPANIES);
     }
@@ -98,7 +98,7 @@ public class Company extends Poolable<Integer>
      * @param index Company ID to check
      * @return true if the index is either valid or spectator.
      */
-    public static boolean IsValidOrSpectator(int index)
+    public static boolean IsValidOrSpectator (int index)
     {
         return (IsValid(index) || isSpectator(index));
     }

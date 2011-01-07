@@ -22,8 +22,8 @@ package org.openttd;
  *
  * @author nathanael
  */
-public final class StringFunc {
-
+public final class StringFunc
+{
     public static String stripColour (String str)
     {
         StringBuilder sb = new StringBuilder(str);

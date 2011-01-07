@@ -19,8 +19,6 @@
 package org.openttd;
 
 import java.math.BigInteger;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -39,7 +37,7 @@ public class Economy
     public BigInteger cargo;
     public BigInteger performance;
 
-    public boolean isSameQuarter(Economy economy)
+    public boolean isSameQuarter (Economy economy)
     {
         return year == economy.year && quarter == economy.quarter;
     }

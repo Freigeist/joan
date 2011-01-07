@@ -122,7 +122,7 @@ public class SimpleConsole extends OpenTTD
      * Lets do something when we receive the "welcome" packet
      */
     @Override
-    public void onServerWelcome(Game game)
+    public void onServerWelcome (Game game)
     {
         /* register for console updates */
         this.registerUpdateFrequency(AdminUpdateType.ADMIN_UPDATE_CONSOLE, AdminUpdateFrequency.ADMIN_FREQUENCY_AUTOMATIC);
@@ -134,7 +134,7 @@ public class SimpleConsole extends OpenTTD
      * We have received console output, print it.
      */
     @Override
-    public void onConsole(String origin, String message)
+    public void onConsole (String origin, String message)
     {
         origin = String.format("[%s]", origin);
         System.out.printf("%-10s %s\n", origin, message);
@@ -144,7 +144,7 @@ public class SimpleConsole extends OpenTTD
      * Result from an Rcon command we entered.
      */
     @Override
-    public void onRcon(Colour colour, String message)
+    public void onRcon (Colour colour, String message)
     {
         System.out.println(StringFunc.stripColour(message));
     }
