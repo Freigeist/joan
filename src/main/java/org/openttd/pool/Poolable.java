@@ -27,6 +27,7 @@ package org.openttd.pool;
  *
  * @author nathanael
  */
-public abstract class Poolable<T extends Number> {
+public abstract class Poolable<T extends Number>
+{
     public T id;
 }
