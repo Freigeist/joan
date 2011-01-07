@@ -74,7 +74,7 @@ public class NetworkInputThread implements Runnable
      * Append a packet to the appropriate queue.
      * @param p Packet to append to the queue.
      */
-    protected static void append(Packet p)
+    protected static void append (Packet p)
     {
         getQueue(p.getSocket()).add(p);
     }
@@ -103,7 +103,7 @@ public class NetworkInputThread implements Runnable
     }
 
     @Override
-    public void run()
+    public void run ()
     {
         while (true) {
             for (Socket socket : queues.keySet()) {

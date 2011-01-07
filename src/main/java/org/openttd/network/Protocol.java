@@ -27,7 +27,8 @@ import java.util.EnumSet;
  * Handling of Protocol details
  * @author Nathanael Rebsch
  */
-public class Protocol {
+public class Protocol
+{
     protected int version = -1;
     protected EnumMap<AdminUpdateType,EnumSet<AdminUpdateFrequency>> supportedFrequencies;
 
@@ -47,8 +48,9 @@ public class Protocol {
             AdminUpdateType type = AdminUpdateType.valueOf(tIndex);
             AdminUpdateFrequency freq = AdminUpdateFrequency.valueOf(fIndex);
 
-            if (!supportedFrequencies.containsKey(type))
+            if (!supportedFrequencies.containsKey(type)) {
                 supportedFrequencies.put(type, EnumSet.noneOf(AdminUpdateFrequency.class));
+            }
 
             supportedFrequencies.get(type).add(freq);
         }
@@ -57,7 +59,7 @@ public class Protocol {
     /**
      * @return The version of the current Protocol as announced by the server.
      */
-    public int getVersion()
+    public int getVersion ()
     {
         return this.version;
     }
@@ -68,7 +70,7 @@ public class Protocol {
      * @param freq The AdminUpdateFrequency to check.
      * @return
      */
-    public boolean isSupported(AdminUpdateType type, AdminUpdateFrequency freq)
+    public boolean isSupported (AdminUpdateType type, AdminUpdateFrequency freq)
     {
         return supportedFrequencies.get(type).contains(freq);
     }

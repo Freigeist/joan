@@ -103,7 +103,7 @@ public class NetworkOutputThread implements Runnable
     }
 
     @Override
-    public void run()
+    public void run ()
     {
         while (true) {
             for (BlockingQueue<Packet> q : queues.values()) {

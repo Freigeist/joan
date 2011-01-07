@@ -25,13 +25,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.openttd.Client;
-import org.openttd.enums.*;
 import org.openttd.Company;
 import org.openttd.Pool;
 import org.openttd.GameDate;
 import org.openttd.Game;
 import org.openttd.Map;
 import org.openttd.OpenTTD;
+import org.openttd.enums.*;
 
 /**
  *
@@ -39,7 +39,6 @@ import org.openttd.OpenTTD;
  */
 public class NetworkClient extends Thread
 {
-
     private Network network;
 
     protected NetworkClient (Network network)

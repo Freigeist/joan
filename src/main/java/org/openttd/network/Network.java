@@ -41,7 +41,7 @@ public class Network
         Logger.getLogger(Network.class.getName()).setLevel(openttd.loglevel);
     }
 
-    public boolean connect(String host, int port) throws UnknownHostException, IOException
+    public boolean connect (String host, int port) throws UnknownHostException, IOException
     {
         if (openttd.getPassword().isEmpty()) {
             Logger.getLogger(Network.class.getName()).log(Level.SEVERE, "Cannot connect with empty password");
@@ -92,27 +92,27 @@ public class Network
         networkClient.start();
     }
     
-    public void serverMessagePublic(String msg) throws IOException
+    public void serverMessagePublic (String msg) throws IOException
     {
         networkClient.SEND_ADMIN_PACKET_ADMIN_CHAT(NetworkAction.NETWORK_ACTION_SERVER_MESSAGE, DestType.DESTTYPE_BROADCAST, 0, msg, 0);
     }
 
-    public void serverMessagePrivate(long client, String msg) throws IOException
+    public void serverMessagePrivate (long client, String msg) throws IOException
     {
         networkClient.SEND_ADMIN_PACKET_ADMIN_CHAT(NetworkAction.NETWORK_ACTION_SERVER_MESSAGE, DestType.DESTTYPE_CLIENT, client, msg, 0);
     }
 
-    public void chatPublic(String msg) throws IOException
+    public void chatPublic (String msg) throws IOException
     {
         networkClient.SEND_ADMIN_PACKET_ADMIN_CHAT(NetworkAction.NETWORK_ACTION_CHAT, DestType.DESTTYPE_BROADCAST, 0, msg, 0);
     }
 
-    public void chatPrivate(long client, String msg) throws IOException
+    public void chatPrivate (long client, String msg) throws IOException
     {
         networkClient.SEND_ADMIN_PACKET_ADMIN_CHAT(NetworkAction.NETWORK_ACTION_CHAT_CLIENT, DestType.DESTTYPE_CLIENT, client, msg, 0);
     }
 
-    public void chatTeam(int company, String msg) throws IOException
+    public void chatTeam (int company, String msg) throws IOException
     {
         networkClient.SEND_ADMIN_PACKET_ADMIN_CHAT(NetworkAction.NETWORK_ACTION_SERVER_MESSAGE, DestType.DESTTYPE_TEAM, company, msg, 0);
     }
