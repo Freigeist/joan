@@ -29,7 +29,12 @@ import java.util.EnumSet;
  */
 public class Protocol {
     protected int version = -1;
-    protected EnumMap<AdminUpdateType,EnumSet<AdminUpdateFrequency>> supportedFrequencies = new EnumMap<AdminUpdateType,EnumSet<AdminUpdateFrequency>>(AdminUpdateType.class);
+    protected EnumMap<AdminUpdateType,EnumSet<AdminUpdateFrequency>> supportedFrequencies;
+
+    public Protocol ()
+    {
+        supportedFrequencies = new EnumMap<AdminUpdateType,EnumSet<AdminUpdateFrequency>>(AdminUpdateType.class);
+    }
 
     /**
      * Add support of an AdminUpdateType to an AdminUpdateFrequency (if the indexes are known as such)
