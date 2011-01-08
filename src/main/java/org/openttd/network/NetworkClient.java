@@ -464,10 +464,6 @@ public class NetworkClient extends Thread
 
             new DoCommandName(cmdName, cmdId);
         }
-
-        for(DoCommandName dcn : DoCommandName.values()) {
-            System.out.printf("%d => %s\n", dcn.getValue(), dcn.toString());
-        }
     }
 
 
