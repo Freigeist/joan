@@ -58,9 +58,9 @@ public class DoCommandName implements Reversible<Integer>
      * @param i Index of the desired DoCommandName.
      * @return Instance of DoCommandName or null.
      */
-    public DoCommandName valueOf (int i)
+    public static DoCommandName valueOf (int i)
     {
-        return lookup.get(value);
+        return lookup.get(i);
     }
 
     @Override
