@@ -24,13 +24,13 @@ import java.util.HashMap;
  *
  * @author Nathanael Rebsch
  */
-public class ReverseLookup<T, E extends Enum<E> & Reversible<T>>
+public class ReverseLookup<T, E extends Reversible<T>>
 {
     private final HashMap<T, E> map = new HashMap<T, E>();
 
-    public ReverseLookup (final Class<E> c)
+    public ReverseLookup (final Class<E> clazz)
     {
-        for (E constant : c.getEnumConstants()) {
+        for (E constant : clazz.getEnumConstants()) {
             map.put(constant.getValue(), constant);
         }
     }
