@@ -466,6 +466,43 @@ public class NetworkClient extends Thread
         }
     }
 
+    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_CMD_LOGGING (OpenTTD openttd, Packet p) throws IOException
+    {
+        Pool pool = openttd.getPool();
+
+        long client_id = p.recv_uint32();
+        int company_id = p.recv_uint8();
+        int command_id = p.recv_uint16();
+        long p1        = p.recv_uint32();
+        long p2        = p.recv_uint32();
+        long tile      = p.recv_uint32();
+        String text    = p.recv_string();
+        long frame     = p.recv_uint32();
+
+        Client client = pool.getClientPool().get(client_id);
+
+        if (client == null) {
+            this.POLL_CLIENT_INFO(client_id);
+            return;
+        }
+
+        Company company = pool.getCompanyPool().get(company_id);
+
+        if (company == null) {
+            this.POLL_COMPANY_INFO(company_id);
+            return;
+        }
+
+        DoCommandName command = DoCommandName.valueOf(command_id);
+
+        if (command == null) {
+            this.POLL_CMD_NAMES();
+            return;
+        }
+
+        openttd.onCmdLogging(client, company, command, p1, p2, tile, text, frame);
+    }
+
 
 
     public synchronized void SEND_ADMIN_PACKET_ADMIN_JOIN () throws IOException

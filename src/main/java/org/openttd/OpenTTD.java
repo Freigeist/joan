@@ -460,4 +460,17 @@ public abstract class OpenTTD
      * @param message the message as printed on the dedicated server console.
      */
     public void onConsole (String origin, String message) {}
+
+    /**
+     * DoCommands are also being sent to the bot. this is for logging purposes only.
+     * @param client The client that executed the command.
+     * @param company The company that executed the command.
+     * @param command The command.
+     * @param p1 Variable value to the command.
+     * @param p2 Variable value to the command.
+     * @param tile The tile where the command takes place.
+     * @param text Additional text to the command.
+     * @param frame Frame in which the command is to be executed.
+     */
+    public void onCmdLogging (Client client, Company company, DoCommandName command, long p1, long p2, long tile, String text, long frame) {}
 }
