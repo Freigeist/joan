@@ -31,12 +31,27 @@ public class DoCommandName implements Reversible<Integer>
     protected final String name;
     protected final Integer value;
     
-    private static final List<DoCommandName> enumeration;
-    private static final ReverseLookup<Integer,DoCommandName> lookup;
+    private static final ThreadLocal<List<DoCommandName>> enumeration;
+    private static final ThreadLocal<ReverseLookup<Integer,DoCommandName>> lookup;
 
     static {
-        enumeration = new ArrayList<DoCommandName>();
-        lookup = new ReverseLookup<Integer,DoCommandName>();
+        enumeration = new ThreadLocal<List<DoCommandName>>()
+        {
+            @Override
+            protected List<DoCommandName> initialValue ()
+            {
+                return new ArrayList<DoCommandName>();
+            }
+        };
+
+        lookup = new ThreadLocal<ReverseLookup<Integer,DoCommandName>>()
+        {
+            @Override
+            protected ReverseLookup<Integer,DoCommandName> initialValue ()
+            {
+                return new ReverseLookup<Integer,DoCommandName>();
+            }
+        };
     }
 
     /**
@@ -49,8 +64,8 @@ public class DoCommandName implements Reversible<Integer>
         this.name  = name;
         this.value = value;
 
-        enumeration.add(this);
-        lookup.add(this);
+        enumeration.get().add(this);
+        lookup.get().add(this);
     }
 
     /**
@@ -60,7 +75,7 @@ public class DoCommandName implements Reversible<Integer>
      */
     public static DoCommandName valueOf (int i)
     {
-        return lookup.get(i);
+        return lookup.get().get(i);
     }
 
     @Override
@@ -77,7 +92,7 @@ public class DoCommandName implements Reversible<Integer>
 
     public static DoCommandName[] values ()
     {
-        DoCommandName[] a = new DoCommandName[enumeration.size()];
-        return enumeration.toArray(a);
+        DoCommandName[] a = new DoCommandName[enumeration.get().size()];
+        return enumeration.get().toArray(a);
     }
 }
