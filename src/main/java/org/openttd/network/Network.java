@@ -173,4 +173,9 @@ public class Network
     {
         networkClient.POLL_CLIENT_INFO(client_id);
     }
+
+    public synchronized void POLL_CMD_NAMES () throws IOException
+    {
+        networkClient.POLL_CMD_NAMES();
+    }
 }

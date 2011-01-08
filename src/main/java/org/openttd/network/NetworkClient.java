@@ -125,6 +125,11 @@ public class NetworkClient extends Thread
         SEND_ADMIN_PACKET_ADMIN_POLL(AdminUpdateType.ADMIN_UPDATE_COMPANY_STATS, 0);
     }
 
+    public synchronized void POLL_CMD_NAMES ()  throws IOException
+    {
+        SEND_ADMIN_PACKET_ADMIN_POLL(AdminUpdateType.ADMIN_UPDATE_CMD_NAMES);
+    }
+
 
 
     public synchronized void RECEIVE_ADMIN_PACKET_SERVER_FULL (OpenTTD openttd, Packet p)
@@ -451,7 +456,21 @@ public class NetworkClient extends Thread
         openttd.onConsole(origin, message);
     }
 
-    
+    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_CMD_NAMES (OpenTTD openttd, Packet p)
+    {
+        while(p.recv_bool()) {
+            int cmdId = p.recv_uint16();
+            String cmdName = p.recv_string();
+
+            new DoCommandName(cmdName, cmdId);
+        }
+
+        for(DoCommandName dcn : DoCommandName.values()) {
+            System.out.printf("%d => %s\n", dcn.getValue(), dcn.toString());
+        }
+    }
+
+
 
     public synchronized void SEND_ADMIN_PACKET_ADMIN_JOIN () throws IOException
     {

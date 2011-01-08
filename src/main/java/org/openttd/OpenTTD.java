@@ -211,6 +211,7 @@ public abstract class OpenTTD
      */
     public final void pollAll ()
     {
+        this.pollCmdNames();
         this.pollDate();
         this.pollClientInfos();
         this.pollCompanyInfos();
@@ -299,6 +300,18 @@ public abstract class OpenTTD
     {
         try {
             network.POLL_COMPANY_ECONOMY();
+        } catch (IOException ex) {
+            Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * poll the server for the DoCommand name enumeration.
+     */
+    public final void pollCmdNames ()
+    {
+        try {
+            network.POLL_CMD_NAMES();
         } catch (IOException ex) {
             Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
         }
