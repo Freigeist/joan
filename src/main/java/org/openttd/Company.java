@@ -56,7 +56,7 @@ public class Company extends Poolable<Integer>
 
     public Company (int company_id)
     {
-        this.id = company_id;
+        super(company_id);
 
         if (this.id == COMPANY_SPECTATOR){
             this.name = "Spectator";

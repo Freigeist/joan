@@ -38,7 +38,7 @@ public class Client extends Poolable<Long>
 
     public Client (long client_id)
     {
-        this.id = client_id;
+        super(client_id);
     }
 
     /**

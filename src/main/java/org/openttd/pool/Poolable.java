@@ -29,5 +29,10 @@ package org.openttd.pool;
  */
 public abstract class Poolable<T extends Number>
 {
-    public T id;
+    public final T id;
+
+    public Poolable (T id)
+    {
+        this.id = id;
+    }
 }
