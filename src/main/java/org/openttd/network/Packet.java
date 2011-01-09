@@ -98,7 +98,7 @@ public class Packet
 
     private void setPacketType (PacketType type)
     {
-        this.buf[2] = (byte) type.getValue().byteValue();
+        this.buf[POS_PACKET_TYPE] = (byte) type.getValue().byteValue();
         this.type = type;
     }
 
