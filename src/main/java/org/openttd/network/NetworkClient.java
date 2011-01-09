@@ -90,42 +90,42 @@ public class NetworkClient extends Thread
         }
     }
     
-    public synchronized void POLL_DATE () throws IOException
+    public synchronized void pollDate () throws IOException
     {
         sendAdminPoll(AdminUpdateType.ADMIN_UPDATE_DATE);
     }
 
-    public synchronized void POLL_CLIENT_INFOS () throws IOException
+    public synchronized void pollClientInfos () throws IOException
     {
-        POLL_CLIENT_INFO(Long.MAX_VALUE);
+        pollClientInfo(Long.MAX_VALUE);
     }
 
-    public synchronized void POLL_CLIENT_INFO (long client_id) throws IOException
+    public synchronized void pollClientInfo (long client_id) throws IOException
     {
         sendAdminPoll(AdminUpdateType.ADMIN_UPDATE_CLIENT_INFO, client_id);
     }
 
-    public synchronized void POLL_COMPANY_INFOS () throws IOException
+    public synchronized void pollCompanyInfos () throws IOException
     {
         sendAdminPoll(AdminUpdateType.ADMIN_UPDATE_COMPANY_INFO, Long.MAX_VALUE);
     }
 
-    public synchronized void POLL_COMPANY_INFO (int company_id) throws IOException
+    public synchronized void pollCompanyInfo (int company_id) throws IOException
     {
         sendAdminPoll(AdminUpdateType.ADMIN_UPDATE_COMPANY_INFO, company_id);
     }
 
-    public synchronized void POLL_COMPANY_ECONOMY () throws IOException
+    public synchronized void pollCompanyEconomy () throws IOException
     {
         sendAdminPoll(AdminUpdateType.ADMIN_UPDATE_COMPANY_ECONOMY, 0);
     }
 
-    public synchronized void POLL_COMPANY_STATS () throws IOException
+    public synchronized void pollCompanyStats () throws IOException
     {
         sendAdminPoll(AdminUpdateType.ADMIN_UPDATE_COMPANY_STATS, 0);
     }
 
-    public synchronized void POLL_CMD_NAMES ()  throws IOException
+    public synchronized void pollCmdNames ()  throws IOException
     {
         sendAdminPoll(AdminUpdateType.ADMIN_UPDATE_CMD_NAMES);
     }
@@ -194,7 +194,7 @@ public class NetworkClient extends Thread
         }
 
         /* we know nothing about this client, request an update */
-        POLL_CLIENT_INFO(client_id);
+        pollClientInfo(client_id);
         Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown client joined #{0}", client_id);
     }
 
@@ -229,7 +229,7 @@ public class NetworkClient extends Thread
         }
 
         /* we know nothing about this client, request an update */
-        POLL_CLIENT_INFO(client_id);
+        pollClientInfo(client_id);
         Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown client update #{0}", client_id);
     }
 
@@ -280,7 +280,7 @@ public class NetworkClient extends Thread
         }
 
         /* we know nothing about this ccompany, request an update */
-        POLL_COMPANY_INFO(company_id);
+        pollCompanyInfo(company_id);
         Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown company new #{0}", company_id);
     }
 
@@ -323,7 +323,7 @@ public class NetworkClient extends Thread
         }
 
         /* we know nothing about this ccompany, request an update */
-        POLL_COMPANY_INFO(company_id);
+        pollCompanyInfo(company_id);
         Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown company update #{0}", company_id);
     }
 
@@ -342,7 +342,7 @@ public class NetworkClient extends Thread
         }
 
         /* we know nothing about this ccompany, request an update */
-        POLL_COMPANY_INFO(company_id);
+        pollCompanyInfo(company_id);
         Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown company economy #{0}", company_id);
     }
 
@@ -367,7 +367,7 @@ public class NetworkClient extends Thread
         }
 
         /* we know nothing about this ccompany, request an update */
-        POLL_COMPANY_INFO(company_id);
+        pollCompanyInfo(company_id);
         Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown company stats #{0}", company_id);
     }
 
@@ -482,21 +482,21 @@ public class NetworkClient extends Thread
         Client client = pool.getClientPool().get(client_id);
 
         if (client == null) {
-            this.POLL_CLIENT_INFO(client_id);
+            this.pollClientInfo(client_id);
             return;
         }
 
         Company company = pool.getCompanyPool().get(company_id);
 
         if (company == null) {
-            this.POLL_COMPANY_INFO(company_id);
+            this.pollCompanyInfo(company_id);
             return;
         }
 
         DoCommandName command = DoCommandName.valueOf(command_id);
 
         if (command == null) {
-            this.POLL_CMD_NAMES();
+            this.pollCmdNames();
             return;
         }
 

@@ -141,41 +141,41 @@ public class Network
 
     public synchronized void POLL_DATE () throws IOException
     {
-        networkClient.POLL_DATE();
+        networkClient.pollDate();
     }
 
     public synchronized void POLL_COMPANY_STATS () throws IOException
     {
-        networkClient.POLL_COMPANY_STATS();
+        networkClient.pollCompanyStats();
     }
 
     public synchronized void POLL_COMPANY_INFOS () throws IOException
     {
-        networkClient.POLL_COMPANY_INFOS();
+        networkClient.pollCompanyInfos();
     }
 
     public synchronized void POLL_COMPANY_INFO (int company_id) throws IOException
     {
-        networkClient.POLL_COMPANY_INFO(company_id);
+        networkClient.pollCompanyInfo(company_id);
     }
 
     public synchronized void POLL_COMPANY_ECONOMY () throws IOException
     {
-        networkClient.POLL_COMPANY_ECONOMY();
+        networkClient.pollCompanyEconomy();
     }
 
     public synchronized void POLL_CLIENT_INFOS () throws IOException
     {
-        networkClient.POLL_CLIENT_INFOS();
+        networkClient.pollClientInfos();
     }
 
     public synchronized void POLL_CLIENT_INFO (long client_id) throws IOException
     {
-        networkClient.POLL_CLIENT_INFO(client_id);
+        networkClient.pollClientInfo(client_id);
     }
 
     public synchronized void POLL_CMD_NAMES () throws IOException
     {
-        networkClient.POLL_CMD_NAMES();
+        networkClient.pollCmdNames();
     }
 }
