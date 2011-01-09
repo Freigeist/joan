@@ -60,7 +60,9 @@ public enum PacketType implements Reversible<Integer>
 
     INVALID_ADMIN_PACKET                 (0xFF); ///< An invalid marker for admin packets.
 
-    private Integer value;
+    private final Integer value;
+    private final String dispatchName;
+
     private static final ReverseLookup<Integer, PacketType> lookup;
 
     static {
@@ -70,6 +72,36 @@ public enum PacketType implements Reversible<Integer>
     PacketType (int i)
     {
         value = i;
+        dispatchName = this.dispatchName();
+    }
+
+    /**
+     * Turn the name into a valid method name.
+     * Example: ADMIN_PACKET_SERVER_CLIENT_INFO receiveServerClientInfo
+     * @return Valid method name to use for receiving.
+     */
+    private String dispatchName ()
+    {
+        StringBuilder result = new StringBuilder("receive");
+
+        String name = this.name().replaceFirst("ADMIN_PACKET_", "").toLowerCase();
+
+        for (String part : name.split("_")) {
+            result.append(part.substring(0,1).toUpperCase());
+            result.append(part.substring(1));
+        }
+
+        return result.toString();
+    }
+
+    /**
+     * Get the dispatch name of the enum.
+     * Example: ADMIN_PACKET_SERVER_CLIENT_INFO receiveServerClientInfoc
+     * @return Cached name of the enum ready to use in a receive method.
+     */
+    public String getDispatchName ()
+    {
+        return this.dispatchName;
     }
 
     public static boolean isValid (int i)
