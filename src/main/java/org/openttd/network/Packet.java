@@ -30,7 +30,7 @@ import java.net.SocketException;
 public class Packet
 {
     public static final int SEND_MTU = 1460;
-    private static final int POS_PACKET_TYPE = 3;
+    private static final int POS_PACKET_TYPE = 2;
 
     private final Socket socket;
 
