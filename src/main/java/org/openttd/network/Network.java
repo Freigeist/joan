@@ -53,7 +53,7 @@ public class Network
         this.socket.setTcpNoDelay(true);
         this.socket.setKeepAlive(false);
 
-        this.networkClient.SEND_ADMIN_PACKET_ADMIN_JOIN();
+        this.networkClient.sendAdminJoin();
         return true;
     }
 
@@ -94,49 +94,49 @@ public class Network
     
     public void serverMessagePublic (String msg) throws IOException
     {
-        networkClient.SEND_ADMIN_PACKET_ADMIN_CHAT(NetworkAction.NETWORK_ACTION_SERVER_MESSAGE, DestType.DESTTYPE_BROADCAST, 0, msg, 0);
+        networkClient.sendAdminChat(NetworkAction.NETWORK_ACTION_SERVER_MESSAGE, DestType.DESTTYPE_BROADCAST, 0, msg, 0);
     }
 
     public void serverMessagePrivate (long client, String msg) throws IOException
     {
-        networkClient.SEND_ADMIN_PACKET_ADMIN_CHAT(NetworkAction.NETWORK_ACTION_SERVER_MESSAGE, DestType.DESTTYPE_CLIENT, client, msg, 0);
+        networkClient.sendAdminChat(NetworkAction.NETWORK_ACTION_SERVER_MESSAGE, DestType.DESTTYPE_CLIENT, client, msg, 0);
     }
 
     public void chatPublic (String msg) throws IOException
     {
-        networkClient.SEND_ADMIN_PACKET_ADMIN_CHAT(NetworkAction.NETWORK_ACTION_CHAT, DestType.DESTTYPE_BROADCAST, 0, msg, 0);
+        networkClient.sendAdminChat(NetworkAction.NETWORK_ACTION_CHAT, DestType.DESTTYPE_BROADCAST, 0, msg, 0);
     }
 
     public void chatPrivate (long client, String msg) throws IOException
     {
-        networkClient.SEND_ADMIN_PACKET_ADMIN_CHAT(NetworkAction.NETWORK_ACTION_CHAT_CLIENT, DestType.DESTTYPE_CLIENT, client, msg, 0);
+        networkClient.sendAdminChat(NetworkAction.NETWORK_ACTION_CHAT_CLIENT, DestType.DESTTYPE_CLIENT, client, msg, 0);
     }
 
     public void chatTeam (int company, String msg) throws IOException
     {
-        networkClient.SEND_ADMIN_PACKET_ADMIN_CHAT(NetworkAction.NETWORK_ACTION_SERVER_MESSAGE, DestType.DESTTYPE_TEAM, company, msg, 0);
+        networkClient.sendAdminChat(NetworkAction.NETWORK_ACTION_SERVER_MESSAGE, DestType.DESTTYPE_TEAM, company, msg, 0);
     }
 
     
     public synchronized void SEND_ADMIN_PACKET_ADMIN_UPDATE_FREQUENCY (AdminUpdateType type, AdminUpdateFrequency freq) throws IOException
     {
-        networkClient.SEND_ADMIN_PACKET_ADMIN_UPDATE_FREQUENCY(type, freq);
+        networkClient.sendAdminUpdateFrequency(type, freq);
     }
 
     public synchronized void SEND_ADMIN_PACKET_ADMIN_RCON (String command) throws IOException
     {
         if (!command.isEmpty())
-            networkClient.SEND_ADMIN_PACKET_ADMIN_RCON(command);
+            networkClient.sendAdminRcon(command);
     }
 
     public synchronized void SEND_ADMIN_PACKET_ADMIN_QUIT () throws IOException
     {
-        networkClient.SEND_ADMIN_PACKET_ADMIN_QUIT();
+        networkClient.sendAdminQuit();
     }
 
     public synchronized void SEND_ADMIN_PACKET_ADMIN_CHAT (NetworkAction action, DestType type, long dest, String message, long data) throws IOException
     {
-        networkClient.SEND_ADMIN_PACKET_ADMIN_CHAT(action, type, dest, message, data);
+        networkClient.sendAdminChat(action, type, dest, message, data);
     }
 
     public synchronized void POLL_DATE () throws IOException

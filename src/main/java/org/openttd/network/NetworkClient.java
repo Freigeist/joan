@@ -92,7 +92,7 @@ public class NetworkClient extends Thread
     
     public synchronized void POLL_DATE () throws IOException
     {
-        SEND_ADMIN_PACKET_ADMIN_POLL(AdminUpdateType.ADMIN_UPDATE_DATE);
+        sendAdminPoll(AdminUpdateType.ADMIN_UPDATE_DATE);
     }
 
     public synchronized void POLL_CLIENT_INFOS () throws IOException
@@ -102,32 +102,32 @@ public class NetworkClient extends Thread
 
     public synchronized void POLL_CLIENT_INFO (long client_id) throws IOException
     {
-        SEND_ADMIN_PACKET_ADMIN_POLL(AdminUpdateType.ADMIN_UPDATE_CLIENT_INFO, client_id);
+        sendAdminPoll(AdminUpdateType.ADMIN_UPDATE_CLIENT_INFO, client_id);
     }
 
     public synchronized void POLL_COMPANY_INFOS () throws IOException
     {
-        SEND_ADMIN_PACKET_ADMIN_POLL(AdminUpdateType.ADMIN_UPDATE_COMPANY_INFO, Long.MAX_VALUE);
+        sendAdminPoll(AdminUpdateType.ADMIN_UPDATE_COMPANY_INFO, Long.MAX_VALUE);
     }
 
     public synchronized void POLL_COMPANY_INFO (int company_id) throws IOException
     {
-        SEND_ADMIN_PACKET_ADMIN_POLL(AdminUpdateType.ADMIN_UPDATE_COMPANY_INFO, company_id);
+        sendAdminPoll(AdminUpdateType.ADMIN_UPDATE_COMPANY_INFO, company_id);
     }
 
     public synchronized void POLL_COMPANY_ECONOMY () throws IOException
     {
-        SEND_ADMIN_PACKET_ADMIN_POLL(AdminUpdateType.ADMIN_UPDATE_COMPANY_ECONOMY, 0);
+        sendAdminPoll(AdminUpdateType.ADMIN_UPDATE_COMPANY_ECONOMY, 0);
     }
 
     public synchronized void POLL_COMPANY_STATS () throws IOException
     {
-        SEND_ADMIN_PACKET_ADMIN_POLL(AdminUpdateType.ADMIN_UPDATE_COMPANY_STATS, 0);
+        sendAdminPoll(AdminUpdateType.ADMIN_UPDATE_COMPANY_STATS, 0);
     }
 
     public synchronized void POLL_CMD_NAMES ()  throws IOException
     {
-        SEND_ADMIN_PACKET_ADMIN_POLL(AdminUpdateType.ADMIN_UPDATE_CMD_NAMES);
+        sendAdminPoll(AdminUpdateType.ADMIN_UPDATE_CMD_NAMES);
     }
 
 
@@ -505,7 +505,7 @@ public class NetworkClient extends Thread
 
 
 
-    public synchronized void SEND_ADMIN_PACKET_ADMIN_JOIN () throws IOException
+    public synchronized void sendAdminJoin () throws IOException
     {
         Packet p = new Packet(network.getSocket(), PacketType.ADMIN_PACKET_ADMIN_JOIN);
         p.send_string(network.getOpenTTD().getPassword());
@@ -515,7 +515,7 @@ public class NetworkClient extends Thread
         NetworkOutputThread.append(p);
     }
 
-    public synchronized void SEND_ADMIN_PACKET_ADMIN_UPDATE_FREQUENCY (AdminUpdateType type, AdminUpdateFrequency freq) throws IOException, IllegalArgumentException
+    public synchronized void sendAdminUpdateFrequency (AdminUpdateType type, AdminUpdateFrequency freq) throws IOException, IllegalArgumentException
     {
         if (!network.getProtocol().isSupported(type, freq))
             throw new IllegalArgumentException("The server does not support " + freq + " for " + type);
@@ -527,12 +527,12 @@ public class NetworkClient extends Thread
         NetworkOutputThread.append(p);
     }
 
-    public synchronized void SEND_ADMIN_PACKET_ADMIN_POLL (AdminUpdateType type) throws IOException, IllegalArgumentException
+    public synchronized void sendAdminPoll (AdminUpdateType type) throws IOException, IllegalArgumentException
     {
-        SEND_ADMIN_PACKET_ADMIN_POLL(type, 0);
+        sendAdminPoll(type, 0);
     }
 
-    public synchronized void SEND_ADMIN_PACKET_ADMIN_POLL (AdminUpdateType type, long data) throws IOException, IllegalArgumentException
+    public synchronized void sendAdminPoll (AdminUpdateType type, long data) throws IOException, IllegalArgumentException
     {
         if (!network.getProtocol().isSupported(type, AdminUpdateFrequency.ADMIN_FREQUENCY_POLL))
             throw new IllegalArgumentException("The server does not support ADMIN_FREQUENCY_POLL for " + type);
@@ -544,7 +544,7 @@ public class NetworkClient extends Thread
         NetworkOutputThread.append(p);
     }
 
-    public synchronized void SEND_ADMIN_PACKET_ADMIN_CHAT (NetworkAction action, DestType type, long dest, String message, long data) throws IOException
+    public synchronized void sendAdminChat (NetworkAction action, DestType type, long dest, String message, long data) throws IOException
     {
         Packet p = new Packet(network.getSocket(), PacketType.ADMIN_PACKET_ADMIN_CHAT);
         p.send_uint8(action.ordinal());
@@ -562,13 +562,13 @@ public class NetworkClient extends Thread
         NetworkOutputThread.append(p);
     }
 
-    public synchronized void SEND_ADMIN_PACKET_ADMIN_QUIT () throws IOException
+    public synchronized void sendAdminQuit () throws IOException
     {
         this.send(PacketType.ADMIN_PACKET_ADMIN_QUIT);
         network.disconnect();
     }
 
-    public synchronized void SEND_ADMIN_PACKET_ADMIN_RCON (String command) throws IOException
+    public synchronized void sendAdminRcon (String command) throws IOException
     {
         Packet p = new Packet(network.getSocket(), PacketType.ADMIN_PACKET_ADMIN_RCON);
         p.send_string(command);
