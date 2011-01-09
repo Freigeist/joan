@@ -54,9 +54,9 @@ public class Company extends Poolable<Integer>
     public final EnumMap<VehicleType, Integer> vehicles = new EnumMap<VehicleType, Integer>(VehicleType.class);
     public final EnumMap<VehicleType, Integer> stations = new EnumMap<VehicleType, Integer>(VehicleType.class);
 
-    public Company (int company_id)
+    public Company (int companyId)
     {
-        super(company_id);
+        super(companyId);
 
         if (this.id == COMPANY_SPECTATOR){
             this.name = "Spectator";

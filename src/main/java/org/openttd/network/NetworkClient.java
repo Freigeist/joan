@@ -110,9 +110,9 @@ public class NetworkClient extends Thread
         sendAdminPoll(AdminUpdateType.ADMIN_UPDATE_COMPANY_INFO, Long.MAX_VALUE);
     }
 
-    public synchronized void pollCompanyInfo (int company_id) throws IOException
+    public synchronized void pollCompanyInfo (int companyId) throws IOException
     {
-        sendAdminPoll(AdminUpdateType.ADMIN_UPDATE_COMPANY_INFO, company_id);
+        sendAdminPoll(AdminUpdateType.ADMIN_UPDATE_COMPANY_INFO, companyId);
     }
 
     public synchronized void pollCompanyEconomy () throws IOException
@@ -202,11 +202,11 @@ public class NetworkClient extends Thread
     {
         Client client = new Client(p.readUint32());
 
-        client.address    = p.readString();
-        client.name       = p.readString();
-        client.language   = NetworkLanguage.valueOf(p.readUint8());
-        client.joindate   = new GameDate(p.readUint32());
-        client.company_id = p.readUint8();
+        client.address   = p.readString();
+        client.name      = p.readString();
+        client.language  = NetworkLanguage.valueOf(p.readUint8());
+        client.joindate  = new GameDate(p.readUint32());
+        client.companyId = p.readUint8();
 
         openttd.getPool().getClientPool().add(client);
 
@@ -221,8 +221,8 @@ public class NetworkClient extends Thread
         if (pool.getClientPool().exists(clientId)) {
             Client client = pool.getClientPool().get(clientId);
 
-            client.name       = p.readString();
-            client.company_id = p.readUint8();
+            client.name      = p.readString();
+            client.companyId = p.readUint8();
 
             openttd.onClientUpdate(client);
             return;
@@ -269,19 +269,19 @@ public class NetworkClient extends Thread
 
     public synchronized void receiveServerCompanyNew (OpenTTD openttd, Packet p) throws IOException
     {
-        Pool pool      = openttd.getPool();
-        int company_id = p.readUint8();
+        Pool pool     = openttd.getPool();
+        int companyId = p.readUint8();
 
-        if (pool.getCompanyPool().exists(company_id)) {
-            Company company = pool.getCompanyPool().get(company_id);
+        if (pool.getCompanyPool().exists(companyId)) {
+            Company company = pool.getCompanyPool().get(companyId);
 
             openttd.onCompanyNew(company);
             return;
         }
 
         /* we know nothing about this ccompany, request an update */
-        pollCompanyInfo(company_id);
-        Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown company new #{0}", company_id);
+        pollCompanyInfo(companyId);
+        Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown company new #{0}", companyId);
     }
 
     public synchronized void receiveServerCompanyInfo (OpenTTD openttd, Packet p)
@@ -302,11 +302,11 @@ public class NetworkClient extends Thread
 
     public synchronized void receiveServerCompanyUpdate (OpenTTD openttd, Packet p) throws IOException
     {
-        Pool pool      = openttd.getPool();
-        int company_id = p.readUint8();
+        Pool pool     = openttd.getPool();
+        int companyId = p.readUint8();
 
-        if (pool.getCompanyPool().exists(company_id)) {
-            Company company = pool.getCompanyPool().get(company_id);
+        if (pool.getCompanyPool().exists(companyId)) {
+            Company company = pool.getCompanyPool().get(companyId);
 
             company.name        = p.readString();
             company.president   = p.readString();
@@ -323,17 +323,17 @@ public class NetworkClient extends Thread
         }
 
         /* we know nothing about this ccompany, request an update */
-        pollCompanyInfo(company_id);
-        Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown company update #{0}", company_id);
+        pollCompanyInfo(companyId);
+        Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown company update #{0}", companyId);
     }
 
     public synchronized void receiveServerCompanyEconomy (OpenTTD openttd, Packet p) throws IOException
     {
-        Pool pool      = openttd.getPool();
-        int company_id = p.readUint8();
+        Pool pool     = openttd.getPool();
+        int companyId = p.readUint8();
 
-        if (pool.getCompanyPool().exists(company_id)) {
-            Company company = pool.getCompanyPool().get(company_id);
+        if (pool.getCompanyPool().exists(companyId)) {
+            Company company = pool.getCompanyPool().get(companyId);
 
             // TODO: company economy handling
 
@@ -342,17 +342,17 @@ public class NetworkClient extends Thread
         }
 
         /* we know nothing about this ccompany, request an update */
-        pollCompanyInfo(company_id);
-        Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown company economy #{0}", company_id);
+        pollCompanyInfo(companyId);
+        Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown company economy #{0}", companyId);
     }
 
     public synchronized void receiveServerCompanyStats (OpenTTD openttd, Packet p) throws IOException
     {
-        Pool pool      = openttd.getPool();
-        int company_id = p.readUint8();
+        Pool pool     = openttd.getPool();
+        int companyId = p.readUint8();
 
-        if (pool.getCompanyPool().exists(company_id)) {
-            Company company = pool.getCompanyPool().get(company_id);
+        if (pool.getCompanyPool().exists(companyId)) {
+            Company company = pool.getCompanyPool().get(companyId);
 
             for (VehicleType vt : VehicleType.values()) {
                 company.vehicles.put(vt, p.readUint16());
@@ -367,25 +367,25 @@ public class NetworkClient extends Thread
         }
 
         /* we know nothing about this ccompany, request an update */
-        pollCompanyInfo(company_id);
-        Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown company stats #{0}", company_id);
+        pollCompanyInfo(companyId);
+        Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown company stats #{0}", companyId);
     }
 
     public synchronized void receiveServerCompanyRemove (OpenTTD openttd, Packet p)
     {
-        Pool pool      = openttd.getPool();
-        int company_id = p.readUint8();
+        Pool pool     = openttd.getPool();
+        int companyId = p.readUint8();
 
         AdminCompanyRemoveReason crr = AdminCompanyRemoveReason.valueOf(p.readUint8());
 
-        if (pool.getCompanyPool().exists(company_id)) {
-            Company company = pool.getCompanyPool().remove(company_id);
+        if (pool.getCompanyPool().exists(companyId)) {
+            Company company = pool.getCompanyPool().remove(companyId);
 
             openttd.onCompanyRemove(company, crr);
         }
 
         /* we do not seem to have known anything about this company, but as the company got closed down, do nothing. */
-        Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown company removed #{0}", company_id);
+        Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown company removed #{0}", companyId);
     }
 
     public synchronized void receiveServerChat (OpenTTD openttd, Packet p)
@@ -471,7 +471,7 @@ public class NetworkClient extends Thread
         Pool pool = openttd.getPool();
 
         long clientId  = p.readUint32();
-        int company_id = p.readUint8();
+        int companyId  = p.readUint8();
         int command_id = p.readUint16();
         long p1        = p.readUint32();
         long p2        = p.readUint32();
@@ -486,10 +486,10 @@ public class NetworkClient extends Thread
             return;
         }
 
-        Company company = pool.getCompanyPool().get(company_id);
+        Company company = pool.getCompanyPool().get(companyId);
 
         if (company == null) {
-            this.pollCompanyInfo(company_id);
+            this.pollCompanyInfo(companyId);
             return;
         }
 

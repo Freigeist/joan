@@ -28,7 +28,7 @@ import org.openttd.pool.Poolable;
 public class Client extends Poolable<Long>
 {
     public String name;
-    public int company_id;
+    public int companyId;
     public NetworkLanguage language;
     public String address;
     public GameDate joindate;
@@ -43,12 +43,12 @@ public class Client extends Poolable<Long>
 
     /**
      * Check if this client is part of a certain company
-     * @param company_id The identifier of the company to check against.
+     * @param companyId The identifier of the company to check against.
      * @return true if the client is in this company.
      */
-    public boolean inCompany (int company_id)
+    public boolean inCompany (int companyId)
     {
-        return (this.company_id == company_id);
+        return (this.companyId == companyId);
     }
 
     /**
@@ -67,7 +67,7 @@ public class Client extends Poolable<Long>
      */
     public boolean isSpectator ()
     {
-        return (this.company_id == Company.COMPANY_SPECTATOR);
+        return (this.companyId == Company.COMPANY_SPECTATOR);
     }
 
     /**

@@ -154,9 +154,9 @@ public class Network
         networkClient.pollCompanyInfos();
     }
 
-    public synchronized void pollCompanyInfo (int company_id) throws IOException
+    public synchronized void pollCompanyInfo (int companyId) throws IOException
     {
-        networkClient.pollCompanyInfo(company_id);
+        networkClient.pollCompanyInfo(companyId);
     }
 
     public synchronized void pollCompanyEconomy () throws IOException
