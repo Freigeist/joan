@@ -37,6 +37,8 @@ public class Packet
     byte[] buf;
     int pos = 0;
 
+    private static final int POS_PACKET_TYPE = 3;
+
     /**
      * Constructor. Creates a new Packet of Type type.
      * @param socket The Socket this is related to.
@@ -46,7 +48,7 @@ public class Packet
     {
         this.socket = socket;
         this.buf    = new byte[SEND_MTU];
-        this.pos    = 3;
+        this.pos    = POS_PACKET_TYPE + 1;
         this.setPacketType(type);
     }
 
@@ -82,7 +84,7 @@ public class Packet
         }
 
         in.readFully(this.buf, 2, this.length() - 2);
-        this.pos = 3;
+        this.pos = POS_PACKET_TYPE + 1;
     }
 
     protected final Socket getSocket ()
@@ -224,7 +226,7 @@ public class Packet
     public PacketType getType () throws ArrayIndexOutOfBoundsException
     {
         if (this.type == null) {
-            this.type = PacketType.valueOf(this.buf[2] & 0xFF);
+            this.type = PacketType.valueOf(this.buf[POS_PACKET_TYPE] & 0xFF);
         }
 
         return this.type;
