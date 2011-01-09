@@ -30,14 +30,13 @@ import java.net.SocketException;
 public class Packet
 {
     public static final int SEND_MTU = 1460;
+    private static final int POS_PACKET_TYPE = 3;
 
     private final Socket socket;
 
     private PacketType type = null;
-    byte[] buf;
-    int pos = 0;
-
-    private static final int POS_PACKET_TYPE = 3;
+    private byte[] buf;
+    private int pos = 0;
 
     /**
      * Constructor. Creates a new Packet of Type type.
