@@ -36,9 +36,9 @@ public class Client extends Poolable<Long>
     public static final int INVALID_CLIENTID = 0;
     public static final int CLIENTID_SERVER  = 1;
 
-    public Client (long client_id)
+    public Client (long clientId)
     {
-        super(client_id);
+        super(clientId);
     }
 
     /**

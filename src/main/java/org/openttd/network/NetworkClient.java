@@ -100,9 +100,9 @@ public class NetworkClient extends Thread
         pollClientInfo(Long.MAX_VALUE);
     }
 
-    public synchronized void pollClientInfo (long client_id) throws IOException
+    public synchronized void pollClientInfo (long clientId) throws IOException
     {
-        sendAdminPoll(AdminUpdateType.ADMIN_UPDATE_CLIENT_INFO, client_id);
+        sendAdminPoll(AdminUpdateType.ADMIN_UPDATE_CLIENT_INFO, clientId);
     }
 
     public synchronized void pollCompanyInfos () throws IOException
@@ -183,19 +183,19 @@ public class NetworkClient extends Thread
 
     public synchronized void receiveServerClientJoin (OpenTTD openttd, Packet p) throws IOException
     {
-        Pool pool      = openttd.getPool();
-        long client_id = p.readUint32();
+        Pool pool     = openttd.getPool();
+        long clientId = p.readUint32();
 
-        if (pool.getClientPool().exists(client_id)) {
-            Client client = pool.getClientPool().get(client_id);
+        if (pool.getClientPool().exists(clientId)) {
+            Client client = pool.getClientPool().get(clientId);
 
             openttd.onClientJoin(client);
             return;
         }
 
         /* we know nothing about this client, request an update */
-        pollClientInfo(client_id);
-        Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown client joined #{0}", client_id);
+        pollClientInfo(clientId);
+        Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown client joined #{0}", clientId);
     }
 
     public synchronized void receiveServerClientInfo (OpenTTD openttd, Packet p)
@@ -215,11 +215,11 @@ public class NetworkClient extends Thread
 
     public synchronized void receiveServerClientUpdate (OpenTTD openttd, Packet p) throws IOException
     {
-        Pool pool      = openttd.getPool();
-        long client_id = p.readUint32();
+        Pool pool     = openttd.getPool();
+        long clientId = p.readUint32();
 
-        if (pool.getClientPool().exists(client_id)) {
-            Client client = pool.getClientPool().get(client_id);
+        if (pool.getClientPool().exists(clientId)) {
+            Client client = pool.getClientPool().get(clientId);
 
             client.name       = p.readString();
             client.company_id = p.readUint8();
@@ -229,42 +229,42 @@ public class NetworkClient extends Thread
         }
 
         /* we know nothing about this client, request an update */
-        pollClientInfo(client_id);
-        Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown client update #{0}", client_id);
+        pollClientInfo(clientId);
+        Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown client update #{0}", clientId);
     }
 
     public synchronized void receiveServerClientQuit (OpenTTD openttd, Packet p)
     {
-        Pool pool      = openttd.getPool();
-        long client_id = p.readUint32();
+        Pool pool     = openttd.getPool();
+        long clientId = p.readUint32();
 
-        if (pool.getClientPool().exists(client_id)) {
-            Client client = pool.getClientPool().remove(client_id);
+        if (pool.getClientPool().exists(clientId)) {
+            Client client = pool.getClientPool().remove(clientId);
 
             openttd.onClientQuit(client);
             return;
         }
 
         /* we do not seem to have known anything about this client, but as the client left, do nothing. */
-        Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown client quit #{0}", client_id);
+        Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown client quit #{0}", clientId);
     }
 
     public synchronized void receiveServerClientError (OpenTTD openttd, Packet p)
     {
-        Pool pool      = openttd.getPool();
-        long client_id = p.readUint32();
+        Pool pool     = openttd.getPool();
+        long clientId = p.readUint32();
 
         NetworkErrorCode error = NetworkErrorCode.valueOf(p.readUint8());
 
-        if (pool.getClientPool().exists(client_id)) {
-            Client client = pool.getClientPool().remove(client_id);
+        if (pool.getClientPool().exists(clientId)) {
+            Client client = pool.getClientPool().remove(clientId);
 
             openttd.onClientError(client, error);
             return;
         }
 
         /* we do not seem to have known anything about this client, but as the client left, do nothing. */
-        Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown client error #{0}", client_id);
+        Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown client error #{0}", clientId);
     }
 
     public synchronized void receiveServerCompanyNew (OpenTTD openttd, Packet p) throws IOException
@@ -393,12 +393,12 @@ public class NetworkClient extends Thread
         Pool pool            = openttd.getPool();
         NetworkAction action = NetworkAction.valueOf(p.readUint8());
         DestType dest        = DestType.valueOf(p.readUint8());
-        long client_id       = p.readUint32();
+        long clientId        = p.readUint32();
         String message       = p.readString();
         BigInteger data      = p.readUint64();
 
-        if (pool.getClientPool().exists(client_id)) {
-            Client client = pool.getClientPool().get(client_id);
+        if (pool.getClientPool().exists(clientId)) {
+            Client client = pool.getClientPool().get(clientId);
 
             openttd.onChat(action, dest, client, message, data);
             return;
@@ -470,7 +470,7 @@ public class NetworkClient extends Thread
     {
         Pool pool = openttd.getPool();
 
-        long client_id = p.readUint32();
+        long clientId  = p.readUint32();
         int company_id = p.readUint8();
         int command_id = p.readUint16();
         long p1        = p.readUint32();
@@ -479,10 +479,10 @@ public class NetworkClient extends Thread
         String text    = p.readString();
         long frame     = p.readUint32();
 
-        Client client = pool.getClientPool().get(client_id);
+        Client client = pool.getClientPool().get(clientId);
 
         if (client == null) {
-            this.pollClientInfo(client_id);
+            this.pollClientInfo(clientId);
             return;
         }
 

@@ -169,9 +169,9 @@ public class Network
         networkClient.pollClientInfos();
     }
 
-    public synchronized void pollClientInfo (long client_id) throws IOException
+    public synchronized void pollClientInfo (long clientId) throws IOException
     {
-        networkClient.pollClientInfo(client_id);
+        networkClient.pollClientInfo(clientId);
     }
 
     public synchronized void pollCmdNames () throws IOException
