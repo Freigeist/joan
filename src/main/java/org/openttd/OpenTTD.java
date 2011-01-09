@@ -200,7 +200,7 @@ public abstract class OpenTTD
     protected final void registerUpdateFrequency (AdminUpdateType type, AdminUpdateFrequency freq)
     {
         try {
-            network.SEND_ADMIN_PACKET_ADMIN_UPDATE_FREQUENCY(type, freq);
+            network.sendAdminUpdateFrequency(type, freq);
         } catch (IOException ex) {
             Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -225,7 +225,7 @@ public abstract class OpenTTD
     public final void pollDate ()
     {
         try {
-            network.POLL_DATE();
+            network.pollDate();
         } catch (IOException ex) {
             Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -237,7 +237,7 @@ public abstract class OpenTTD
     public final void pollClientInfos ()
     {
         try {
-            network.POLL_CLIENT_INFOS();
+            network.pollClientInfos();
         } catch (IOException ex) {
             Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -250,7 +250,7 @@ public abstract class OpenTTD
     public final void pollClientInfo (long clientId)
     {
         try {
-            network.POLL_CLIENT_INFO(clientId);
+            network.pollClientInfo(clientId);
         } catch (IOException ex) {
             Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -262,7 +262,7 @@ public abstract class OpenTTD
     public final void pollCompanyInfos ()
     {
         try {
-            network.POLL_COMPANY_INFOS();
+            network.pollCompanyInfos();
         } catch (IOException ex) {
             Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -275,7 +275,7 @@ public abstract class OpenTTD
     public final void pollCompanyInfo (int companyId)
     {
         try {
-            network.POLL_COMPANY_INFO(companyId);
+            network.pollCompanyInfo(companyId);
         } catch (IOException ex) {
             Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -287,7 +287,7 @@ public abstract class OpenTTD
     public final void pollCompanyStats ()
     {
         try {
-            network.POLL_COMPANY_STATS();
+            network.pollCompanyStats();
         } catch (IOException ex) {
             Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -299,7 +299,7 @@ public abstract class OpenTTD
     public final void pollCompanyEconomy ()
     {
         try {
-            network.POLL_COMPANY_ECONOMY();
+            network.pollCompanyEconomy();
         } catch (IOException ex) {
             Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -311,7 +311,7 @@ public abstract class OpenTTD
     public final void pollCmdNames ()
     {
         try {
-            network.POLL_CMD_NAMES();
+            network.pollCmdNames();
         } catch (IOException ex) {
             Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
         }

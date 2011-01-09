@@ -88,7 +88,7 @@ public class SimpleConsole extends OpenTTD
             String str = "";
             while (network.isConnected()) {
                 str = in.readLine();
-                network.SEND_ADMIN_PACKET_ADMIN_RCON(str);
+                network.sendAdminRcon(str);
             }
         } catch (UnknownHostException ex) {
             Logger.getLogger(SimpleConsole.class.getName()).log(Level.SEVERE, null, ex);

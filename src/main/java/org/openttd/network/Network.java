@@ -118,63 +118,63 @@ public class Network
     }
 
     
-    public synchronized void SEND_ADMIN_PACKET_ADMIN_UPDATE_FREQUENCY (AdminUpdateType type, AdminUpdateFrequency freq) throws IOException
+    public synchronized void sendAdminUpdateFrequency (AdminUpdateType type, AdminUpdateFrequency freq) throws IOException
     {
         networkClient.sendAdminUpdateFrequency(type, freq);
     }
 
-    public synchronized void SEND_ADMIN_PACKET_ADMIN_RCON (String command) throws IOException
+    public synchronized void sendAdminRcon (String command) throws IOException
     {
         if (!command.isEmpty())
             networkClient.sendAdminRcon(command);
     }
 
-    public synchronized void SEND_ADMIN_PACKET_ADMIN_QUIT () throws IOException
+    public synchronized void sendAdminQuit () throws IOException
     {
         networkClient.sendAdminQuit();
     }
 
-    public synchronized void SEND_ADMIN_PACKET_ADMIN_CHAT (NetworkAction action, DestType type, long dest, String message, long data) throws IOException
+    public synchronized void sendAdminChat (NetworkAction action, DestType type, long dest, String message, long data) throws IOException
     {
         networkClient.sendAdminChat(action, type, dest, message, data);
     }
 
-    public synchronized void POLL_DATE () throws IOException
+    public synchronized void pollDate () throws IOException
     {
         networkClient.pollDate();
     }
 
-    public synchronized void POLL_COMPANY_STATS () throws IOException
+    public synchronized void pollCompanyStats () throws IOException
     {
         networkClient.pollCompanyStats();
     }
 
-    public synchronized void POLL_COMPANY_INFOS () throws IOException
+    public synchronized void pollCompanyInfos () throws IOException
     {
         networkClient.pollCompanyInfos();
     }
 
-    public synchronized void POLL_COMPANY_INFO (int company_id) throws IOException
+    public synchronized void pollCompanyInfo (int company_id) throws IOException
     {
         networkClient.pollCompanyInfo(company_id);
     }
 
-    public synchronized void POLL_COMPANY_ECONOMY () throws IOException
+    public synchronized void pollCompanyEconomy () throws IOException
     {
         networkClient.pollCompanyEconomy();
     }
 
-    public synchronized void POLL_CLIENT_INFOS () throws IOException
+    public synchronized void pollClientInfos () throws IOException
     {
         networkClient.pollClientInfos();
     }
 
-    public synchronized void POLL_CLIENT_INFO (long client_id) throws IOException
+    public synchronized void pollClientInfo (long client_id) throws IOException
     {
         networkClient.pollClientInfo(client_id);
     }
 
-    public synchronized void POLL_CMD_NAMES () throws IOException
+    public synchronized void pollCmdNames () throws IOException
     {
         networkClient.pollCmdNames();
     }
