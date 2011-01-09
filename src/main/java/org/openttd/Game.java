@@ -27,8 +27,8 @@ import org.openttd.network.NetworkClient;
 public class Game
 {
     public String name;
-    public String version;
-    public int protocol_version;
+    public String versionGame;
+    public int versionProtocol;
     public boolean dedicated;
 
     public Map map;
@@ -61,12 +61,12 @@ public class Game
 
     public int getProtocolVersion ()
     {
-        return protocol_version;
+        return versionProtocol;
     }
 
     public String getRevision ()
     {
-        return version;
+        return versionGame;
     }
 
     

@@ -27,22 +27,22 @@ import org.openttd.pool.ClientPool;
  */
 public class Pool
 {
-    protected ClientPool  client_pool;
-    protected CompanyPool company_pool;
+    protected ClientPool  clientPool;
+    protected CompanyPool companyPool;
 
     public Pool ()
     {
-        client_pool  = new ClientPool();
-        company_pool = new CompanyPool();
+        clientPool  = new ClientPool();
+        companyPool = new CompanyPool();
     }
 
     public ClientPool getClientPool ()
     {
-        return client_pool;
+        return clientPool;
     }
 
     public CompanyPool getCompanyPool ()
     {
-        return company_pool;
+        return companyPool;
     }
 }

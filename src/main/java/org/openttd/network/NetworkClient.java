@@ -157,13 +157,13 @@ public class NetworkClient extends Thread
         Map  map  = new Map();
 
         game.name      = p.readString();
-        game.version   = p.readString();
+        game.versionGame   = p.readString();
         game.dedicated = p.readBool();
 
         map.name = p.readString();
         map.seed = p.readUint32();
         map.landscape = Landscape.valueOf(p.readUint8());
-        map.start_date = new GameDate(p.readUint32());
+        map.dateStart = new GameDate(p.readUint32());
         map.width      = p.readUint16();
         map.height     = p.readUint16();
 
@@ -176,7 +176,7 @@ public class NetworkClient extends Thread
     {
         GameDate date = new GameDate(p.readUint32());
 
-        openttd.getGame().getMap().current_date = date;
+        openttd.getGame().getMap().dateCurrent = date;
 
         openttd.onServerDate(date);
     }
@@ -470,14 +470,14 @@ public class NetworkClient extends Thread
     {
         Pool pool = openttd.getPool();
 
-        long clientId  = p.readUint32();
-        int companyId  = p.readUint8();
-        int command_id = p.readUint16();
-        long p1        = p.readUint32();
-        long p2        = p.readUint32();
-        long tile      = p.readUint32();
-        String text    = p.readString();
-        long frame     = p.readUint32();
+        long clientId = p.readUint32();
+        int companyId = p.readUint8();
+        int commandId = p.readUint16();
+        long p1       = p.readUint32();
+        long p2       = p.readUint32();
+        long tile     = p.readUint32();
+        String text   = p.readString();
+        long frame    = p.readUint32();
 
         Client client = pool.getClientPool().get(clientId);
 
@@ -493,7 +493,7 @@ public class NetworkClient extends Thread
             return;
         }
 
-        DoCommandName command = DoCommandName.valueOf(command_id);
+        DoCommandName command = DoCommandName.valueOf(commandId);
 
         if (command == null) {
             this.pollCmdNames();

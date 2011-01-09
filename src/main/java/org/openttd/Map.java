@@ -28,8 +28,8 @@ public class Map
 {
     public String    name;
     public Landscape landscape;
-    public GameDate  start_date;
-    public GameDate  current_date;
+    public GameDate  dateStart;
+    public GameDate  dateCurrent;
     
     public long seed;
     public int  height;
