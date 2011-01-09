@@ -73,7 +73,7 @@ public class NetworkClient extends Thread
     private void delegatePacket (Packet p)
     {
         try {
-            this.getClass().getMethod("RECEIVE_" + p.getType(), OpenTTD.class, Packet.class).invoke(this, network.getOpenTTD(), p);
+            this.getClass().getMethod(p.getType().getDispatchName(), OpenTTD.class, Packet.class).invoke(this, network.getOpenTTD(), p);
         } catch (NoSuchMethodException ex) {
             Logger.getLogger(Network.class.getName()).log(Level.SEVERE, ex.getCause().getMessage(), ex.getCause());
         } catch (SecurityException ex) {
@@ -132,26 +132,26 @@ public class NetworkClient extends Thread
 
 
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_FULL (OpenTTD openttd, Packet p)
+    public synchronized void receiveServerFull (OpenTTD openttd, Packet p)
     {
         network.disconnect();
         openttd.onServerFull();
     }
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_BANNED (OpenTTD openttd, Packet p)
+    public synchronized void receiveServerBanned (OpenTTD openttd, Packet p)
     {
         network.disconnect();
         openttd.onServerBanned();
     }
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_ERROR (OpenTTD openttd, Packet p)
+    public synchronized void receiveServerError (OpenTTD openttd, Packet p)
     {
         network.disconnect();
         NetworkErrorCode error = NetworkErrorCode.valueOf(p.recv_uint8());
         openttd.onServerError(error);
     }
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_WELCOME (OpenTTD openttd, Packet p)
+    public synchronized void receiveServerWelcome (OpenTTD openttd, Packet p)
     {
         Game game = new Game();
         Map  map  = new Map();
@@ -172,7 +172,7 @@ public class NetworkClient extends Thread
         openttd.onServerWelcome(game);
     }
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_DATE (OpenTTD openttd, Packet p)
+    public synchronized void receiveServerDate (OpenTTD openttd, Packet p)
     {
         GameDate date = new GameDate(p.recv_uint32());
 
@@ -181,7 +181,7 @@ public class NetworkClient extends Thread
         openttd.onServerDate(date);
     }
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_CLIENT_JOIN (OpenTTD openttd, Packet p) throws IOException
+    public synchronized void receiveServerClientJoin (OpenTTD openttd, Packet p) throws IOException
     {
         Pool pool      = openttd.getPool();
         long client_id = p.recv_uint32();
@@ -198,7 +198,7 @@ public class NetworkClient extends Thread
         Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown client joined #{0}", client_id);
     }
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_CLIENT_INFO (OpenTTD openttd, Packet p)
+    public synchronized void receiveServerClientInfo (OpenTTD openttd, Packet p)
     {
         Client client = new Client(p.recv_uint32());
 
@@ -213,7 +213,7 @@ public class NetworkClient extends Thread
         openttd.onClientInfo(client);
     }
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_CLIENT_UPDATE (OpenTTD openttd, Packet p) throws IOException
+    public synchronized void receiveServerClientUpdate (OpenTTD openttd, Packet p) throws IOException
     {
         Pool pool      = openttd.getPool();
         long client_id = p.recv_uint32();
@@ -233,7 +233,7 @@ public class NetworkClient extends Thread
         Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown client update #{0}", client_id);
     }
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_CLIENT_QUIT (OpenTTD openttd, Packet p)
+    public synchronized void receiveServerClientQuit (OpenTTD openttd, Packet p)
     {
         Pool pool      = openttd.getPool();
         long client_id = p.recv_uint32();
@@ -249,7 +249,7 @@ public class NetworkClient extends Thread
         Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown client quit #{0}", client_id);
     }
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_CLIENT_ERROR (OpenTTD openttd, Packet p)
+    public synchronized void receiveServerClientError (OpenTTD openttd, Packet p)
     {
         Pool pool      = openttd.getPool();
         long client_id = p.recv_uint32();
@@ -267,7 +267,7 @@ public class NetworkClient extends Thread
         Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown client error #{0}", client_id);
     }
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_COMPANY_NEW (OpenTTD openttd, Packet p) throws IOException
+    public synchronized void receiveServerCompanyNew (OpenTTD openttd, Packet p) throws IOException
     {
         Pool pool      = openttd.getPool();
         int company_id = p.recv_uint8();
@@ -284,7 +284,7 @@ public class NetworkClient extends Thread
         Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown company new #{0}", company_id);
     }
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_COMPANY_INFO (OpenTTD openttd, Packet p)
+    public synchronized void receiveServerCompanyInfo (OpenTTD openttd, Packet p)
     {
         Company company = new Company(p.recv_uint8());
 
@@ -300,7 +300,7 @@ public class NetworkClient extends Thread
         openttd.onCompanyInfo(company);
     }
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_COMPANY_UPDATE (OpenTTD openttd, Packet p) throws IOException
+    public synchronized void receiveServerCompanyUpdate (OpenTTD openttd, Packet p) throws IOException
     {
         Pool pool      = openttd.getPool();
         int company_id = p.recv_uint8();
@@ -327,7 +327,7 @@ public class NetworkClient extends Thread
         Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown company update #{0}", company_id);
     }
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_COMPANY_ECONOMY (OpenTTD openttd, Packet p) throws IOException
+    public synchronized void receiveServerCompanyEconomy (OpenTTD openttd, Packet p) throws IOException
     {
         Pool pool      = openttd.getPool();
         int company_id = p.recv_uint8();
@@ -346,7 +346,7 @@ public class NetworkClient extends Thread
         Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown company economy #{0}", company_id);
     }
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_COMPANY_STATS (OpenTTD openttd, Packet p) throws IOException
+    public synchronized void receiveServerCompanyStats (OpenTTD openttd, Packet p) throws IOException
     {
         Pool pool      = openttd.getPool();
         int company_id = p.recv_uint8();
@@ -371,7 +371,7 @@ public class NetworkClient extends Thread
         Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown company stats #{0}", company_id);
     }
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_COMPANY_REMOVE (OpenTTD openttd, Packet p)
+    public synchronized void receiveServerCompanyRemove (OpenTTD openttd, Packet p)
     {
         Pool pool      = openttd.getPool();
         int company_id = p.recv_uint8();
@@ -388,7 +388,7 @@ public class NetworkClient extends Thread
         Logger.getLogger(Network.class.getName()).log(Level.INFO, "Unknown company removed #{0}", company_id);
     }
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_CHAT (OpenTTD openttd, Packet p)
+    public synchronized void receiveServerChat (OpenTTD openttd, Packet p)
     {
         Pool pool            = openttd.getPool();
         NetworkAction action = NetworkAction.valueOf(p.recv_uint8());
@@ -407,18 +407,18 @@ public class NetworkClient extends Thread
         /* we know nothing of the client who aparently sent this message, just drop it */
     }
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_NEWGAME (OpenTTD openttd, Packet p)
+    public synchronized void receiveServerNewgame (OpenTTD openttd, Packet p)
     {
         openttd.onNewgame();
     }
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_SHUTDOWN (OpenTTD openttd, Packet p)
+    public synchronized void receiveServerShutdown (OpenTTD openttd, Packet p)
     {
         network.disconnect();
         openttd.onShutdown();
     }
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_RCON (OpenTTD openttd, Packet p)
+    public synchronized void receiveServerRcon (OpenTTD openttd, Packet p)
     {
         Colour colour  = Colour.valueOf(p.recv_uint16());
         String message = p.recv_string();
@@ -426,7 +426,7 @@ public class NetworkClient extends Thread
         openttd.onRcon(colour, message);
     }
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_PROTOCOL (OpenTTD openttd, Packet p)
+    public synchronized void receiveServerProtocol (OpenTTD openttd, Packet p)
     {
         Protocol protocol = network.getProtocol();
         
@@ -448,7 +448,7 @@ public class NetworkClient extends Thread
         network.getOpenTTD().onProtocol(protocol);
     }
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_CONSOLE (OpenTTD openttd, Packet p)
+    public synchronized void receiveServerConsole (OpenTTD openttd, Packet p)
     {
         String origin  = p.recv_string();
         String message = p.recv_string();
@@ -456,7 +456,7 @@ public class NetworkClient extends Thread
         openttd.onConsole(origin, message);
     }
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_CMD_NAMES (OpenTTD openttd, Packet p)
+    public synchronized void receiveServerCmdNames (OpenTTD openttd, Packet p)
     {
         while(p.recv_bool()) {
             int cmdId = p.recv_uint16();
@@ -466,7 +466,7 @@ public class NetworkClient extends Thread
         }
     }
 
-    public synchronized void RECEIVE_ADMIN_PACKET_SERVER_CMD_LOGGING (OpenTTD openttd, Packet p) throws IOException
+    public synchronized void receiveServerCmdLogging (OpenTTD openttd, Packet p) throws IOException
     {
         Pool pool = openttd.getPool();
 
