@@ -77,14 +77,22 @@ public enum PacketType implements Reversible<Integer>
 
     /**
      * Turn the name into a valid method name.
-     * Example: ADMIN_PACKET_SERVER_CLIENT_INFO receiveServerClientInfo
+     * Example:
+     *   ADMIN_PACKET_SERVER_CLIENT_INFO becomes receiveServerClientInfo
+     *   ADMIN_PACKET_ADMIN_RCON becomes sendAdminRcon
      * @return Valid method name to use for receiving.
      */
     private String dispatchName ()
     {
-        StringBuilder result = new StringBuilder("receive");
-
+        StringBuilder result;
         String name = this.name().replaceFirst("ADMIN_PACKET_", "").toLowerCase();
+
+        /* receive packets start at 100 */
+        if (this.value < 100) {
+            result = new StringBuilder("send");
+        } else {
+            result = new StringBuilder("receive");
+        }
 
         for (String part : name.split("_")) {
             result.append(part.substring(0,1).toUpperCase());
@@ -96,7 +104,9 @@ public enum PacketType implements Reversible<Integer>
 
     /**
      * Get the dispatch name of the enum.
-     * Example: ADMIN_PACKET_SERVER_CLIENT_INFO receiveServerClientInfoc
+     * Example:
+     *   ADMIN_PACKET_SERVER_CLIENT_INFO becomes receiveServerClientInfo
+     *   ADMIN_PACKET_ADMIN_RCON becomes sendAdminRcon
      * @return Cached name of the enum ready to use in a receive method.
      */
     public String getDispatchName ()
