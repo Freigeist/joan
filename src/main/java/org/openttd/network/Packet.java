@@ -102,12 +102,12 @@ public class Packet
         this.type = type;
     }
 
-    public void send_bool (boolean b)
+    public void writeBool (boolean b)
     {
         this.buf[this.pos++] = (byte) (b ? 1 : 0);
     }
 
-    public void send_string (String s) throws IOException
+    public void writeString (String s) throws IOException
     {
         byte b[] = s.getBytes();
 
@@ -118,23 +118,23 @@ public class Packet
         this.buf[this.pos++] = '\0';
     }
 
-    public void send_uint8 (short n)
+    public void writeUint8 (short n)
     {
         this.buf[this.pos++] = (byte) n;
     }
 
-    public void send_uint8 (int n)
+    public void writeUint8 (int n)
     {
-        this.send_uint8((short) n);
+        this.writeUint8((short) n);
     }
 
-    public void send_uint16 (int n)
+    public void writeUint16 (int n)
     {
         this.buf[this.pos++] = (byte) n;
         this.buf[this.pos++] = (byte) (n >> 8);
     }
 
-    public void send_uint32 (long n)
+    public void writeUint32 (long n)
     {
         this.buf[this.pos++] = (byte) n;
         this.buf[this.pos++] = (byte) (n >> 8);
@@ -142,7 +142,7 @@ public class Packet
         this.buf[this.pos++] = (byte) (n >> 24);
     }
 
-    public void send_uint64 (long n)
+    public void writeUint64 (long n)
     {
         this.buf[this.pos++] = (byte) n;
         this.buf[this.pos++] = (byte) (n >> 8);
@@ -154,22 +154,22 @@ public class Packet
         this.buf[this.pos++] = (byte) (n >> 56);
     }
 
-    public void send_uint64 (BigInteger n)
+    public void writeUint64 (BigInteger n)
     {
-        this.send_uint64(n.longValue());
+        this.writeUint64(n.longValue());
     }
 
-    public boolean recv_bool ()
+    public boolean readBool ()
     {
         return (this.buf[this.pos++] & 0xFF) > 0;
     }
 
-    public int recv_uint8 ()
+    public int readUint8 ()
     {
         return (this.buf[this.pos++] & 0xFF);
     }
 
-    public int recv_uint16 ()
+    public int readUint16 ()
     {
         int n = this.buf[this.pos++] & 0xFF;
         n += (this.buf[this.pos++] & 0xFF) << 8;
@@ -177,7 +177,7 @@ public class Packet
         return n;
     }
 
-    public long recv_uint32 ()
+    public long readUint32 ()
     {
         long n = this.buf[this.pos++] & 0xFF;
         n += (this.buf[this.pos++] & 0xFF) << 8;
@@ -187,7 +187,7 @@ public class Packet
         return n;
     }
 
-    public BigInteger recv_uint64 ()
+    public BigInteger readUint64 ()
     {
         long l = 0;
         l += (long)(this.buf[this.pos++] & 0xFF);
@@ -204,7 +204,7 @@ public class Packet
         return b;
     }
 
-    public String recv_string ()
+    public String readString ()
     {
         String out = "";
         int startIdx = this.pos;

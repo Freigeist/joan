@@ -147,7 +147,7 @@ public class NetworkClient extends Thread
     public synchronized void receiveServerError (OpenTTD openttd, Packet p)
     {
         network.disconnect();
-        NetworkErrorCode error = NetworkErrorCode.valueOf(p.recv_uint8());
+        NetworkErrorCode error = NetworkErrorCode.valueOf(p.readUint8());
         openttd.onServerError(error);
     }
 
@@ -156,16 +156,16 @@ public class NetworkClient extends Thread
         Game game = new Game();
         Map  map  = new Map();
 
-        game.name      = p.recv_string();
-        game.version   = p.recv_string();
-        game.dedicated = p.recv_bool();
+        game.name      = p.readString();
+        game.version   = p.readString();
+        game.dedicated = p.readBool();
 
-        map.name = p.recv_string();
-        map.seed = p.recv_uint32();
-        map.landscape = Landscape.valueOf(p.recv_uint8());
-        map.start_date = new GameDate(p.recv_uint32());
-        map.width      = p.recv_uint16();
-        map.height     = p.recv_uint16();
+        map.name = p.readString();
+        map.seed = p.readUint32();
+        map.landscape = Landscape.valueOf(p.readUint8());
+        map.start_date = new GameDate(p.readUint32());
+        map.width      = p.readUint16();
+        map.height     = p.readUint16();
 
         game.map = map;
 
@@ -174,7 +174,7 @@ public class NetworkClient extends Thread
 
     public synchronized void receiveServerDate (OpenTTD openttd, Packet p)
     {
-        GameDate date = new GameDate(p.recv_uint32());
+        GameDate date = new GameDate(p.readUint32());
 
         openttd.getGame().getMap().current_date = date;
 
@@ -184,7 +184,7 @@ public class NetworkClient extends Thread
     public synchronized void receiveServerClientJoin (OpenTTD openttd, Packet p) throws IOException
     {
         Pool pool      = openttd.getPool();
-        long client_id = p.recv_uint32();
+        long client_id = p.readUint32();
 
         if (pool.getClientPool().exists(client_id)) {
             Client client = pool.getClientPool().get(client_id);
@@ -200,13 +200,13 @@ public class NetworkClient extends Thread
 
     public synchronized void receiveServerClientInfo (OpenTTD openttd, Packet p)
     {
-        Client client = new Client(p.recv_uint32());
+        Client client = new Client(p.readUint32());
 
-        client.address    = p.recv_string();
-        client.name       = p.recv_string();
-        client.language   = NetworkLanguage.valueOf(p.recv_uint8());
-        client.joindate   = new GameDate(p.recv_uint32());
-        client.company_id = p.recv_uint8();
+        client.address    = p.readString();
+        client.name       = p.readString();
+        client.language   = NetworkLanguage.valueOf(p.readUint8());
+        client.joindate   = new GameDate(p.readUint32());
+        client.company_id = p.readUint8();
 
         openttd.getPool().getClientPool().add(client);
 
@@ -216,13 +216,13 @@ public class NetworkClient extends Thread
     public synchronized void receiveServerClientUpdate (OpenTTD openttd, Packet p) throws IOException
     {
         Pool pool      = openttd.getPool();
-        long client_id = p.recv_uint32();
+        long client_id = p.readUint32();
 
         if (pool.getClientPool().exists(client_id)) {
             Client client = pool.getClientPool().get(client_id);
 
-            client.name       = p.recv_string();
-            client.company_id = p.recv_uint8();
+            client.name       = p.readString();
+            client.company_id = p.readUint8();
 
             openttd.onClientUpdate(client);
             return;
@@ -236,7 +236,7 @@ public class NetworkClient extends Thread
     public synchronized void receiveServerClientQuit (OpenTTD openttd, Packet p)
     {
         Pool pool      = openttd.getPool();
-        long client_id = p.recv_uint32();
+        long client_id = p.readUint32();
 
         if (pool.getClientPool().exists(client_id)) {
             Client client = pool.getClientPool().remove(client_id);
@@ -252,9 +252,9 @@ public class NetworkClient extends Thread
     public synchronized void receiveServerClientError (OpenTTD openttd, Packet p)
     {
         Pool pool      = openttd.getPool();
-        long client_id = p.recv_uint32();
+        long client_id = p.readUint32();
 
-        NetworkErrorCode error = NetworkErrorCode.valueOf(p.recv_uint8());
+        NetworkErrorCode error = NetworkErrorCode.valueOf(p.readUint8());
 
         if (pool.getClientPool().exists(client_id)) {
             Client client = pool.getClientPool().remove(client_id);
@@ -270,7 +270,7 @@ public class NetworkClient extends Thread
     public synchronized void receiveServerCompanyNew (OpenTTD openttd, Packet p) throws IOException
     {
         Pool pool      = openttd.getPool();
-        int company_id = p.recv_uint8();
+        int company_id = p.readUint8();
 
         if (pool.getCompanyPool().exists(company_id)) {
             Company company = pool.getCompanyPool().get(company_id);
@@ -286,14 +286,14 @@ public class NetworkClient extends Thread
 
     public synchronized void receiveServerCompanyInfo (OpenTTD openttd, Packet p)
     {
-        Company company = new Company(p.recv_uint8());
+        Company company = new Company(p.readUint8());
 
-        company.name        = p.recv_string();
-        company.president   = p.recv_string();
-        company.colour      = Colour.valueOf(p.recv_uint8());
-        company.passworded  = p.recv_bool();
-        company.inaugurated = p.recv_uint32();
-        company.ai          = p.recv_bool();
+        company.name        = p.readString();
+        company.president   = p.readString();
+        company.colour      = Colour.valueOf(p.readUint8());
+        company.passworded  = p.readBool();
+        company.inaugurated = p.readUint32();
+        company.ai          = p.readBool();
 
         openttd.getPool().getCompanyPool().add(company);
 
@@ -303,19 +303,19 @@ public class NetworkClient extends Thread
     public synchronized void receiveServerCompanyUpdate (OpenTTD openttd, Packet p) throws IOException
     {
         Pool pool      = openttd.getPool();
-        int company_id = p.recv_uint8();
+        int company_id = p.readUint8();
 
         if (pool.getCompanyPool().exists(company_id)) {
             Company company = pool.getCompanyPool().get(company_id);
 
-            company.name        = p.recv_string();
-            company.president   = p.recv_string();
-            company.colour      = Colour.valueOf(p.recv_uint8());
-            company.passworded  = p.recv_bool();
-            company.bankruptcy  = p.recv_uint8();
+            company.name        = p.readString();
+            company.president   = p.readString();
+            company.colour      = Colour.valueOf(p.readUint8());
+            company.passworded  = p.readBool();
+            company.bankruptcy  = p.readUint8();
 
             for (short i = 0; i < 4; i++) {
-                company.shares[i] = p.recv_uint8();
+                company.shares[i] = p.readUint8();
             }
 
             openttd.onCompanyUpdate(company);
@@ -330,7 +330,7 @@ public class NetworkClient extends Thread
     public synchronized void receiveServerCompanyEconomy (OpenTTD openttd, Packet p) throws IOException
     {
         Pool pool      = openttd.getPool();
-        int company_id = p.recv_uint8();
+        int company_id = p.readUint8();
 
         if (pool.getCompanyPool().exists(company_id)) {
             Company company = pool.getCompanyPool().get(company_id);
@@ -349,17 +349,17 @@ public class NetworkClient extends Thread
     public synchronized void receiveServerCompanyStats (OpenTTD openttd, Packet p) throws IOException
     {
         Pool pool      = openttd.getPool();
-        int company_id = p.recv_uint8();
+        int company_id = p.readUint8();
 
         if (pool.getCompanyPool().exists(company_id)) {
             Company company = pool.getCompanyPool().get(company_id);
 
             for (VehicleType vt : VehicleType.values()) {
-                company.vehicles.put(vt, p.recv_uint16());
+                company.vehicles.put(vt, p.readUint16());
             }
 
             for (VehicleType vt : VehicleType.values()) {
-                company.stations.put(vt, p.recv_uint16());
+                company.stations.put(vt, p.readUint16());
             }
 
             openttd.onCompanyStats(company);
@@ -374,9 +374,9 @@ public class NetworkClient extends Thread
     public synchronized void receiveServerCompanyRemove (OpenTTD openttd, Packet p)
     {
         Pool pool      = openttd.getPool();
-        int company_id = p.recv_uint8();
+        int company_id = p.readUint8();
 
-        AdminCompanyRemoveReason crr = AdminCompanyRemoveReason.valueOf(p.recv_uint8());
+        AdminCompanyRemoveReason crr = AdminCompanyRemoveReason.valueOf(p.readUint8());
 
         if (pool.getCompanyPool().exists(company_id)) {
             Company company = pool.getCompanyPool().remove(company_id);
@@ -391,11 +391,11 @@ public class NetworkClient extends Thread
     public synchronized void receiveServerChat (OpenTTD openttd, Packet p)
     {
         Pool pool            = openttd.getPool();
-        NetworkAction action = NetworkAction.valueOf(p.recv_uint8());
-        DestType dest        = DestType.valueOf(p.recv_uint8());
-        long client_id       = p.recv_uint32();
-        String message       = p.recv_string();
-        BigInteger data      = p.recv_uint64();
+        NetworkAction action = NetworkAction.valueOf(p.readUint8());
+        DestType dest        = DestType.valueOf(p.readUint8());
+        long client_id       = p.readUint32();
+        String message       = p.readString();
+        BigInteger data      = p.readUint64();
 
         if (pool.getClientPool().exists(client_id)) {
             Client client = pool.getClientPool().get(client_id);
@@ -420,8 +420,8 @@ public class NetworkClient extends Thread
 
     public synchronized void receiveServerRcon (OpenTTD openttd, Packet p)
     {
-        Colour colour  = Colour.valueOf(p.recv_uint16());
-        String message = p.recv_string();
+        Colour colour  = Colour.valueOf(p.readUint16());
+        String message = p.readString();
 
         openttd.onRcon(colour, message);
     }
@@ -430,11 +430,11 @@ public class NetworkClient extends Thread
     {
         Protocol protocol = network.getProtocol();
         
-        protocol.version = p.recv_uint8();
+        protocol.version = p.readUint8();
 
-        while (p.recv_bool()) {
-            int tIndex  = p.recv_uint16();
-            int fValues = p.recv_uint16();
+        while (p.readBool()) {
+            int tIndex  = p.readUint16();
+            int fValues = p.readUint16();
 
             /* Bitwise handling in java is ucky */
             while (fValues > 0) {
@@ -450,17 +450,17 @@ public class NetworkClient extends Thread
 
     public synchronized void receiveServerConsole (OpenTTD openttd, Packet p)
     {
-        String origin  = p.recv_string();
-        String message = p.recv_string();
+        String origin  = p.readString();
+        String message = p.readString();
 
         openttd.onConsole(origin, message);
     }
 
     public synchronized void receiveServerCmdNames (OpenTTD openttd, Packet p)
     {
-        while(p.recv_bool()) {
-            int cmdId = p.recv_uint16();
-            String cmdName = p.recv_string();
+        while(p.readBool()) {
+            int cmdId = p.readUint16();
+            String cmdName = p.readString();
 
             new DoCommandName(cmdName, cmdId);
         }
@@ -470,14 +470,14 @@ public class NetworkClient extends Thread
     {
         Pool pool = openttd.getPool();
 
-        long client_id = p.recv_uint32();
-        int company_id = p.recv_uint8();
-        int command_id = p.recv_uint16();
-        long p1        = p.recv_uint32();
-        long p2        = p.recv_uint32();
-        long tile      = p.recv_uint32();
-        String text    = p.recv_string();
-        long frame     = p.recv_uint32();
+        long client_id = p.readUint32();
+        int company_id = p.readUint8();
+        int command_id = p.readUint16();
+        long p1        = p.readUint32();
+        long p2        = p.readUint32();
+        long tile      = p.readUint32();
+        String text    = p.readString();
+        long frame     = p.readUint32();
 
         Client client = pool.getClientPool().get(client_id);
 
@@ -508,9 +508,9 @@ public class NetworkClient extends Thread
     public synchronized void sendAdminJoin () throws IOException
     {
         Packet p = new Packet(network.getSocket(), PacketType.ADMIN_PACKET_ADMIN_JOIN);
-        p.send_string(network.getOpenTTD().getPassword());
-        p.send_string(network.getOpenTTD().getBotName());
-        p.send_string(network.getOpenTTD().getBotVersion());
+        p.writeString(network.getOpenTTD().getPassword());
+        p.writeString(network.getOpenTTD().getBotName());
+        p.writeString(network.getOpenTTD().getBotVersion());
 
         NetworkOutputThread.append(p);
     }
@@ -521,8 +521,8 @@ public class NetworkClient extends Thread
             throw new IllegalArgumentException("The server does not support " + freq + " for " + type);
 
         Packet p = new Packet(network.getSocket(), PacketType.ADMIN_PACKET_ADMIN_UPDATE_FREQUENCY);
-        p.send_uint16(type.getValue());
-        p.send_uint16(freq.getValue());
+        p.writeUint16(type.getValue());
+        p.writeUint16(freq.getValue());
 
         NetworkOutputThread.append(p);
     }
@@ -538,8 +538,8 @@ public class NetworkClient extends Thread
             throw new IllegalArgumentException("The server does not support ADMIN_FREQUENCY_POLL for " + type);
 
         Packet p = new Packet(network.getSocket(), PacketType.ADMIN_PACKET_ADMIN_POLL);
-        p.send_uint8(type.getValue());
-        p.send_uint32(data);
+        p.writeUint8(type.getValue());
+        p.writeUint32(data);
 
         NetworkOutputThread.append(p);
     }
@@ -547,17 +547,17 @@ public class NetworkClient extends Thread
     public synchronized void sendAdminChat (NetworkAction action, DestType type, long dest, String message, long data) throws IOException
     {
         Packet p = new Packet(network.getSocket(), PacketType.ADMIN_PACKET_ADMIN_CHAT);
-        p.send_uint8(action.ordinal());
-        p.send_uint8(type.ordinal());
-        p.send_uint32(dest);
+        p.writeUint8(action.ordinal());
+        p.writeUint8(type.ordinal());
+        p.writeUint32(dest);
 
         message.trim();
         if (message.length() >= 900) {
             return;
         }
 
-        p.send_string(message);
-        p.send_uint64(data);
+        p.writeString(message);
+        p.writeUint64(data);
 
         NetworkOutputThread.append(p);
     }
@@ -571,7 +571,7 @@ public class NetworkClient extends Thread
     public synchronized void sendAdminRcon (String command) throws IOException
     {
         Packet p = new Packet(network.getSocket(), PacketType.ADMIN_PACKET_ADMIN_RCON);
-        p.send_string(command);
+        p.writeString(command);
 
         NetworkOutputThread.append(p);
     }
