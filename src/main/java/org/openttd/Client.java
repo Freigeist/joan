@@ -75,7 +75,7 @@ public class Client extends Poolable<Long>
      * @param index The client id to check.
      * @return true if the client id is valid.
      */
-    public static boolean IsValid (long index)
+    public static boolean isValid (long index)
     {
         return (index != INVALID_CLIENTID);
     }
