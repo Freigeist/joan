@@ -317,6 +317,78 @@ public abstract class OpenTTD
         }
     }
 
+    public final void serverMessagePublic(String msg)
+    {
+        try {
+            network.serverMessagePublic(msg);
+        } catch (IOException ex) {
+            Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public final void serverMessagePrivate(long client, String msg)
+    {
+        try {
+            network.serverMessagePrivate(client, msg);
+        } catch (IOException ex) {
+            Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public final void sendAdminUpdateFrequency(AdminUpdateType type, AdminUpdateFrequency freq)
+    {
+        try {
+            network.sendAdminUpdateFrequency(type, freq);
+        } catch (IOException ex) {
+            Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public final void sendAdminRcon(String command)
+    {
+        try {
+            network.sendAdminRcon(command);
+        } catch (IOException ex) {
+            Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public final void sendAdminQuit()
+    {
+        try {
+            network.sendAdminQuit();
+        } catch (IOException ex) {
+            Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public final void sendAdminChat(NetworkAction action, DestType type, long dest, String message, long data)
+    {
+        try {
+            network.sendAdminChat(action, type, dest, message, data);
+        } catch (IOException ex) {
+            Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public final void chatPublic(String msg)
+    {
+        try {
+            network.chatPublic(msg);
+        } catch (IOException ex) {
+            Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public final void chatPrivate(long client, String msg)
+    {
+        try {
+            network.chatPrivate(client, msg);
+        } catch (IOException ex) {
+            Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     /**
      * Called when the server tells us that it is full.
      */
