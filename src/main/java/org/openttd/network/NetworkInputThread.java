@@ -92,36 +92,27 @@ public class NetworkInputThread implements Runnable
         return getQueue(socket).take();
     }
 
-    /**
-     * Remove queues to which sockets have been closed.
-     */
-    private synchronized static void cleanQueue ()
-    {
-        for (Socket socket : queues.keySet()) {
-            if (socket.isClosed()) {
-                queues.remove(socket);
-
-            }
-        }
-    }
-
     @Override
     public void run ()
     {
         while (true) {
             for (Socket socket : queues.keySet()) {
                 try {
+                    if (socket.isClosed()) {
+                        queues.remove(socket);
+                        log.info("Socket closed: {}", socket.getRemoteSocketAddress().toString());
+                        continue;
+                    }
+                    
                     Packet p = new Packet(socket);
                     append(p);
                     log.trace("Received Packet {}", p.getType());
                 } catch (IOException ex) {
-                    log.error(null, ex);
+                    log.error("Failed reading packet", ex);
                 } catch (IndexOutOfBoundsException ex) {
-                    log.error(null, ex);
+                    log.error("Packet size > SEND_MTU?", ex);
                 }
             }
-
-            cleanQueue();
         }
     }
 }

@@ -92,18 +92,6 @@ public class NetworkOutputThread implements Runnable
         return getQueue(socket).take();
     }
 
-    /**
-     * Remove queues to which sockets have been closed.
-     */
-    private static void cleanQueue ()
-    {
-        for (Socket socket : queues.keySet()) {
-            if (socket.isClosed()) {
-                queues.remove(socket);
-            }
-        }
-    }
-
     @Override
     public void run ()
     {
@@ -111,6 +99,13 @@ public class NetworkOutputThread implements Runnable
             for (BlockingQueue<Packet> q : queues.values()) {
                 try {
                     Packet p = q.take();
+
+                    /* if the socket is closed, remove it from the queue and leave the foreach */
+                    if (p.getSocket().isClosed()) {
+                        queues.remove(p.getSocket());
+                        break;
+                    }
+
                     p.send();
                     log.trace("Sending Packet {}", p.getType());
                 } catch (InterruptedException ex) {
@@ -119,9 +114,6 @@ public class NetworkOutputThread implements Runnable
                     log.error(null, ex);
                 }
             }
-
-            cleanQueue();
         }
     }
-
 }
