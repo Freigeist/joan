@@ -21,10 +21,10 @@ package org.openttd.network;
 import java.util.HashMap;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.net.Socket;
 import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handling of sending packets to an OpenTTD server in a separate thread.
@@ -34,6 +34,8 @@ public class NetworkInputThread implements Runnable
 {
     private static final NetworkInputThread singleton;
     private static final HashMap<Socket, BlockingQueue<Packet>> queues;
+
+    private final Logger log = LoggerFactory.getLogger(NetworkInputThread.class);
 
     static {
         singleton = new NetworkInputThread();
@@ -98,6 +100,7 @@ public class NetworkInputThread implements Runnable
         for (Socket socket : queues.keySet()) {
             if (socket.isClosed()) {
                 queues.remove(socket);
+
             }
         }
     }
@@ -108,11 +111,13 @@ public class NetworkInputThread implements Runnable
         while (true) {
             for (Socket socket : queues.keySet()) {
                 try {
-                    append(new Packet(socket));
+                    Packet p = new Packet(socket);
+                    append(p);
+                    log.trace("Received Packet {}", p.getType());
                 } catch (IOException ex) {
-                    Logger.getLogger(NetworkInputThread.class.getName()).log(Level.SEVERE, null, ex);
+                    log.error(null, ex);
                 } catch (IndexOutOfBoundsException ex) {
-                    Logger.getLogger(NetworkInputThread.class.getName()).log(Level.SEVERE, null, ex);
+                    log.error(null, ex);
                 }
             }
 

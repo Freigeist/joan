@@ -21,10 +21,10 @@ package org.openttd.network;
 import java.util.HashMap;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.net.Socket;
 import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handling of sending packets to an OpenTTD server in a separate thread.
@@ -34,6 +34,8 @@ public class NetworkOutputThread implements Runnable
 {
     private static final NetworkOutputThread singleton;
     private static final HashMap<Socket, BlockingQueue<Packet>> queues;
+
+    private final Logger log = LoggerFactory.getLogger(NetworkOutputThread.class);
 
     static {
         singleton = new NetworkOutputThread();
@@ -108,11 +110,13 @@ public class NetworkOutputThread implements Runnable
         while (true) {
             for (BlockingQueue<Packet> q : queues.values()) {
                 try {
-                    q.take().send();
+                    Packet p = q.take();
+                    p.send();
+                    log.trace("Sending Packet {}", p.getType());
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(NetworkOutputThread.class.getName()).log(Level.SEVERE, null, ex);
+                    log.error(null, ex);
                 } catch (IOException ex) {
-                    Logger.getLogger(NetworkOutputThread.class.getName()).log(Level.SEVERE, null, ex);
+                    log.error(null, ex);
                 }
             }
 
