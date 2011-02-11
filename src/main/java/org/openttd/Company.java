@@ -65,7 +65,7 @@ public class Company extends Poolable<Integer>
 
     /**
      * Check if the Company is Spectator
-     * @return
+     * @return If the Company is Spectator.
      */
     public boolean isSpectator ()
     {
@@ -73,10 +73,10 @@ public class Company extends Poolable<Integer>
     }
 
     /**
-     * Check if the Company is Spectator
-     * static representation of isSpectator()
-     * @param index
-     * @return
+     * Check if the Company is Spectator.
+     * static representation of isSpectator().
+     * @param index The index to check.
+     * @return true if the index is a Spectator.
      */
     public static boolean isSpectator (int index)
     {
