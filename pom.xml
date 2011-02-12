@@ -10,6 +10,13 @@
     <name>Java OpenTTD Admin Library</name>
     <url>http://dev.openttdcoop.org/projects/joan</url>
 
+    <licenses>
+        <license>
+            <name>GPL v2</name>
+            <url>http://www.gnu.org/licenses/gpl-2.0.txt</url>
+        </license>
+    </licenses>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <netbeans.hint.license>gpl20</netbeans.hint.license>
