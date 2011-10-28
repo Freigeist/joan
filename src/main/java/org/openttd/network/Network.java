@@ -48,12 +48,18 @@ public class Network
             System.exit(2);
         }
 
-        this.socket = new Socket(host, port);
+        try {
+            this.socket = new Socket(host, port);
 
-        this.socket.setTcpNoDelay(true);
-        this.socket.setKeepAlive(false);
+            this.socket.setTcpNoDelay(true);
+            this.socket.setKeepAlive(false);
 
-        this.networkClient.sendAdminJoin();
+            this.networkClient.sendAdminJoin();
+        } catch (ConnectException ex) {
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, ex.getMessage());
+            System.exit(3);
+        }
+
         return true;
     }
 
