@@ -144,6 +144,11 @@ public class Network
     {
         networkClient.sendAdminChat(action, type, dest, message, data);
     }
+    
+    public synchronized void sendAdminGamescript (String json) throws IOException
+    {
+        networkClient.sendAdminGamescript(json);
+    }
 
     public synchronized void pollDate () throws IOException
     {

@@ -582,4 +582,12 @@ public class NetworkClient extends Thread
 
         NetworkOutputThread.append(p);
     }
+    
+    public synchronized void sendAdminGamescript (String json) throws IOException
+    {   
+        Packet p = new Packet(network.getSocket(), PacketType.ADMIN_PACKET_ADMIN_GAMESCRIPT);
+        p.writeString(json);
+        
+        NetworkOutputThread.append(p);
+    }
 }

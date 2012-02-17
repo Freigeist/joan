@@ -370,6 +370,15 @@ public abstract class OpenTTD
             Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public final void sendAdminGamescript (String json)
+    {
+        try {
+            network.sendAdminGamescript(json);
+        } catch (IOException ex) {
+            Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public final void chatPublic(String msg)
     {
