@@ -502,6 +502,13 @@ public class NetworkClient extends Thread
 
         openttd.onCmdLogging(client, company, command, p1, p2, tile, text, frame);
     }
+    
+    public synchronized void receiveServerGamescript (OpenTTD openttd, Packet p) throws IOException
+    {
+        String json = p.readString();
+        
+        openttd.onGamescript(json);
+    }
 
 
 

@@ -545,4 +545,15 @@ public abstract class OpenTTD
      * @param frame Frame in which the command is to be executed.
      */
     public void onCmdLogging (Client client, Company company, DoCommandName command, long p1, long p2, long tile, String text, long frame) {}
+
+    /**
+     * Gamescript (NoGo) interaction is handled via JSON formatted strings.
+     * It is up to the implementing Plugin to choose how to handle the data.
+     * 
+     * @link http://www.tt-forums.net/viewtopic.php?f=33&t=57431
+     * @link http://www.json.org
+     * 
+     * @param json The JSON formatted string.
+     */
+    public void onGamescript(String json) {}
 }

@@ -57,6 +57,7 @@ public enum PacketType implements Reversible<Integer>
     ADMIN_PACKET_SERVER_CMD_NAMES        (122),  ///< The server gives the admin names of all DoCommands.
     ADMIN_PACKET_SERVER_CMD_LOGGING      (123),  ///< The server gives the admin DoCommand information (for logging purposes only).
     ADMIN_PACKET_SERVER_END              (124),  ///< For internal reference only, mark the end.
+    ADMIN_PACKET_SERVER_GAMESCRIPT       (125),  ///< The server gives the admin information from the GameScript in JSON.
 
     INVALID_ADMIN_PACKET                 (0xFF); ///< An invalid marker for admin packets.
 
