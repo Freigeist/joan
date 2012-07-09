@@ -26,8 +26,7 @@ import java.math.BigInteger;
  */
 public class Economy
 {
-    public int year;
-    public int quarter;
+    public GameDate date;
 
     public BigInteger money;
     public BigInteger loan;
@@ -39,6 +38,6 @@ public class Economy
 
     public boolean isSameQuarter (Economy economy)
     {
-        return year == economy.year && quarter == economy.quarter;
+        return date.getYear() == economy.date.getYear() && date.getQuarter() == economy.date.getQuarter();
     }
 }
