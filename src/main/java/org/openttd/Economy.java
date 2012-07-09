@@ -34,8 +34,8 @@ public class Economy
     public BigInteger income;
 
     public BigInteger value;
-    public BigInteger cargo;
-    public BigInteger performance;
+    public int cargo;
+    public int performance;
 
     public boolean isSameQuarter (Economy economy)
     {
