@@ -85,6 +85,11 @@ public class GameDate
     {
         return day;
     }
+    
+    public int getQuarter ()
+    {
+        return (int) (this.month + 2) / 3;
+    }
 
     public String toString ()
     {
