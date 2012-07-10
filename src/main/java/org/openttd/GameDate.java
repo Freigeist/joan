@@ -19,6 +19,7 @@
 package org.openttd;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -53,6 +54,13 @@ public class GameDate
 
         day = ++rem;
         setMonthDay();
+    }
+    
+    protected GameDate (Calendar cal)
+    {
+        this.year = cal.get(Calendar.YEAR);
+        this.month = cal.get(Calendar.MONTH) + 1;
+        this.day = cal.get(Calendar.DAY_OF_MONTH);
     }
     
     public boolean isLeapYear (double year)
