@@ -98,6 +98,17 @@ public class GameDate
         return (int) (this.month + 2) / 3;
     }
 
+    public GameDate previousQuarter ()
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day);
+        
+        cal.add(Calendar.MONTH, -3);
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+        
+        return new GameDate(cal);
+    }
+    
     public String toString ()
     {
         return year+"-"+month+"-"+day;
