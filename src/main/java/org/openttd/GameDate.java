@@ -18,16 +18,17 @@
 
 package org.openttd;
 
+import java.util.Calendar;
+
 /**
  *
  * @author nathanael
  */
 public class GameDate
 {
-    public int  year  = 0;
-    public int  month = 0;
-    public int  day   = 0;
-    public long date;
+    public int  year    = 0;
+    public int  month   = 0;
+    public int  day     = 0;
 
     public GameDate (long date)
     {
@@ -50,12 +51,10 @@ public class GameDate
             year++;
         }
 
-        if (!isLeapYear(year) && rem >= 30+28) rem++;
-
-        day = rem;
+        day = ++rem;
         setMonthDay();
     }
-
+    
     public boolean isLeapYear (double year)
     {
         return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
@@ -63,69 +62,15 @@ public class GameDate
 
     public void setMonthDay ()
     {
-        if (day > 31) {
-            month++;
-            day -= 31;
-        }
+        Calendar cal = Calendar.getInstance();
 
-        if (day > 29) {
-            month++;
-            day -= 29;
-        }
+        cal.set(Calendar.YEAR, this.year);
+        cal.set(Calendar.DAY_OF_YEAR, day);
 
-        if (day > 31) {
-            month++;
-            day -= 31;
-        }
-
-        if (day > 30) {
-            month++;
-            day -= 30;
-        }
-
-        if (day > 31) {
-            month++;
-            day -= 31;
-        }
-
-        if (day > 30) {
-            month++;
-            day -= 30;
-        }
-
-        if (day > 31) {
-            month++;
-            day -= 31;
-        }
-
-        if (day > 31) {
-            month++;
-            day -= 31;
-        }
-
-        if (day > 30) {
-            month++;
-            day -= 30;
-        }
-
-        if (day > 31) {
-            month++;
-            day -= 31;
-        }
-
-        if (day > 30) {
-            month++;
-            day -= 30;
-        }
-
-        if (day > 31) {
-            month++;
-            day -= 31;
-        }
-        
-        month++;
+        this.month = cal.get(Calendar.MONTH) + 1;
+        this.day = cal.get(Calendar.DAY_OF_MONTH);
     }
-
+    
     public int getYear ()
     {
         return year;
