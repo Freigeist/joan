@@ -60,7 +60,7 @@ public class GameDate
         return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
     }
 
-    public void setMonthDay ()
+    private void setMonthDay ()
     {
         Calendar cal = Calendar.getInstance();
 
