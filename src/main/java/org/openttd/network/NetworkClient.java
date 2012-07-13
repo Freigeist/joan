@@ -26,6 +26,7 @@ import java.util.logging.Logger;
 
 import org.openttd.Client;
 import org.openttd.Company;
+import org.openttd.Economy;
 import org.openttd.Pool;
 import org.openttd.GameDate;
 import org.openttd.Game;
@@ -334,10 +335,36 @@ public class NetworkClient extends Thread
 
         if (pool.getCompanyPool().exists(companyId)) {
             Company company = pool.getCompanyPool().get(companyId);
+            Economy tmp_cur_economy = new Economy();
+            
+            tmp_cur_economy.date   = openttd.getGame().getMap().dateCurrent;
+            tmp_cur_economy.money  = p.readUint64();
+            tmp_cur_economy.loan   = p.readUint64();
+            tmp_cur_economy.income = p.readUint64();
+            
+            Economy e1 = new Economy();
+            e1.date        = tmp_cur_economy.date.previousQuarter();
+            e1.cargo       = p.readUint16();
+            e1.value       = p.readUint64();
+            e1.performance = p.readUint16();
+            
+            Economy e2 = new Economy();
+            e2.date        = e1.date.previousQuarter();
+            e2.cargo       = p.readUint16();
+            e2.value       = p.readUint64();
+            e2.performance = p.readUint16();
 
-            // TODO: company economy handling
-
-            openttd.onCompanyEconomy(null);
+            if (company.current_economy.isSameQuarter(e1)) {
+                e1.money  = company.current_economy.money;
+                e1.loan   = company.current_economy.loan;
+                e1.income = company.current_economy.income;
+            }
+            
+            company.current_economy = tmp_cur_economy;
+            
+            /* store e1 and e2 with company economy history */
+            
+            openttd.onCompanyEconomy(company);
             return;
         }
 
