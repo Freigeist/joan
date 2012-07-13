@@ -38,6 +38,9 @@ public class Economy
 
     public boolean isSameQuarter (Economy economy)
     {
+        if (this.date == null || economy.date == null)
+            return false;
+        
         return date.getYear() == economy.date.getYear() && date.getQuarter() == economy.date.getQuarter();
     }
 }
