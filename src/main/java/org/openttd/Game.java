@@ -32,7 +32,6 @@ public class Game
     public boolean dedicated;
 
     public Map map;
-    public GameDate date;
 
     public Game ()
     {
@@ -41,7 +40,7 @@ public class Game
 
     public GameDate getDate ()
     {
-        return date;
+        return map.dateCurrent;
     }
 
     public boolean isDedicated ()

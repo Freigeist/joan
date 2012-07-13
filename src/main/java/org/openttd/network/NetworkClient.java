@@ -337,7 +337,7 @@ public class NetworkClient extends Thread
             Company company = pool.getCompanyPool().get(companyId);
             Economy tmp_cur_economy = new Economy();
             
-            tmp_cur_economy.date   = openttd.getGame().getMap().dateCurrent;
+            tmp_cur_economy.date   = openttd.getGame().getDate();
             tmp_cur_economy.money  = p.readUint64();
             tmp_cur_economy.loan   = p.readUint64();
             tmp_cur_economy.income = p.readUint64();
