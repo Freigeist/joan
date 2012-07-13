@@ -105,6 +105,12 @@ public class NetworkInputThread implements Runnable
                     }
                     
                     Packet p = new Packet(socket);
+                    
+                    /* make sure it's not a close packet, in case we need to shutdown the socket */
+                    if (p.getType().isSocketCloseIndicator()) {
+                        socket.close();
+                    }
+                    
                     append(p);
                     log.trace("Received Packet {}", p.getType());
                 } catch (IOException ex) {
