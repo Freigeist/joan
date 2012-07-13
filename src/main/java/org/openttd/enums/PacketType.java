@@ -131,4 +131,17 @@ public enum PacketType implements Reversible<Integer>
     {
         return lookup.get(i);
     }
+    
+    public boolean isSocketCloseIndicator ()
+    {
+        switch (this) {
+            case ADMIN_PACKET_SERVER_FULL:
+            case ADMIN_PACKET_SERVER_BANNED:
+            case ADMIN_PACKET_SERVER_ERROR:
+            case ADMIN_PACKET_SERVER_SHUTDOWN:
+                return true;
+        }
+        
+        return false;
+    }
 }
