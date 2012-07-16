@@ -66,6 +66,11 @@ public enum NetworkErrorCode implements Reversible<Integer>
     {
         return value;
     }
+    
+    public String toReadableString ()
+    {
+        return this.toString().substring(14).toLowerCase().replaceAll("_", " ");
+    }
 
     public static NetworkErrorCode valueOf (int i)
     {

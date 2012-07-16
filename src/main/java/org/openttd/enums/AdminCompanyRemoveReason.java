@@ -51,6 +51,11 @@ public enum AdminCompanyRemoveReason implements Reversible<Integer>
         return value;
     }
 
+    public String toReadableString ()
+    {
+        return this.toString().substring(10).toLowerCase();
+    }
+
     public static AdminCompanyRemoveReason valueOf (int i)
     {
         return lookup.get(i);
