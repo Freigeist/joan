@@ -552,6 +552,13 @@ public class NetworkClient extends Thread
         openttd.onGamescript(json);
     }
 
+    public synchronized void receiveServerPong (OpenTTD openttd, Packet p) throws IOException
+    {
+        long d1 = p.readUint32();
+
+        openttd.onPong(d1);
+    }
+
 
 
     public synchronized void sendAdminJoin () throws IOException
@@ -630,6 +637,14 @@ public class NetworkClient extends Thread
         Packet p = new Packet(network.getSocket(), PacketType.ADMIN_PACKET_ADMIN_GAMESCRIPT);
         p.writeString(json);
         
+        NetworkOutputThread.append(p);
+    }
+
+    public synchronized void sendAdminPing (long d1) throws IOException
+    {   
+        Packet p = new Packet(network.getSocket(), PacketType.ADMIN_PACKET_ADMIN_PING);
+        p.writeUint32(d1);
+
         NetworkOutputThread.append(p);
     }
 }

@@ -31,6 +31,7 @@ public enum PacketType implements Reversible<Integer>
     ADMIN_PACKET_ADMIN_CHAT              (4),    ///< The admin sends a chat message to be distributed.
     ADMIN_PACKET_ADMIN_RCON              (5),    ///< The admin sends a remote console command.
     ADMIN_PACKET_ADMIN_GAMESCRIPT        (6),    ///< The admin sends a JSON string for the GameScript.
+    ADMIN_PACKET_ADMIN_PING              (7),    ///< The admin sends a ping to the server, expecting a ping-reply (PONG) packet.
 
     ADMIN_PACKET_SERVER_FULL             (100),  ///< The server tells the admin it cannot accept the admin.
     ADMIN_PACKET_SERVER_BANNED           (101),  ///< The server tells the admin it is banned.
@@ -59,6 +60,7 @@ public enum PacketType implements Reversible<Integer>
     ADMIN_PACKET_SERVER_CMD_LOGGING      (123),  ///< The server gives the admin DoCommand information (for logging purposes only).
     ADMIN_PACKET_SERVER_GAMESCRIPT       (124),  ///< The server gives the admin information from the GameScript in JSON.
     ADMIN_PACKET_SERVER_RCON_END         (125),  ///< The server indicates that the remote console command has completed.
+    ADMIN_PACKET_SERVER_PONG             (126),  ///< The server replies to a ping request from the admin.
     ADMIN_PACKET_SERVER_END              (127),  ///< For internal reference only, mark the end.
 
     INVALID_ADMIN_PACKET                 (0xFF); ///< An invalid marker for admin packets.

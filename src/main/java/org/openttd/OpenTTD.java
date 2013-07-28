@@ -379,6 +379,15 @@ public abstract class OpenTTD
             Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public final void sendAdminPing (long d1)
+    {
+        try {
+            network.sendAdminPing(d1);
+        } catch (IOException ex) {
+            Logger.getLogger(OpenTTD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public final void chatPublic(String msg)
     {
@@ -565,4 +574,10 @@ public abstract class OpenTTD
      * @param json The JSON formatted string.
      */
     public void onGamescript(String json) {}
+
+    /**
+     * Pong - in repl to a preveously sent ping packet - payload is the same as in the ping packet.
+     * @param payload id sent to the server with the ping packet.
+     */
+    public void onPong(long payload) {}
 }

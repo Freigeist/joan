@@ -150,6 +150,11 @@ public class Network
         networkClient.sendAdminGamescript(json);
     }
 
+    public synchronized void sendAdminPing (long d1) throws IOException
+    {
+        networkClient.sendAdminPing(d1);
+    }
+
     public synchronized void pollDate () throws IOException
     {
         networkClient.pollDate();
