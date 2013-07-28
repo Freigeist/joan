@@ -32,6 +32,7 @@ import org.openttd.GameDate;
 import org.openttd.Game;
 import org.openttd.Map;
 import org.openttd.OpenTTD;
+import org.openttd.RconBuffer;
 import org.openttd.enums.*;
 
 /**
@@ -41,10 +42,12 @@ import org.openttd.enums.*;
 public class NetworkClient extends Thread
 {
     private Network network;
+    private RconBuffer rconBuffer;
 
     protected NetworkClient (Network network)
     {
         this.network = network;
+        this.rconBuffer = new RconBuffer();
         Logger.getLogger(Network.class.getName()).setLevel(network.getOpenTTD().loglevel);
     }
 
@@ -447,10 +450,22 @@ public class NetworkClient extends Thread
 
     public synchronized void receiveServerRcon (OpenTTD openttd, Packet p)
     {
+        if (this.rconBuffer.isEOR()) {
+            this.rconBuffer = new RconBuffer();
+        }
+
         Colour colour  = Colour.valueOf(p.readUint16());
         String message = p.readString();
 
-        openttd.onRcon(colour, message);
+        this.rconBuffer.add(colour, message);
+    }
+
+    public synchronized void receiveServerRconEnd (OpenTTD openttd, Packet p)
+    {
+        this.rconBuffer.setEOR();
+
+        openttd.onRcon(this.rconBuffer);
+        this.rconBuffer = new RconBuffer();
     }
 
     public synchronized void receiveServerProtocol (OpenTTD openttd, Packet p)

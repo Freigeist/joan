@@ -144,9 +144,12 @@ public class SimpleConsole extends OpenTTD
      * Result from an Rcon command we entered.
      */
     @Override
-    public void onRcon (Colour colour, String message)
+    public void onRcon (RconBuffer rconBuffer)
     {
-        System.out.println(StringFunc.stripColour(message));
+        for (RconBuffer.Entry rconEntry : rconBuffer)
+        {
+            System.out.println(StringFunc.stripColour(rconEntry.message));
+        }
     }
 
     @Override

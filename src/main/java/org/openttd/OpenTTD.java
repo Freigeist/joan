@@ -503,7 +503,7 @@ public abstract class OpenTTD
      * @param colour  Colour of the message.
      * @param message The output of our Rcon command.
      */
-    public void onRcon (Colour colour, String message) {}
+    public void onRcon (RconBuffer rconBuffer) {}
 
     /**
      * Someone in the game is chatting.
