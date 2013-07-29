@@ -17,9 +17,8 @@
  */
 package org.openttd;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Set;
 import org.openttd.enums.Colour;
 
 /**
@@ -40,12 +39,12 @@ public class RconBuffer implements Iterable<RconBuffer.Entry>
         }
     }
     
-    private Set<Entry> buffer;
+    private ArrayList<Entry> buffer;
     private boolean eor = false;
     
     public RconBuffer ()
     {
-        buffer = new HashSet<Entry>();
+        buffer = new ArrayList<Entry>();
     }
     
     public void add (Colour colour, String message)
