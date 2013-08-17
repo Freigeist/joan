@@ -24,24 +24,24 @@ package org.openttd.enums;
  */
 public enum Colour implements Reversible<Integer>
 {
-    COLOUR_DARK_BLUE   (0),
-    COLOUR_PALE_GREEN  (1),
-    COLOUR_PINK        (2),
-    COLOUR_YELLOW      (3),
-    COLOUR_RED         (4),
-    COLOUR_LIGHT_BLUE  (5),
-    COLOUR_GREEN       (6),
-    COLOUR_DARK_GREEN  (7),
-    COLOUR_BLUE        (8),
-    COLOUR_CREAM       (9),
-    COLOUR_MAUVE       (10),
-    COLOUR_PURPLE      (11),
-    COLOUR_ORANGE      (12),
-    COLOUR_BROWN       (13),
-    COLOUR_GREY        (14),
-    COLOUR_WHITE       (15),
-    COLOUR_END         (16),
-    INVALID_COLOUR     (0xFF);
+    DARK_BLUE   (0),
+    PALE_GREEN  (1),
+    PINK        (2),
+    YELLOW      (3),
+    RED         (4),
+    LIGHT_BLUE  (5),
+    GREEN       (6),
+    DARK_GREEN  (7),
+    BLUE        (8),
+    CREAM       (9),
+    MAUVE       (10),
+    PURPLE      (11),
+    ORANGE      (12),
+    BROWN       (13),
+    GREY        (14),
+    WHITE       (15),
+    END         (16),
+    INVALID     (0xFF);
 
     private Integer value;
     private static final ReverseLookup<Integer, Colour> lookup;
