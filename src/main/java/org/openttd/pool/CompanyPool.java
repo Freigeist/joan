@@ -26,5 +26,10 @@ import org.openttd.Company;
  */
 public class CompanyPool extends GenericPool<Integer, Company>
 {
-    
+    public CompanyPool ()
+    {
+        Company spectator = new Company(Company.COMPANY_SPECTATOR);
+        spectator.name = "Spectator";
+        this.add(spectator);
+    }
 }
