@@ -18,6 +18,10 @@
 
 package org.openttd;
 
+import java.util.HashMap;
+import java.util.Map.Entry;
+import org.openttd.enums.PauseMode;
+
 /**
  *
  * @author nathanael
@@ -28,8 +32,9 @@ public class Game
     public String versionGame;
     public int versionProtocol;
     public boolean dedicated;
-
     public Map map;
+
+    private final HashMap<PauseMode, Boolean> pauseState = new HashMap<PauseMode, Boolean>();
 
     public Game ()
     {
@@ -66,5 +71,33 @@ public class Game
         return versionGame;
     }
 
+    public void setPauseMode (PauseMode pm, boolean paused)
+    {
+        if (paused == false) {
+            this.pauseState.remove(pm);
+        } else {
+            this.pauseState.put(pm, paused);
+        }
+    }
+
+    public boolean isPaused ()
+    {
+        return this.pauseState.containsValue(Boolean.TRUE);
+    }
     
+    public PauseMode getPauseMode ()
+    {
+        for (Entry<PauseMode, Boolean> pm : this.pauseState.entrySet()) {
+            if (pm.getValue() == Boolean.TRUE) {
+                return pm.getKey();
+            }
+        }
+        
+        return PauseMode.PM_UNPAUSED;
+    }
+    
+    public HashMap<PauseMode, Boolean> getPauseState ()
+    {
+        return this.pauseState;
+    }
 }
