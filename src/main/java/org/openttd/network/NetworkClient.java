@@ -94,6 +94,17 @@ public class NetworkClient extends Thread
         }
     }
     
+    private synchronized void handleCmdPause (long p1, long p2)
+    {
+        OpenTTD openttd = network.getOpenTTD();
+        PauseMode pm = PauseMode.valueOf((int) p1);
+        boolean paused = p2 != 0;
+        
+        openttd.getGame().setPauseMode(pm, paused);
+        
+        openttd.onPause(pm, paused);
+    }
+    
     public synchronized void pollDate () throws IOException
     {
         sendAdminPoll(AdminUpdateType.ADMIN_UPDATE_DATE);
@@ -540,6 +551,10 @@ public class NetworkClient extends Thread
         if (command == null) {
             this.pollCmdNames();
             return;
+        }
+
+        if ("CmdPause".equals(command.toString())) {
+            this.handleCmdPause(p1, p2);
         }
 
         openttd.onCmdLogging(client, company, command, p1, p2, tile, text, frame);
