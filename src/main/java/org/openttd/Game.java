@@ -18,8 +18,6 @@
 
 package org.openttd;
 
-import org.openttd.network.NetworkClient;
-
 /**
  *
  * @author nathanael
