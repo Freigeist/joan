@@ -509,8 +509,7 @@ public abstract class OpenTTD
 
     /**
      * We have sent an Rcon command, this is the answer.
-     * @param colour  Colour of the message.
-     * @param message The output of our Rcon command.
+     * @param rconBuffer instance of RconBuffer.
      */
     public void onRcon (RconBuffer rconBuffer) {}
 
