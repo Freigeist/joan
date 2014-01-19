@@ -579,4 +579,11 @@ public abstract class OpenTTD
      * @param payload id sent to the server with the ping packet.
      */
     public void onPong(long payload) {}
+
+    /**
+     * onPause - a transformed input from onCmdLogging.
+     * @param pm the type of the pause action.
+     * @param paused true if pause, false if unpause.
+     */
+    public void onPause (PauseMode pm, boolean paused) {}
 }
